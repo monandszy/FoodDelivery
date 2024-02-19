@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+</head>
+<body>
+<h1>Home</h1>
+</body>
+<div>
+  <a th:href="@{/register}">Register</a>
+  <a th:href="@{/login}">Login</a>
+  <a th:href="@{/logout}">Logout</a>
+</div>
+<div>
+  <a th:href="@{/discover}">Discover</a>
+  <a th:href="@{/restaurant/get/1}">Restaurant get 1</a>
+  <a th:href="@{/menu/get/1}">Menu get 1</a>
+</div>
+<div>
+  <a th:href="@{/manage}">Manage</a>
+  <a th:href="@{/myRestaurants/get}">MyRestaurants get</a>
+  <a th:href="@{/myRestaurant/get/1}">MyRestaurant get 1</a>
+  <a th:href="@{/myMenu/get/1}">MyMenu get 1</a>
+</div>
+</html>
