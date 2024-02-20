@@ -1,4 +1,4 @@
-package code.service.manageRestaurant.controller.myRestaurant;
+package code.service.manageRestaurant.controller.sellerInput;
 
 public class MyRestaurantsController {
 

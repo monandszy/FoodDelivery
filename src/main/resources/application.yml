@@ -1,0 +1,23 @@
+server:
+  port: 8087
+  servlet:
+    context-path: /code
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgres://localhost:5432/java_model
+    username: postgres
+    password: postgres
+    hikari:
+      idle-timeout: 10000
+      connection-timeout: 20000
+      minimum-idle: 10
+      maximum-pool-size: 20
+  jpa:
+    hibernate:
+      ddl-auto: none
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

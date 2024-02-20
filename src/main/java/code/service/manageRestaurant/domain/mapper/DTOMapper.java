@@ -1,4 +1,4 @@
 package code.service.manageRestaurant.domain.mapper;
 
-public class RestaurantCrudMapper {
+public class DTOMapper {
 }
