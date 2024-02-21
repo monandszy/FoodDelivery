@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 @Getter
 @Setter
 @EqualsAndHashCode(of = {})
@@ -25,16 +23,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "client_order", schema = "food_delivery")
-public class OrderEntity {
+@Table(name = "order_position", schema = "food_delivery")
+public class OrderPositionEntity {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
 
-   @Column(name = "client_code")
-   private Integer clientCode;
+   @ManyToOne
+   private OrderEntity orderEntity;
 
-   @OneToMany
-   private List<OrderPositionEntity> menuPositions;
+   @Column(name = "menu_position_id")
+   private Integer MenuPositionId;
 }

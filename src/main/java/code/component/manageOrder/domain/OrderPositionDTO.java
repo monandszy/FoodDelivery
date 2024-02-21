@@ -11,8 +11,9 @@ import lombok.With;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDTO {
+public class OrderPositionDTO {
 
    private Integer id;
-   private Integer clientCode;
+   private Integer orderId;
+   private Integer menuPositionId;
 }
