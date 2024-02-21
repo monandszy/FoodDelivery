@@ -12,19 +12,19 @@ public class EntityMapper {
       return null;
    }
 
-   public MenuEntity mapToEntity(Menu menu) {
-      return null;
-   }
-
-   public MenuPositionEntity mapToEntity(MenuPosition menuPosition) {
-      return null;
-   }
-
    public Restaurant mapFromEntity(RestaurantEntity restaurantEntity) {
       return null;
    }
 
+   public MenuEntity mapToEntity(Menu menu) {
+      return null;
+   }
+
    public Menu mapFromEntity(MenuEntity menuEntity) {
+      return null;
+   }
+
+   public MenuPositionEntity mapToEntity(MenuPosition menuPosition) {
       return null;
    }
 

@@ -13,19 +13,19 @@ public class DTOMapper {
       return null;
    }
 
-   public MenuDTO mapToDTO(Menu menu) {
-      return null;
-   }
-
-   public MenuPositionDTO mapToDTO(MenuPosition menuPosition) {
-      return null;
-   }
-
    public Restaurant mapFromDTO(RestaurantDTO restaurantDTO) {
       return null;
    }
 
+   public MenuDTO mapToDTO(Menu menu) {
+      return null;
+   }
+
    public Menu mapFromDTO(MenuDTO menuDTO) {
+      return null;
+   }
+
+   public MenuPositionDTO mapToDTO(MenuPosition menuPosition) {
       return null;
    }
 

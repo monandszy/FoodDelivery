@@ -12,19 +12,19 @@ public class CrudMapper {
       return null;
    }
 
-   public MenuEntity mapToEntity(MenuDTO menuDTO) {
-      return null;
-   }
-
-   public MenuPositionEntity mapToEntity(MenuPositionDTO menuPositionDTO) {
-      return null;
-   }
-
    public RestaurantDTO mapToDTO(RestaurantEntity restaurantEntity) {
       return null;
    }
 
+   public MenuEntity mapToEntity(MenuDTO menuDTO) {
+      return null;
+   }
+
    public MenuDTO mapToDTO(MenuEntity menuEntity) {
+      return null;
+   }
+
+   public MenuPositionEntity mapToEntity(MenuPositionDTO menuPositionDTO) {
       return null;
    }
 
