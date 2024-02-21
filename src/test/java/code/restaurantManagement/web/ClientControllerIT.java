@@ -1,9 +1,11 @@
-package restaurantManagement.web;
+package code.restaurantManagement.web;
 
 import code.component.manageRestaurant.dao.MenuDAO;
 import code.component.manageRestaurant.dao.MenuPositionDAO;
 import code.component.manageRestaurant.web.clientOutput.MenuController;
 import code.component.manageRestaurant.web.clientOutput.RestaurantController;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -12,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
     RestaurantController.class,
     MenuController.class
 })
-//@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ClientControllerIT {
 
    private MockMvc mockMvC;

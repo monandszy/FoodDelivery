@@ -1,4 +1,4 @@
-package configuration;
+package code.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;

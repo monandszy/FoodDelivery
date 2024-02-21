@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<code.configuration>
 
     <property name="HOME_LOG" value="${user.dir}/logs/application.log"/>
 
@@ -31,4 +31,4 @@
         </root>
     </springProfile>
 
-</configuration>
+</code.configuration>

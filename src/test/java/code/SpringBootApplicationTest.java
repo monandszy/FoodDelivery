@@ -1,4 +1,6 @@
-import configuration.DatabaseContainerTestConfiguration;
+package code;
+
+import code.configuration.DatabaseContainerTestConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

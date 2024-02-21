@@ -1,4 +1,4 @@
-package restaurantManagement;
+package code.restaurantManagement.web;
 
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
