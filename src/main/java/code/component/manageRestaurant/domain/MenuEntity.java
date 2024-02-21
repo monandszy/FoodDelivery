@@ -38,7 +38,7 @@ public class MenuEntity {
    private Menu.MenuType menuType;
 
    @OneToMany()
-   private List<MenuPositionEntity> positions;
+   private List<MenuPositionEntity> menuPositions;
 
    @ManyToOne()
    private RestaurantEntity restaurant;

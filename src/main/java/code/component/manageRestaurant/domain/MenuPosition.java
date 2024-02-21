@@ -17,4 +17,5 @@ public class MenuPosition {
 
    Integer id;
    BigDecimal price;
+   Menu menu;
 }

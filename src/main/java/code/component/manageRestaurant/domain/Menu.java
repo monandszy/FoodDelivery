@@ -17,7 +17,8 @@ public class Menu {
 
    Integer id;
    MenuType menuType;
-   List<MenuPosition> positions;
+   List<MenuPosition> menuPositions;
+   Restaurant restaurant;
 
    public enum MenuType {
       MENU_TYPE

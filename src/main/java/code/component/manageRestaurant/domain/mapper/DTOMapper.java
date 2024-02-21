@@ -6,32 +6,26 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Component
-public class DTOMapper {
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface DTOMapper {
 
-   public RestaurantDTO mapToDTO(Restaurant restaurant) {
-      return null;
-   }
+   RestaurantDTO mapToDTO(Restaurant restaurant);
 
-   public Restaurant mapFromDTO(RestaurantDTO restaurantDTO) {
-      return null;
-   }
+   @Mapping(target = "menus", ignore = true)
+   Restaurant mapFromDTO(RestaurantDTO restaurantDTO);
 
-   public MenuDTO mapToDTO(Menu menu) {
-      return null;
-   }
+   MenuDTO mapToDTO(Menu menu);
 
-   public Menu mapFromDTO(MenuDTO menuDTO) {
-      return null;
-   }
+   @Mapping(target = "menuPositions", ignore = true)
+   @Mapping(target = "restaurant", ignore = true)
+   Menu mapFromDTO(MenuDTO menuDTO);
 
-   public MenuPositionDTO mapToDTO(MenuPosition menuPosition) {
-      return null;
-   }
+   MenuPositionDTO mapToDTO(MenuPosition menuPosition);
 
-   public MenuPosition mapFromDTO(MenuPositionDTO menuPositionDTO) {
-      return null;
-   }
+   @Mapping(target = "menu", ignore = true)
+   MenuPosition mapFromDTO(MenuPositionDTO menuPositionDTO);
 }

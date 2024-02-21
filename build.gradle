@@ -31,9 +31,13 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation "org.mapstruct:mapstruct:${mapstruct}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstruct}"
 
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
@@ -46,10 +50,15 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.testcontainers:testcontainers-bom:1.19.3"
+        mavenBom "org.testcontainers:testcontainers-bom:${testContainers}"
     }
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
+
+compileJava.options.encoding = 'UTF-8'

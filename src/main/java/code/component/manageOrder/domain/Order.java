@@ -1,6 +1,5 @@
 package code.component.manageOrder.domain;
 
-import code.component.manageRestaurant.domain.MenuPosition;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -18,6 +17,6 @@ public class Order {
 
    Integer id;
    Integer clientCode;
-   List<MenuPosition> menuPositions;
+   List<OrderPosition> menuPositions;
 
 }

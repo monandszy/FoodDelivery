@@ -31,7 +31,7 @@ public class OrderPositionEntity {
    private Integer id;
 
    @ManyToOne
-   private OrderEntity orderEntity;
+   private OrderEntity order;
 
    @Column(name = "menu_position_id")
    private Integer MenuPositionId;

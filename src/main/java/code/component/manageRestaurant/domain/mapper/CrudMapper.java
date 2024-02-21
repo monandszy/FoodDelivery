@@ -6,31 +6,26 @@ import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.MenuPositionEntity;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.RestaurantEntity;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Component
-public class CrudMapper {
-   public RestaurantEntity mapToEntity(RestaurantDTO restaurantDTO) {
-      return null;
-   }
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface CrudMapper {
 
-   public RestaurantDTO mapToDTO(RestaurantEntity restaurantEntity) {
-      return null;
-   }
+   @Mapping(target = "menus", ignore = true)
+   RestaurantEntity mapToEntity(RestaurantDTO restaurantDTO);
 
-   public MenuEntity mapToEntity(MenuDTO menuDTO) {
-      return null;
-   }
+   RestaurantDTO mapToDTO(RestaurantEntity restaurantEntity);
 
-   public MenuDTO mapToDTO(MenuEntity menuEntity) {
-      return null;
-   }
+   @Mapping(target = "menuPositions", ignore = true)
+   @Mapping(target = "restaurant", ignore = true)
+   MenuEntity mapToEntity(MenuDTO menuDTO);
 
-   public MenuPositionEntity mapToEntity(MenuPositionDTO menuPositionDTO) {
-      return null;
-   }
+   MenuDTO mapToDTO(MenuEntity menuEntity);
 
-   public MenuPositionDTO mapToDTO(MenuPositionEntity menuPositionEntity) {
-      return null;
-   }
+   @Mapping(target = "menu", ignore = true)
+   MenuPositionEntity mapToEntity(MenuPositionDTO menuPositionDTO);
+
+   MenuPositionDTO mapToDTO(MenuPositionEntity menuPositionEntity);
 }
