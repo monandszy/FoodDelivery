@@ -4,23 +4,27 @@ import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.DTOMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping(MyRestaurantsController.MY_RESTAURANTS)
 public class MyRestaurantsController {
 
    public static final String MY_RESTAURANTS = "myRestaurants";
 
-   RestaurantDAO restaurantDAO;
-   DTOMapper dtoMapper;
+   private RestaurantDAO restaurantDAO;
+   private DTOMapper dtoMapper;
 
    @GetMapping("/{sellerCode}")
    public String getRestaurants(
@@ -31,14 +35,20 @@ public class MyRestaurantsController {
       List<Restaurant> restaurants = restaurantDAO.getPageByParent(sellerCode, page);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsPage", restaurantsPage);
-      return "myRestaurants";
+      return "seller/myRestaurants";
    }
 
-   void postRestaurant() {
-
+   @PostMapping("/add")
+   public String postRestaurant(
+       @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
+   ) {
+      return "redirect:seller/myRestaurant";
    }
 
-   void deleteRestaurant() {
-
+   @PostMapping("/delete")
+   public String deleteRestaurant(
+       @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
+   ) {
+      return "redirect:seller/myRestaurant";
    }
 }

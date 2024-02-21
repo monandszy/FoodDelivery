@@ -26,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "menu")
+@Table(name = "menu", schema = "food_delivery")
 public class MenuEntity {
 
    @Id

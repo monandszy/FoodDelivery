@@ -19,7 +19,7 @@ public class Menu {
    MenuType menuType;
    List<MenuPosition> positions;
 
-   enum MenuType {
+   public enum MenuType {
       MENU_TYPE
    }
 }

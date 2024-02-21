@@ -6,7 +6,9 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DTOMapper {
 
    public RestaurantDTO mapToDTO(Restaurant restaurant) {

@@ -16,7 +16,4 @@ public class MenuDTO {
    private Integer id;
    private Menu.MenuType menuType;
 
-   enum MenuType {
-      MENU_TYPE
-   }
 }

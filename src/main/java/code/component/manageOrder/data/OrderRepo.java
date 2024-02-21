@@ -2,9 +2,11 @@ package code.component.manageOrder.data;
 
 import code.component.manageOrder.OrderDAO;
 import code.component.manageOrder.domain.Order;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
+@Repository
 public class OrderRepo implements OrderDAO {
 
    OrderJpaRepo orderJpaRepo;

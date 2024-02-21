@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "menu_position")
+@Table(name = "menu_position", schema = "food_delivery")
 public class MenuPositionEntity {
 
    @Id

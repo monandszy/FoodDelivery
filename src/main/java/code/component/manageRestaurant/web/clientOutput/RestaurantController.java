@@ -4,6 +4,7 @@ import code.component.manageRestaurant.dao.MenuDAO;
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.DTOMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping(RestaurantController.RESTAURANT)
 public class RestaurantController {
 
    public static final String RESTAURANT = "restaurant";
 
-   MenuDAO menuDAO;
-   DTOMapper dtoMapper;
+   private MenuDAO menuDAO;
+   private DTOMapper dtoMapper;
 
    @GetMapping("/{restaurantId}")
    public String getMenus(
@@ -31,6 +33,6 @@ public class RestaurantController {
       List<Menu> menus = menuDAO.getPageByParent(restaurantId, page);
       List<MenuDTO> restaurantMenus = menus.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantPage", restaurantMenus);
-      return "restaurant";
+      return "client/restaurant";
    }
 }

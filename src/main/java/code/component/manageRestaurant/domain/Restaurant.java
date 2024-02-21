@@ -16,6 +16,6 @@ import java.util.List;
 public class Restaurant {
 
    Integer id;
-   Integer sellerAccountCode;
+   String sellerAccountCode;
    List<Menu> menus;
 }

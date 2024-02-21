@@ -6,7 +6,9 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionEntity;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EntityMapper {
    public RestaurantEntity mapToEntity(Restaurant restaurant) {
       return null;

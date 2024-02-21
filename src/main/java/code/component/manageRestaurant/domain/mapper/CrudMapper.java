@@ -6,7 +6,9 @@ import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.MenuPositionEntity;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.RestaurantEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CrudMapper {
    public RestaurantEntity mapToEntity(RestaurantDTO restaurantDTO) {
       return null;
