@@ -24,7 +24,6 @@ public class MenuController {
    private MenuPositionDAO menuPositionDAO;
    private DTOMapper dtoMapper;
 
-
    @GetMapping("/{menuId}")
    public String getMenuPositions(
        @PathVariable(value = "menuId", required = true) Integer menuId,
