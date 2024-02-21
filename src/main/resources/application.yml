@@ -25,7 +25,3 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-  security:
-    user:
-      name: user
-      password: user

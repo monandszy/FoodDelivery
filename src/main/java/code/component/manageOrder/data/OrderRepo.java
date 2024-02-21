@@ -10,6 +10,7 @@ import java.util.Set;
 public class OrderRepo implements OrderDAO {
 
    OrderJpaRepo orderJpaRepo;
+   OrderPositionJpaRepo orderPositionJpaRepo;
 
    @Override
    public Set<Order> getOrders() {
