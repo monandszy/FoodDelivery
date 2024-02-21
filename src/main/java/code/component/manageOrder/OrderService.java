@@ -1,14 +1,18 @@
 package code.component.manageOrder;
 
 import code.component.manageOrder.domain.Order;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
+@AllArgsConstructor
 public class OrderService {
 
-   OrderDAO orderDAO;
+   private OrderDAO orderDAO;
 
-   public Set<Order> getOrders() {
+   public Set<Order> getOrderPositions() {
       return null;
    }
 

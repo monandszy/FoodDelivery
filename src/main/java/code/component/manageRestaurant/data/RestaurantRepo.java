@@ -34,4 +34,9 @@ public class RestaurantRepo implements RestaurantDAO {
    public void updateRange(Restaurant restaurant) {
       throw new RuntimeException("not implemented");
    }
+
+   @Override
+   public List<Restaurant> getPage(Integer page) {
+      return null;
+   }
 }

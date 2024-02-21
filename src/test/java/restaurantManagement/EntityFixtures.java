@@ -23,7 +23,7 @@ public class EntityFixtures {
       return Menu.builder()
           .id(id)
           .menuType(Menu.MenuType.MENU_TYPE)
-          .positions(List.of(someMenuPosition(1)))
+          .menuPositions(List.of(someMenuPosition(1)))
           .build();
    }
 
