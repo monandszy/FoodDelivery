@@ -1,9 +1,9 @@
 package code.component.manageRestaurant.web.sellerInput;
 
-import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.DTOMapper;
+import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ public class MyRestaurantsController {
 
    public static final String MY_RESTAURANTS = "myRestaurants";
 
-   private RestaurantDAO restaurantDAO;
+   private RestaurantService restaurantService;
    private DTOMapper dtoMapper;
 
    @GetMapping("/{sellerCode}")
@@ -32,7 +32,7 @@ public class MyRestaurantsController {
        @RequestParam(value = "page") Integer page,
        Model model
    ) {
-      List<Restaurant> restaurants = restaurantDAO.getPageByParent(sellerCode, page);
+      List<Restaurant> restaurants = restaurantService.getPageByParent(sellerCode, page);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsPage", restaurantsPage);
       return "seller/myRestaurants";

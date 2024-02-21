@@ -6,6 +6,8 @@ import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.web.sellerInput.MyMenuController;
 import code.component.manageRestaurant.web.sellerInput.MyRestaurantController;
 import code.component.manageRestaurant.web.sellerInput.MyRestaurantsController;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
     MyRestaurantController.class,
     MyMenuController.class
 })
-//@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class SellerControllerIT {
 
    private MockMvc mockMvC;
@@ -26,4 +28,5 @@ public class SellerControllerIT {
    private MenuPositionDAO menuPositionDAO;
    @MockBean
    private MenuDAO menuDAO;
+
 }

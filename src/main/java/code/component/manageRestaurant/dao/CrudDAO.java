@@ -1,10 +1,7 @@
 package code.component.manageRestaurant.dao;
 
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
-@Component
 public interface CrudDAO<T> {
 
    // for use in controllers - relaxed architecture - skip service layer
