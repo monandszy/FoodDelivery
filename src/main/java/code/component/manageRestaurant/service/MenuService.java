@@ -14,14 +14,14 @@ public class MenuService {
    private MenuDAO menuDAO;
 
    public void add(Menu menu) {
-
+      menuDAO.add(menu);
    }
 
    public List<Menu> getPageByParent(Object parentKey, Integer page) {
-      return null;
+      return menuDAO.getPageByParent(parentKey, page);
    }
 
    public void deleteById(Integer id) {
-
+      menuDAO.deleteById(id);
    }
 }

@@ -13,15 +13,19 @@ public class RestaurantService {
    private RestaurantDAO restaurantDAO;
 
    public void add(Restaurant restaurant) {
-
+      restaurantDAO.add(restaurant);
    }
 
    public List<Restaurant> getPageByParent(Object parentKey, Integer page) {
-      return null;
+      return restaurantDAO.getPageByParent(parentKey, page);
+   }
+
+   public List<Restaurant> getPage(Integer page) {
+      return restaurantDAO.getPage(page);
    }
 
    public void deleteById(Integer id) {
-
+      restaurantDAO.deleteById(id);
    }
 
    public void updateAddress(Restaurant restaurant) {
@@ -30,9 +34,5 @@ public class RestaurantService {
 
    public void updateRange(Restaurant restaurant) {
 
-   }
-
-   public List<Restaurant> getPage(Integer page) {
-      return null;
    }
 }

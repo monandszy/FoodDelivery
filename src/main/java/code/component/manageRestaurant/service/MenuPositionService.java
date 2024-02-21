@@ -13,14 +13,14 @@ public class MenuPositionService {
    private MenuPositionDAO menuPositionDAO;
 
    public void add(MenuPosition menuPosition) {
-
+      menuPositionDAO.add(menuPosition);
    }
 
    public List<MenuPosition> getPageByParent(Object parentKey, Integer page) {
-      return null;
+      return menuPositionDAO.getPageByParent(parentKey, page);
    }
 
    public void deleteById(Integer id) {
-
+      menuPositionDAO.deleteById(id);
    }
 }
