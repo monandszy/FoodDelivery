@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping(MyRestaurantController.MY_RESTAURANT)
 public class MyRestaurantController {
 
    public static final String MY_RESTAURANT = "myRestaurant";
@@ -26,9 +24,9 @@ public class MyRestaurantController {
    private MenuService menuService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping("/{restaurantId}")
-   public String getMenus(
-       @PathVariable(value = "restaurantId", required = true) Integer restaurantId,
+   @GetMapping(MY_RESTAURANT + "/{restaurantId}")
+   public String getRestaurantViewById(
+       @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "page") Integer page,
        Model model
    ) {
@@ -37,14 +35,14 @@ public class MyRestaurantController {
       model.addAttribute("restaurantPage", restaurantMenus);
       return "seller/myRestaurant";
    }
-   @PostMapping("/add")
+   @PostMapping(MY_RESTAURANT + "/add")
    public String postMenu(
        @ModelAttribute("menuDTO") MenuDTO menuDTO
    ) {
       return "redirect:seller/myRestaurant";
    }
 
-   @PostMapping("/delete")
+   @PostMapping(MY_RESTAURANT + "/delete")
    public String deleteMenu(
        @ModelAttribute("menuDTO") MenuDTO menuDTO
    ) {

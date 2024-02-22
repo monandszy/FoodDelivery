@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,14 +20,14 @@ public class OrderController {
    private OrderService orderService;
 
    @GetMapping(ORDER + "getIncompleteBySeller/{sellerId}")
-   public String getIncompleteOrdersBySeller(
+   public String getIncompleteOrdersBySellerId(
        @PathVariable String sellerId
    ) {
       return null;
    }
 
    @GetMapping(ORDER + "getByClient/{clientId}")
-   public String getOrderByClient(
+   public String getOrderByClientId(
        @PathVariable String clientId
    ) {
       return null;
@@ -35,23 +35,22 @@ public class OrderController {
 
    @PostMapping(ORDER + "/add")
    public String postOrder(
-       @RequestParam("orderList")List<OrderDTO> orderList
+       @ModelAttribute("orderList") List<OrderDTO> orderList
        ) {
       return null;
    }
 
-   @DeleteMapping(ORDER + "/delete/{orderId}")
+   @DeleteMapping(ORDER + "/delete")
    public String deleteOrder(
-       @PathVariable String orderId
+       @ModelAttribute("orderDTO") OrderDTO orderDTO
    ) {
       return null;
    }
 
-   @DeleteMapping(ORDER + "/complete/{orderId}")
+   @DeleteMapping(ORDER + "/complete")
    public String completeOrder(
-       @PathVariable String orderId
+       @ModelAttribute("orderDTO") OrderDTO orderDTO
    ) {
       return null;
    }
-
 }

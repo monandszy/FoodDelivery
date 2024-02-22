@@ -2,11 +2,20 @@ package code.component.manageAccount.web;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @AllArgsConstructor
-public class PermissionController {
+public class HomeController {
 
+   public static final String HOME = "/home";
+
+   @GetMapping(HOME)
+   public String redirect() {
+      return "home";
+   }
+
+   // TODO ADD ADMINISTRATION FUNCTIONS
 //   @GetMapping
 //   void getRoles() {
 //
@@ -22,7 +31,7 @@ public class PermissionController {
 //
 //   }
 //
-//   @PutMapping("/")
+//   @PutMapping()
 //   void setRole() {
 //
 //   }
