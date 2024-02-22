@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @AllArgsConstructor
-public class DiscoveryController {
+public class DiscoverController {
 
-   public static final String DISCOVERY = "discovery";
+   public static final String DISCOVERY = "discover";
 
    @GetMapping(DISCOVERY)
    String getDiscover() {

@@ -55,29 +55,29 @@ public class SecurityConfig {
       return http
           .csrf((AbstractHttpConfigurer::disable))
           .authorizeHttpRequests(requests -> requests
-              .requestMatchers("/login", "/error", "/register").permitAll()
+              .requestMatchers("/login", "/error", "/register", "register.html").permitAll()
               .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
-//              .requestMatchers("/home").hasAnyAuthority("ADMIN")
-//              .requestMatchers(
-//                  "restaurants/**",
-//                  "restaurant/**",
-//                  "menu/**",
-//                  "discover/**"
-//              ).hasAnyAuthority("CLIENT")
-//              .requestMatchers(
-//                  "myRestaurants/**",
-//                  "myRestaurant/**",
-//                  "myMenu/**",
-//                  "manage/**",
-//                  "discover/**"
-//              ).hasAnyAuthority("SELLER")
+              .requestMatchers("/home").hasAnyAuthority("ADMIN")
+              .requestMatchers(
+                  "restaurants/**",
+                  "restaurant/**",
+                  "menu/**",
+                  "discover/**"
+              ).hasAnyAuthority("CLIENT")
+              .requestMatchers(
+                  "myRestaurants/**",
+                  "myRestaurant/**",
+                  "myMenu/**",
+                  "manage/**",
+                  "discover/**"
+              ).hasAnyAuthority("SELLER")
           )
           .exceptionHandling(e -> e
               .accessDeniedPage("/queue")
           )
           .formLogin(form -> form
               .loginPage("/login")
-//              .defaultSuccessUrl("/discovery", true)
+              .defaultSuccessUrl("/discover", true)
               .permitAll()
           )
           .logout(logout -> logout.logoutSuccessUrl("/login")

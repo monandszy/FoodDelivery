@@ -24,14 +24,14 @@ public class UserAccountDetailsService implements UserDetailsService {
    @Override
    @Transactional
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      Account account = accountManagementDAO.findByUserName(username).orElseThrow();
+      Account account = accountManagementDAO.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException(username));
       List<GrantedAuthority> authorities = getAccountAuthority(account.getRoles());
       return buildAccountForAuthentication(account, authorities);
    }
 
    private List<GrantedAuthority> getAccountAuthority(Set<Role> roles) {
       return roles.stream()
-          .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRole().name()))
+          .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRole().toString()))
           .distinct()
           .toList();
    }

@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.With;
-import org.springframework.lang.NonNull;
 
 import java.util.Set;
 
@@ -22,13 +21,10 @@ import java.util.Set;
 public class AccountDTO {
 
    private Integer id;
-   @NonNull
    @NotEmpty
    private String userName;
-   @NonNull
    @NotEmpty
    private String password;
-   @NonNull
    private Boolean active;
    private Set<RoleDTO> roles;
 }

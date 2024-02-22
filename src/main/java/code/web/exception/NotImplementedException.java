@@ -1,4 +1,4 @@
-package code.web;
+package code.web.exception;
 
 public class NotImplementedException extends RuntimeException {
 
