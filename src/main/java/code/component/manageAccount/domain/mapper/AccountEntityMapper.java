@@ -1,7 +1,7 @@
 package code.component.manageAccount.domain.mapper;
 
-import code.component.manageAccount.domain.AccountDetails;
-import code.component.manageAccount.domain.AccountDetailsEntity;
+import code.component.manageAccount.domain.Account;
+import code.component.manageAccount.domain.AccountEntity;
 import code.component.manageAccount.domain.Role;
 import code.component.manageAccount.domain.RoleEntity;
 import org.mapstruct.Mapper;
@@ -14,7 +14,7 @@ public interface AccountEntityMapper {
 
    Role mapFromEntity(RoleEntity roleEntity);
 
-   AccountDetailsEntity mapToEntity(AccountDetails AccountDetails);
+   AccountEntity mapToEntity(Account Account);
 
-   AccountDetails mapFromEntity(AccountDetailsEntity AccountDetailsEntity);
+   Account mapFromEntity(AccountEntity AccountEntity);
 }

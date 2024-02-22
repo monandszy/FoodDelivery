@@ -1,7 +1,11 @@
 package code.component.manageAccount;
 
-import code.component.manageAccount.domain.AccountDetailsEntity;
+import code.component.manageAccount.domain.Account;
+
+import java.util.Optional;
 
 public interface AccountManagementDAO {
-   AccountDetailsEntity findByUserName();
+   Optional<Account> findByUserName(String username);
+
+   void addAccount(Account account);
 }

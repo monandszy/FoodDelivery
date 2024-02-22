@@ -6,14 +6,19 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
+import java.util.Set;
+
 @With
 @Value
 @Builder
 @EqualsAndHashCode(of = {})
 @ToString(of = {})
-public class AccountDetails {
+public class Account {
 
    Integer id;
-   String code;
+   String userName;
+   String password;
+   Boolean active;
+   Set<Role> roles;
 
 }

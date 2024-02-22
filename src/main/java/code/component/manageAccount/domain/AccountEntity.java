@@ -29,7 +29,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "seller", schema = "food_delivery")
-public class AccountDetailsEntity {
+public class AccountEntity {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 package code.component.manageAccount;
 
-import code.component.manageAccount.domain.AccountDetailsEntity;
-import code.component.manageAccount.domain.RoleEntity;
+import code.component.manageAccount.domain.Account;
+import code.component.manageAccount.domain.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,12 +24,12 @@ public class UserAccountDetailsService implements UserDetailsService {
    @Override
    @Transactional
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      AccountDetailsEntity account = accountManagementDAO.findByUserName();
+      Account account = accountManagementDAO.findByUserName(username).orElseThrow();
       List<GrantedAuthority> authorities = getAccountAuthority(account.getRoles());
       return buildAccountForAuthentication(account, authorities);
    }
 
-   private List<GrantedAuthority> getAccountAuthority(Set<RoleEntity> roles) {
+   private List<GrantedAuthority> getAccountAuthority(Set<Role> roles) {
       return roles.stream()
           .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRole()))
           .distinct()
@@ -37,7 +37,7 @@ public class UserAccountDetailsService implements UserDetailsService {
    }
 
    private UserDetails buildAccountForAuthentication(
-       AccountDetailsEntity account, List<GrantedAuthority> authorities) {
+       Account account, List<GrantedAuthority> authorities) {
       return new User(
           account.getUserName(),
           account.getPassword(),

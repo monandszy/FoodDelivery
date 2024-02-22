@@ -1,7 +1,7 @@
 package code.component.manageAccount.domain.mapper;
 
-import code.component.manageAccount.domain.AccountDetails;
-import code.component.manageAccount.domain.AccountDetailsDTO;
+import code.component.manageAccount.domain.Account;
+import code.component.manageAccount.domain.AccountDTO;
 import code.component.manageAccount.domain.Role;
 import code.component.manageAccount.domain.RoleDTO;
 import org.mapstruct.Mapper;
@@ -14,7 +14,7 @@ public interface AccountDTOMapper {
 
    Role mapFromDTO(RoleDTO roleDTO);
 
-   AccountDetailsDTO mapToDTO(AccountDetails accountDetails);
+   AccountDTO mapToDTO(Account account);
 
-   AccountDetails mapFromDTO(AccountDetailsDTO accountDetailsDTO);
+   Account mapFromDTO(AccountDTO accountDTO);
 }

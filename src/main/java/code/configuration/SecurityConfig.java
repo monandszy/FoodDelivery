@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +23,7 @@ public class SecurityConfig {
 
    @Bean
    public PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder();
+      return new BCryptPasswordEncoder(16);
    }
 
    @Bean
@@ -55,8 +54,11 @@ public class SecurityConfig {
       return http
           .csrf((AbstractHttpConfigurer::disable))
           .authorizeHttpRequests(requests -> requests
-              .requestMatchers("/login", "/error").permitAll())
-          .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+              .requestMatchers("/login", "/error", "/register").permitAll())
+          .formLogin(form -> form
+              .loginPage("/login")
+              .permitAll()
+          )
           .logout(logout -> logout.logoutSuccessUrl("/login")
               .invalidateHttpSession(true)
               .deleteCookies("JSESSIONID")
