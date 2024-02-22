@@ -1,4 +1,4 @@
-package code.web;
+package code.component.manageRestaurant.web.clientOutput;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,7 @@ public class DiscoverController {
    public static final String DISCOVERY = "discover";
 
    @GetMapping(DISCOVERY)
-   String getDiscover() {
+   public String getDiscover() {
       return "client/discover";
    }
 }

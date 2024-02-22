@@ -6,12 +6,11 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Your Restaurants</title>
+  <title>Menu</title>
 </head>
-
 <body>
-<h1>Restaurants</h1>
 <div>
+  <h2>Your Orders</h2>
   <table>
     <thead>
     <tr>
@@ -21,13 +20,15 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="myRestaurant : ${restaurantsPage}">
-      <td th:text="${myRestaurant.getId()}"></td>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
       <td>
-        <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})}" method="GET">
+        <form action="#" th:action="@{order/getByClient/{id}(id=${order.id})}" method="GET">
           <button type="submit">+</button>
         </form>
-        <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})}" th:method="DELETE">
+      </td>
+      <td>
+        <form action="#" th:action="@{order/delete/{id}(id=${order.id})}" method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>
@@ -37,7 +38,7 @@
 </div>
 
 <div>
-  <a th:href="@{seller/manage}">Go Back</a>
+  <a th:href="@{client/discover}">Go Back</a>
 </div>
 </body>
 </html>

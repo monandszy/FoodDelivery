@@ -9,6 +9,30 @@
   <title>Restaurant</title>
 </head>
 <body>
-<h1>Restaurant</h1>
+<div>
+  <h2>Restaurant</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Show</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menu : ${menuPage}">
+      <td th:text="${menu.id}"></td>
+      <td>
+        <form action="#" th:action="@{menu/{id}(id=${menu.id})}" method="GET">
+          <button type="submit">+</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <a th:href="@{client/discover}">Go Back</a>
+</div>
 </body>
 </html>

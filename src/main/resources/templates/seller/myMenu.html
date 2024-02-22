@@ -16,17 +16,30 @@
     <thead>
     <tr>
       <th>Id</th>
-      <th>Price</th>
+      <th>Show</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="menuPosition : ${menuPage}">
-      <td th:text="${menuPosition.getId()}"></td>
-      <td th:text="${menuPosition.getPrice()}"></td>
+    <tr th:each="myMenuPosition : ${menuPage}">
+      <td th:text="${myMenuPosition.getId()}"></td>
+      <td>
+        <form action="#" th:action="@{myMenuPosition/{id}(id=${myMenuPosition.id})}" method="GET">
+          <button type="submit">+</button>
+        </form>
+      </td>
+      <td>
+        <form action="#" th:action="@{myMenuPosition/{id}(id=${myMenuPosition.id})}" th:method="DELETE">
+          <button type="submit">-</button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>
 </div>
-</body>
 
+<div>
+  <a th:href="@{seller/myRestaurant}">Go Back</a>
+</div>
+</body>
 </html>

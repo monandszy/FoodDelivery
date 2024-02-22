@@ -13,6 +13,11 @@
 <div>
   <p th:if="${exceptionMessage}" th:text="${errorMessage}">Error</p>
 </div>
+<div>
+  <a th:href="@{/home}">Home</a>
+  <a th:href="@{/client/discover}">Discover</a>
+  <a th:href="@{/seller/manage}">Manage</a>
+</div>
 </body>
 
 </html>

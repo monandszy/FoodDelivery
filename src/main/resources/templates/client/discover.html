@@ -10,9 +10,47 @@
 </head>
 <body>
 <main>
-<h1>Discover</h1>
-<a href="menu.html">Menu</a>
-<a href="restaurant.html">Restaurant</a>
+  <h1>Discover</h1>
+  <div>
+    <h2>Input Your Address</h2>
+    <!--  <form action="#" th:action="@{/discover/findByAddress}" th:method="GET" th:object="${addressDTO}">-->
+    <!--    <div class="form-group">-->
+    <!--      <label>-->
+    <!--        Id: <input type="text" placeholder="Field" th:field="*{}"/>-->
+    <!--      </label>-->
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--      <input type="submit" value="Update employee" name="button"/>-->
+    <!--    </div>-->
+    <!--  </form>-->
+  </div>
+
+  <div>
+    <h2>Found Restaurants</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Show</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="restaurant : ${foundByAddressRestaurantPage}">
+        <td th:text="${restaurant.id}"></td>
+        <td>
+          <form action="#" th:action="@{restaurant/{id}(id=${restaurant.id})}" method="GET">
+            <button type="submit">+</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <a th:href="@{client/orders}">Your Orders</a>
+    <a th:href="@{seller/manage}">Manage Restaurants (Seller Only)</a>
+  </div>
 </main>
 </body>
 </html>
