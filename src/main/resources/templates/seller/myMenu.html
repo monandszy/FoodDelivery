@@ -39,6 +39,20 @@
 </div>
 
 <div>
+  <h2>Page</h2>
+  <form action="#" th:action="@{myMenu/{id}(id=${menuId})}" method="GET">
+    <div>
+      <label>
+        <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
+      </label>
+    </div>
+    <div>
+      <input type="submit" value="Set Page" name="button"/>
+    </div>
+  </form>
+</div>
+
+<div>
   <a th:href="@{seller/myRestaurant}">Go Back</a>
 </div>
 </body>

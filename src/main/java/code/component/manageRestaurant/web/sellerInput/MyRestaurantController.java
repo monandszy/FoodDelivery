@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -27,12 +28,15 @@ public class MyRestaurantController {
    @GetMapping(MY_RESTAURANT + "/{restaurantId}")
    public String getRestaurantViewById(
        @PathVariable(value = "restaurantId") Integer restaurantId,
-       @RequestParam(value = "page") Integer page,
+       @RequestParam(value = "pageNumber") Integer pageNumber,
        Model model
    ) {
-      List<Menu> menus = menuService.getPageByParent(restaurantId, page);
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      List<Menu> menus = menuService.getPageByParent(restaurantId, pageNumber);
       List<MenuDTO> restaurantMenus = menus.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantPage", restaurantMenus);
+      model.addAttribute("restaurantId", restaurantId);
+      model.addAttribute("pageNumber", pageNumber);
       return "seller/myRestaurant";
    }
    @PostMapping(MY_RESTAURANT + "/add")

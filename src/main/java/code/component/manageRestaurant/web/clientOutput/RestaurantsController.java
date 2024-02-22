@@ -8,9 +8,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Controller
@@ -22,14 +24,18 @@ public class RestaurantsController {
    private RestaurantService restaurantService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping(RESTAURANTS)
-   String getRestaurantsView(
-       @RequestParam("page") Integer page,
+   @GetMapping(RESTAURANTS + "/getByAddress")
+   String getRestaurantsViewByAddress(
+       @ModelAttribute(value = "address") Object addressDTO,
+       @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
-      List<Restaurant> restaurants = restaurantService.getPage(page);
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      List<Restaurant> restaurants = restaurantService.getPageByAddress(addressDTO, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
-      model.addAttribute("restaurantsPage", restaurantsPage);
+      model.addAttribute("restaurantsByAddressPage", restaurantsPage);
+      model.addAttribute("pageNumber", pageNumber);
+      model.addAttribute("addressDTO", addressDTO);
       return "client/discover";
    }
 }

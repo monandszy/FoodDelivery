@@ -23,4 +23,8 @@ public class MenuPositionService {
    public void deleteById(Integer id) {
       menuPositionDAO.deleteById(id);
    }
+
+   public List<MenuPosition> getMenuPositions(Integer menuId) {
+      return menuPositionDAO.getMenuPositions(menuId);
+   }
 }

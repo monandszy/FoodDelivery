@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
    public ModelAndView handleException(NotImplementedException ex) {
       String message = String.format("NotImplementedException occurred: [%s]", ex.getMessage());
       log.error(message, ex);
-      ModelAndView modelView = new ModelAndView("redirect:error");
+      ModelAndView modelView = new ModelAndView("error");
       modelView.addObject("exceptionMessage", message);
       return modelView;
    }

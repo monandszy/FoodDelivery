@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -25,11 +26,14 @@ public class RestaurantController {
    @GetMapping(RESTAURANT + "/{restaurantId}")
    public String getMenusView(
        @PathVariable(value = "restaurantId") Integer restaurantId,
-       @RequestParam(value = "page") Integer page,
+       @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
-      List<Menu> menus = menuService.getPageByParent(restaurantId, page);
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      List<Menu> menus = menuService.getPageByParent(restaurantId, pageNumber);
       List<MenuDTO> restaurantMenus = menus.stream().map(restaurantDtoMapper::mapToDTO).toList();
+      model.addAttribute("pageNumber", pageNumber);
+      model.addAttribute("restaurantId", restaurantId);
       model.addAttribute("restaurantPage", restaurantMenus);
       return "client/restaurant";
    }

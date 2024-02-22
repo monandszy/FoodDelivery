@@ -13,16 +13,17 @@
   <h1>Discover</h1>
   <div>
     <h2>Input Your Address</h2>
-    <!--  <form action="#" th:action="@{/discover/findByAddress}" th:method="GET" th:object="${addressDTO}">-->
-    <!--    <div class="form-group">-->
-    <!--      <label>-->
-    <!--        Id: <input type="text" placeholder="Field" th:field="*{}"/>-->
-    <!--      </label>-->
-    <!--    </div>-->
-    <!--    <div class="form-group">-->
-    <!--      <input type="submit" value="Update employee" name="button"/>-->
-    <!--    </div>-->
-    <!--  </form>-->
+      <form action="#" th:action="@{restaurants/getByAddress}" th:method="GET" th:object="${addressDTO}">
+        <div class="form-group">
+          <label>
+<!--            kind of an update to empty address, maybe change-->
+<!--            Id: <input type="text" placeholder="Field" th:field="*{}"/>-->
+          </label>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Set address" name="button"/>
+        </div>
+      </form>
   </div>
 
   <div>
@@ -35,7 +36,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="restaurant : ${foundByAddressRestaurantPage}">
+      <tr th:each="restaurant : ${restaurantsByAddressPage}">
         <td th:text="${restaurant.id}"></td>
         <td>
           <form action="#" th:action="@{restaurant/{id}(id=${restaurant.id})}" method="GET">
@@ -45,6 +46,20 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <div>
+    <h2>Page</h2>
+      <form action="#" th:action="@{restaurants/getByAddress}" th:method="GET" th:object="${addressDTO}">
+        <div>
+          <label>
+            <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
+          </label>
+        </div>
+        <div>
+          <input type="submit" value="Set Page" name="button"/>
+        </div>
+      </form>
   </div>
 
   <div>

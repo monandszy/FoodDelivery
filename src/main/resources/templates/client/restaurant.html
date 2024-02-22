@@ -19,7 +19,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="menu : ${menuPage}">
+    <tr th:each="menu : ${Page}">
       <td th:text="${menu.id}"></td>
       <td>
         <form action="#" th:action="@{menu/{id}(id=${menu.id})}" method="GET">
@@ -29,6 +29,20 @@
     </tr>
     </tbody>
   </table>
+</div>
+
+<div>
+  <h2>Page</h2>
+  <form action="#" th:action="@{restaurant/{id}(id=${restaurantId})}" method="GET">
+    <div>
+      <label>
+        <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
+      </label>
+    </div>
+    <div>
+      <input type="submit" value="Set Page" name="button"/>
+    </div>
+  </form>
 </div>
 
 <div>
