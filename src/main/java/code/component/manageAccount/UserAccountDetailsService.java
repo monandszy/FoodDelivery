@@ -31,7 +31,7 @@ public class UserAccountDetailsService implements UserDetailsService {
 
    private List<GrantedAuthority> getAccountAuthority(Set<Role> roles) {
       return roles.stream()
-          .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRole()))
+          .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRole().name()))
           .distinct()
           .toList();
    }

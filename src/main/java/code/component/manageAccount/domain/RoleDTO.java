@@ -14,5 +14,5 @@ import lombok.With;
 public class RoleDTO {
 
    private Integer id;
-   private String role;
+   private Role.ACCOUNT_ROLE role;
 }

@@ -9,14 +9,17 @@ import lombok.With;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = {})
-@ToString(of = {})
+@EqualsAndHashCode
+@ToString
 public class Role {
 
    Integer id;
-   String role;
+   ACCOUNT_ROLE role;
 
-   public enum ACCOUNT_ROLES {
-      ACCOUNT
+   public enum ACCOUNT_ROLE {
+      ACCOUNT,
+      SELLER,
+      CLIENT,
+      ADMIN
    }
 }

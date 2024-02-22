@@ -16,5 +16,13 @@ CREATE TABLE role
 (
     id SERIAL NOT NULL,
     role VARCHAR(32) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT role_in CHECK (
+        role IN
+        (
+        'ACCOUNT',
+        'SELLER',
+        'CLIENT',
+        'ADMIN'
+        ))
 );

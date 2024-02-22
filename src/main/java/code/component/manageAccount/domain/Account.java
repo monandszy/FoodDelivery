@@ -11,8 +11,8 @@ import java.util.Set;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = {})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 public class Account {
 
    Integer id;

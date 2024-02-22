@@ -56,24 +56,28 @@ public class SecurityConfig {
           .csrf((AbstractHttpConfigurer::disable))
           .authorizeHttpRequests(requests -> requests
               .requestMatchers("/login", "/error", "/register").permitAll()
-              .requestMatchers("/home").hasAnyAuthority("ACCOUNT")
-              .requestMatchers(
-                  "restaurants/**",
-                  "restaurant/**",
-                  "menu/**",
-                  "discover/**"
-              ).hasAnyAuthority("CLIENT")
-              .requestMatchers(
-                  "myRestaurants/**",
-                  "myRestaurant/**",
-                  "myMenu/**",
-                  "manage/**",
-                  "discover/**"
-              ).hasAnyAuthority("SELLER")
+              .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
+//              .requestMatchers("/home").hasAnyAuthority("ADMIN")
+//              .requestMatchers(
+//                  "restaurants/**",
+//                  "restaurant/**",
+//                  "menu/**",
+//                  "discover/**"
+//              ).hasAnyAuthority("CLIENT")
+//              .requestMatchers(
+//                  "myRestaurants/**",
+//                  "myRestaurant/**",
+//                  "myMenu/**",
+//                  "manage/**",
+//                  "discover/**"
+//              ).hasAnyAuthority("SELLER")
+          )
+          .exceptionHandling(e -> e
+              .accessDeniedPage("/queue")
           )
           .formLogin(form -> form
               .loginPage("/login")
-              .defaultSuccessUrl("/home", true)
+//              .defaultSuccessUrl("/discovery", true)
               .permitAll()
           )
           .logout(logout -> logout.logoutSuccessUrl("/login")
