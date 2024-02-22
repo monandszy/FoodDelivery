@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<code.configuration>
-
-    <property name="HOME_LOG" value="${user.dir}/logs/application.log"/>
+<configuration>
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <property name="HOME_LOG" value="${user.dir}/logs/application.log"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -31,4 +31,4 @@
         </root>
     </springProfile>
 
-</code.configuration>
+</configuration>

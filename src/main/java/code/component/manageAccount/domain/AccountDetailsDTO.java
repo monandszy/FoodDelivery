@@ -1,4 +1,4 @@
-package code.component.manageAccount.domain.client;
+package code.component.manageAccount.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import lombok.With;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientDTO {
+public class AccountDetailsDTO {
 
    private Integer id;
-   private String email;
+   private String code;
 }

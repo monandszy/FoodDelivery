@@ -1,4 +1,4 @@
-package code.component.manageAccount.domain.client;
+package code.component.manageAccount.domain;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -11,8 +11,8 @@ import lombok.With;
 @Builder
 @EqualsAndHashCode(of = {})
 @ToString(of = {})
-public class Client {
+public class Role {
 
    Integer id;
-   String email;
+   String role;
 }

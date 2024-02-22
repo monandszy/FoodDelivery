@@ -1,4 +1,4 @@
-package code.component.manageAccount.domain.seller;
+package code.component.manageAccount.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,8 @@ import lombok.With;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerDTO {
+public class RoleDTO {
 
    private Integer id;
+   private String role;
 }

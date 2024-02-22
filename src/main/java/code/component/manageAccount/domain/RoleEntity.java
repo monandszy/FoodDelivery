@@ -1,4 +1,4 @@
-package code.component.manageAccount.domain.client;
+package code.component.manageAccount.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,14 +22,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "client", schema = "food_delivery")
-public class ClientEntity {
+@Table(name = "role", schema = "food_delivery")
+public class RoleEntity {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
 
-   @Column(name = "email")
-   private String email;
+   @Column(name = "role")
+   private String role;
+
 }

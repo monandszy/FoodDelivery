@@ -2,7 +2,7 @@ package code.component.manageRestaurant.web.sellerInput;
 
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
-import code.component.manageRestaurant.domain.mapper.DTOMapper;
+import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class MyRestaurantsController {
    public static final String MY_RESTAURANTS = "myRestaurants";
 
    private RestaurantService restaurantService;
-   private DTOMapper dtoMapper;
+   private RestaurantDTOMapper restaurantDtoMapper;
 
    @GetMapping("/{sellerCode}")
    public String getRestaurants(
@@ -33,7 +33,7 @@ public class MyRestaurantsController {
        Model model
    ) {
       List<Restaurant> restaurants = restaurantService.getPageByParent(sellerCode, page);
-      List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
+      List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsPage", restaurantsPage);
       return "seller/myRestaurants";
    }

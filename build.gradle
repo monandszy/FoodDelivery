@@ -51,6 +51,7 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom "org.testcontainers:testcontainers-bom:${testContainers}"
+        mavenBom "org.springframework.security:spring-security-bom:${springSecurity}"
     }
 }
 

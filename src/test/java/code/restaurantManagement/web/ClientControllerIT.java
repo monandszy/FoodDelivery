@@ -2,7 +2,7 @@ package code.restaurantManagement.web;
 
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
-import code.component.manageRestaurant.domain.mapper.DTOMapper;
+import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.service.MenuService;
 import code.component.manageRestaurant.service.RestaurantService;
@@ -39,7 +39,7 @@ public class ClientControllerIT {
    private MenuService menuService;
 
    @MockBean
-   private DTOMapper dtoMapper;
+   private RestaurantDTOMapper restaurantDtoMapper;
 
    @Test
    void test() {

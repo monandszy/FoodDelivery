@@ -3,8 +3,7 @@ package code.restaurantManagement.web;
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
-import code.component.manageRestaurant.domain.mapper.DTOMapper;
-import code.component.manageRestaurant.domain.mapper.DTOMapperImpl;
+import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.service.MenuService;
 import code.component.manageRestaurant.service.RestaurantService;
@@ -40,7 +39,7 @@ public class SellerControllerIT {
    @MockBean
    private MenuService menuService;
    @MockBean
-   private DTOMapper dtoMapper;
+   private RestaurantDTOMapper restaurantDtoMapper;
 
    @Test
    void test() {
@@ -55,14 +54,14 @@ public class SellerControllerIT {
       List<Menu> menus = List.of(menu);
       List<MenuPosition> menuPositions = List.of(menuPosition);
       ExtendedModelMap model = new ExtendedModelMap();
-      DTOMapperImpl dtoMapper = new DTOMapperImpl();
+//      DTOMapperImpl dtoMapper = new DTOMapperImpl();
 
       Mockito.when(restaurantService.getPageByParent(id, page)).thenReturn(restaurants);
       Mockito.when(menuService.getPageByParent(id, page)).thenReturn(menus);
       Mockito.when(menuPositionService.getPageByParent(id, page)).thenReturn(menuPositions);
-      Mockito.when(dtoMapper.mapToDTO(menu)).thenReturn(dtoMapper.mapToDTO(menu));
-      Mockito.when(dtoMapper.mapToDTO(menuPosition)).thenReturn(dtoMapper.mapToDTO(menuPosition));
-      Mockito.when(dtoMapper.mapToDTO(restaurant)).thenReturn(dtoMapper.mapToDTO(restaurant));
+      Mockito.when(restaurantDtoMapper.mapToDTO(menu)).thenReturn(restaurantDtoMapper.mapToDTO(menu));
+      Mockito.when(restaurantDtoMapper.mapToDTO(menuPosition)).thenReturn(restaurantDtoMapper.mapToDTO(menuPosition));
+      Mockito.when(restaurantDtoMapper.mapToDTO(restaurant)).thenReturn(restaurantDtoMapper.mapToDTO(restaurant));
       //when
 //      String restaurantResult = restaurantsController.getRestaurants(sellerCode, page, model);
 //      String menuResult = restaurantController.getMenus(id, page, model);

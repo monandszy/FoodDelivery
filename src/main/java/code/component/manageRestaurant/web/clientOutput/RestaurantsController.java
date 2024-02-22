@@ -2,7 +2,7 @@ package code.component.manageRestaurant.web.clientOutput;
 
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
-import code.component.manageRestaurant.domain.mapper.DTOMapper;
+import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ public class RestaurantsController {
    public static final String RESTAURANTS = "restaurants";
 
    private RestaurantService restaurantService;
-   private DTOMapper dtoMapper;
+   private RestaurantDTOMapper restaurantDtoMapper;
 
    @GetMapping
    String getRestaurants(
@@ -28,7 +28,7 @@ public class RestaurantsController {
        Model model
    ) {
       List<Restaurant> restaurants = restaurantService.getPage(page);
-      List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
+      List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsPage", restaurantsPage);
       return "client/discover";
    }

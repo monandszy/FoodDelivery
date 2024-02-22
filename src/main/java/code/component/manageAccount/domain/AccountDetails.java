@@ -1,4 +1,4 @@
-package code.component.manageAccount.domain.seller;
+package code.component.manageAccount.domain;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,9 @@ import lombok.With;
 @Builder
 @EqualsAndHashCode(of = {})
 @ToString(of = {})
-public class Seller {
+public class AccountDetails {
 
    Integer id;
+   String code;
+
 }
