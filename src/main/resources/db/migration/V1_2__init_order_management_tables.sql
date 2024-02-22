@@ -1,9 +1,3 @@
-CREATE TABLE client_code
-(
-    id SERIAL NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE client_order
 (
     id SERIAL NOT NULL,

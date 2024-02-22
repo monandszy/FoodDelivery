@@ -23,7 +23,7 @@ public class SecurityConfig {
 
    @Bean
    public PasswordEncoder passwordEncoder() {
-      return new BCryptPasswordEncoder(16);
+      return new BCryptPasswordEncoder();
    }
 
    @Bean
@@ -42,7 +42,8 @@ public class SecurityConfig {
        HttpSecurity http,
        AuthenticationProvider authProvider
    ) throws Exception {
-      return http.getSharedObject(AuthenticationManagerBuilder.class)
+      return http
+          .getSharedObject(AuthenticationManagerBuilder.class)
           .authenticationProvider(authProvider)
           .build();
    }
@@ -54,9 +55,25 @@ public class SecurityConfig {
       return http
           .csrf((AbstractHttpConfigurer::disable))
           .authorizeHttpRequests(requests -> requests
-              .requestMatchers("/login", "/error", "/register").permitAll())
+              .requestMatchers("/login", "/error", "/register").permitAll()
+              .requestMatchers("/home").hasAnyAuthority("ACCOUNT")
+              .requestMatchers(
+                  "restaurants/**",
+                  "restaurant/**",
+                  "menu/**",
+                  "discover/**"
+              ).hasAnyAuthority("CLIENT")
+              .requestMatchers(
+                  "myRestaurants/**",
+                  "myRestaurant/**",
+                  "myMenu/**",
+                  "manage/**",
+                  "discover/**"
+              ).hasAnyAuthority("SELLER")
+          )
           .formLogin(form -> form
               .loginPage("/login")
+              .defaultSuccessUrl("/home", true)
               .permitAll()
           )
           .logout(logout -> logout.logoutSuccessUrl("/login")
@@ -67,8 +84,7 @@ public class SecurityConfig {
    }
 
    @Bean
-   @ConditionalOnProperty(value = "spring.security.enabled",
-       havingValue = "false")
+   @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
    SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
       return http
           .csrf(AbstractHttpConfigurer::disable)

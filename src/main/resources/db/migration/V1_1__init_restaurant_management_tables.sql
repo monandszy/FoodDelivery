@@ -1,9 +1,3 @@
-CREATE TABLE seller_code
-(
-    id SERIAL NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE restaurant
 (
     id SERIAL NOT NULL,

@@ -11,7 +11,6 @@ import java.util.List;
 @UtilityClass
 public class EntityFixtures {
 
-
    public static MenuPosition someMenuPosition(Integer id) {
       return MenuPosition.builder()
           .id(id)

@@ -15,4 +15,8 @@ public class Role {
 
    Integer id;
    String role;
+
+   public enum ACCOUNT_ROLES {
+      ACCOUNT
+   }
 }

@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -18,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
     classes = {ApplicationRunner.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@AutoConfigureMockMvc(addFilters = false)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SpringBootApplicationTest {
 
@@ -26,11 +28,12 @@ public class SpringBootApplicationTest {
 
    private final TestRestTemplate restTemplate;
 
-   @Test
-   public void thatHomePageWorksCorrectly() {
-      String url = String.format("http://localhost:%s/code/home", port);
+   @Test // test rest template probably has its own register page
+   public void thatRegisterPageWorksCorrectly() {
+      String url = String.format("http://localhost:%s/code/register", port);
 
       String renderedPage = this.restTemplate.getForObject(url, String.class);
-      Assertions.assertThat(renderedPage).contains("HOME");
+      System.out.println(renderedPage);
+      Assertions.assertThat(renderedPage).contains("Register");
    }
 }

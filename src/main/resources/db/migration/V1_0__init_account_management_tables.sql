@@ -1,4 +1,4 @@
-CREATE TABLE account_details
+CREATE TABLE account
 (
     id SERIAL NOT NULL,
     user_name VARCHAR(32) NOT NULL,
