@@ -52,8 +52,8 @@ public class ClientControllerIT {
       List<MenuPosition> menuPositions = List.of(EntityFixtures.someMenuPosition(id));
       ExtendedModelMap model = new ExtendedModelMap();
 
-      Mockito.when(menuService.getPageByParent(id, page)).thenReturn(menus);
-      Mockito.when(menuPositionService.getPageByParent(id, page)).thenReturn(menuPositions);
+      Mockito.when(menuService.getPageByRestaurantId(id, page)).thenReturn(menus);
+      Mockito.when(menuPositionService.getPageByMenuId(id, page)).thenReturn(menuPositions);
       //when
 //      String menuResult = restaurantController.getMenus(id, page, model);
 //      String menuPositionResult = menuController.getMenuPositions(id, page, model);

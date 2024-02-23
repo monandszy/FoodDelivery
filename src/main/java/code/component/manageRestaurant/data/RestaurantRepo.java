@@ -17,26 +17,12 @@ public class RestaurantRepo implements RestaurantDAO {
 
    @Override
    public List<Restaurant> getPageByParent(Object parentKey, Integer page) {
+      // get page by sellerId
       return List.of();
    }
 
    @Override
    public void deleteById(Integer id) {
 
-   }
-
-   @Override
-   public void updateAddress(Restaurant restaurant) {
-      throw new RuntimeException("not implemented");
-   }
-
-   @Override
-   public void updateRange(Restaurant restaurant) {
-      throw new RuntimeException("not implemented");
-   }
-
-   @Override
-   public List<Restaurant> getPage(Integer page) {
-      return List.of();
    }
 }

@@ -28,7 +28,7 @@ public class MenuController {
        @RequestParam(value = "restaurantId") Integer restaurantId,
        Model model
    ) {
-      List<MenuPosition> menu = menuPositionService.getMenuPositions(menuId);
+      List<MenuPosition> menu = menuPositionService.getAllMenuPositions(menuId);
       List<MenuPositionDTO> menuPositions = menu.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("menuPositions", menuPositions);
       model.addAttribute("restaurantId", restaurantId);

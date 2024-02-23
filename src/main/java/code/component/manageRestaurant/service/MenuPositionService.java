@@ -16,15 +16,15 @@ public class MenuPositionService {
       menuPositionDAO.add(menuPosition);
    }
 
-   public List<MenuPosition> getPageByParent(Object parentKey, Integer page) {
-      return menuPositionDAO.getPageByParent(parentKey, page);
+   public List<MenuPosition> getPageByMenuId(Object menuId, Integer page) {
+      return menuPositionDAO.getPageByParent(menuId, page);
    }
 
    public void deleteById(Integer id) {
       menuPositionDAO.deleteById(id);
    }
 
-   public List<MenuPosition> getMenuPositions(Integer menuId) {
+   public List<MenuPosition> getAllMenuPositions(Integer menuId) {
       return menuPositionDAO.getMenuPositions(menuId);
    }
 }

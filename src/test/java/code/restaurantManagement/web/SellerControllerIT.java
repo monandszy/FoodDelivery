@@ -57,9 +57,9 @@ public class SellerControllerIT {
       ExtendedModelMap model = new ExtendedModelMap();
 //      DTOMapperImpl dtoMapper = new DTOMapperImpl();
 
-      Mockito.when(restaurantService.getPageByParent(id, page)).thenReturn(restaurants);
-      Mockito.when(menuService.getPageByParent(id, page)).thenReturn(menus);
-      Mockito.when(menuPositionService.getPageByParent(id, page)).thenReturn(menuPositions);
+      Mockito.when(restaurantService.getPageBySellerId(id, page)).thenReturn(restaurants);
+      Mockito.when(menuService.getPageByRestaurantId(id, page)).thenReturn(menus);
+      Mockito.when(menuPositionService.getPageByMenuId(id, page)).thenReturn(menuPositions);
       Mockito.when(restaurantDtoMapper.mapToDTO(menu)).thenReturn(restaurantDtoMapper.mapToDTO(menu));
       Mockito.when(restaurantDtoMapper.mapToDTO(menuPosition)).thenReturn(restaurantDtoMapper.mapToDTO(menuPosition));
       Mockito.when(restaurantDtoMapper.mapToDTO(restaurant)).thenReturn(restaurantDtoMapper.mapToDTO(restaurant));

@@ -17,8 +17,8 @@ public class MenuService {
       menuDAO.add(menu);
    }
 
-   public List<Menu> getPageByParent(Object parentKey, Integer page) {
-      return menuDAO.getPageByParent(parentKey, page);
+   public List<Menu> getPageByRestaurantId(Integer restaurantId, Integer page) {
+      return menuDAO.getPageByParent(restaurantId, page);
    }
 
    public void deleteById(Integer id) {

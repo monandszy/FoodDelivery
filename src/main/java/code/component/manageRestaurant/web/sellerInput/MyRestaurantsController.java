@@ -37,7 +37,7 @@ public class MyRestaurantsController {
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
       model.addAttribute("sellerId", sellerId);
-      List<Restaurant> restaurants = restaurantService.getPageByParent(sellerId, pageNumber);
+      List<Restaurant> restaurants = restaurantService.getPageBySellerId(sellerId, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsPage", restaurantsPage);
       return "seller/myRestaurants";

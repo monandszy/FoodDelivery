@@ -16,23 +16,11 @@ public class RestaurantService {
       restaurantDAO.add(restaurant);
    }
 
-   public List<Restaurant> getPageByParent(Object parentKey, Integer page) {
-      return restaurantDAO.getPageByParent(parentKey, page);
-   }
-
-   public List<Restaurant> getPage(Integer page) {
-      return restaurantDAO.getPage(page);
+   public List<Restaurant> getPageBySellerId(Object sellerId, Integer page) {
+      return restaurantDAO.getPageByParent(sellerId, page);
    }
 
    public void deleteById(Integer id) {
       restaurantDAO.deleteById(id);
-   }
-
-   public void updateAddress(Restaurant restaurant) {
-
-   }
-
-   public void updateRange(Restaurant restaurant) {
-
    }
 }

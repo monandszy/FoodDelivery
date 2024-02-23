@@ -38,7 +38,7 @@ public class MyMenuController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<MenuPosition> menu = menuPositionService.getPageByParent(menuId, pageNumber);
+      List<MenuPosition> menu = menuPositionService.getPageByMenuId(menuId, pageNumber);
       List<MenuPositionDTO> menuPage = menu.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("menuPage", menuPage);
       return "seller/myMenu";

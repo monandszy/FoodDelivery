@@ -32,7 +32,7 @@ public class RestaurantController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<Menu> menus = menuService.getPageByParent(restaurantId, pageNumber);
+      List<Menu> menus = menuService.getPageByRestaurantId(restaurantId, pageNumber);
       List<MenuDTO> restaurantMenus = menus.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantPage", restaurantMenus);
       return "client/restaurant";
