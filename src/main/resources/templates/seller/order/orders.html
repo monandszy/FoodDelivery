@@ -23,13 +23,13 @@
     <tr th:each="order : ${orders}">
       <td th:text="${order.id}"></td>
       <td>
-        <form action="#" th:action="@{order/getForSeller/{id}
+        <form action="#" th:action="@{/order/getForSeller/{id}
         (id=${order.id})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
       <td>
-        <form action="#" th:action="@{order/complete/{id}
+        <form action="#" th:action="@{/order/complete/{id}
         (id=${order.id})}" method="PATCH">
           <button type="submit">o</button>
         </form>

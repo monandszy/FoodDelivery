@@ -39,13 +39,13 @@
     <tr th:each="myMenu : ${restaurantPage}">
       <td th:text="${myMenu.getId()}"></td>
       <td>
-        <form action="#" th:action="@{myMenu/get/{id}
+        <form action="#" th:action="@{/myMenu/get/{id}
         (id=${myMenu.id})(restaurantId=${restaurantId})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
       <td>
-        <form action="#" th:action="@{myRestaurant/delete/{id}
+        <form action="#" th:action="@{/myRestaurant/delete/{id}
         (id=${myMenu.id})(restaurantId=${restaurantId})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
@@ -57,7 +57,7 @@
 
 <div>
   <h2>Page</h2>
-  <form action="#" th:action="@{myRestaurant/get/{id}
+  <form action="#" th:action="@{/myRestaurant/get/{id}
   (id=${restaurantId})}" method="GET">
     <div>
       <label>
@@ -71,7 +71,7 @@
 </div>
 
 <div>
-  <a th:href="@{myRestaurants/get/{id}(id=${restaurantId})}">Go Back</a>
+  <a th:href="@{/myRestaurants/get/{id}(id=${restaurantId})}">Go Back</a>
 </div>
 </body>
 </html>

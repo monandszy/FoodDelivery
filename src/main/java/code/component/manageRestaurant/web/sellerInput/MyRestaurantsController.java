@@ -47,10 +47,10 @@ public class MyRestaurantsController {
    public String postRestaurant(
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
-      accountService.getAuthenticatedUserName();
+      String sellerId = accountService.getAuthenticatedUserName();
       restaurantService.add(
           dtoMapper.mapFromDTO(restaurantDTO),
-          restaurantDTO.getSeller());
+          sellerId);
       return "redirect:/myRestaurants/get";
    }
 

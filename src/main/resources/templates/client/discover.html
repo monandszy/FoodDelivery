@@ -17,7 +17,7 @@
   <div>
     <h2>Input Your Address</h2>
       <form action="#"
-            th:action="@{restaurants/getByAddress}"
+            th:action="@{/restaurants/getByAddress}"
             th:method="GET"
             th:object="${addressDTO}">
         <div>
@@ -45,7 +45,7 @@
       <tr th:each="restaurant : ${restaurantsByAddressPage}">
         <td th:text="${restaurant.id}"></td>
         <td>
-          <form action="#" th:action="@{restaurant/get/{id}
+          <form action="#" th:action="@{/restaurant/get/{id}
           (id=${restaurant.id})}" method="GET">
             <button type="submit">+</button>
           </form>
@@ -57,7 +57,7 @@
 
   <div>
     <h2>Page</h2>
-      <form action="#" th:action="@{restaurants/getByAddress}"
+      <form action="#" th:action="@{/restaurants/getByAddress}"
             th:method="GET" th:object="${addressDTO}">
         <div>
           <label>

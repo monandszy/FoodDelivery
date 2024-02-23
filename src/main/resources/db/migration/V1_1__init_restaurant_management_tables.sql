@@ -9,7 +9,7 @@ CREATE TABLE food_delivery.restaurant
     id             SERIAL     NOT NULL,
     delivery_range NUMERIC(7) NOT NULL,
     seller_id      INT        NOT NULL,
-    address_id     INT        NOT NULL,
+    address_id     INT        ,
     PRIMARY KEY (id),
     CONSTRAINT fk_restaurant_seller
         FOREIGN KEY (seller_id) REFERENCES food_delivery.account (id),

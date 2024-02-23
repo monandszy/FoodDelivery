@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
+import java.math.BigInteger;
+
 @With
 @Data
 @Builder
@@ -17,4 +19,5 @@ public class RestaurantDTO {
    private Integer id;
    private AddressDTO address;
    private String seller;
+   private BigInteger deliveryRange;
 }
