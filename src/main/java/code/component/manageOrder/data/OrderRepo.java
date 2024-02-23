@@ -14,13 +14,13 @@ public class OrderRepo implements OrderDAO {
    OrderPositionJpaRepo orderPositionJpaRepo;
 
    @Override
-   public List<OrderPosition> getOrderPositionsByOrderId(Integer orderId) {
+   public List<OrderPosition> getOrderPositions(Integer orderId) {
       return null;
    }
 
    @Override
    public void addOrder(Order build) {
-
+      // restaurantId will be added;
    }
 
    @Override

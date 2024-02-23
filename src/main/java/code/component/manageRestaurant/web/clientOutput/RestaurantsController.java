@@ -3,7 +3,9 @@ package code.component.manageRestaurant.web.clientOutput;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
+import code.component.manageRestaurant.manageDelivery.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.DeliveryService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +28,12 @@ public class RestaurantsController {
 
    @GetMapping(RESTAURANTS + "/getByAddress")
    String getRestaurantsViewByAddress(
-       @ModelAttribute(value = "address") Object addressDTO,
+       @ModelAttribute(value = "address") AddressDTO addressDTO,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+       HttpSession session,
        Model model
    ) {
+      session.setAttribute("ADDRESS", addressDTO);
       model.addAttribute("addressDTO", addressDTO);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);

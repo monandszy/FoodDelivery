@@ -13,9 +13,13 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderDTOMapper {
 
+   @Mapping(target = "restaurantId", source = "restaurant", qualifiedByName = "restaurantMapping")
    OrderDTO mapToDTO(Order order);
 
    @Mapping(target = "menuPositions", ignore = true)
+   @Mapping(target = "address", ignore = true)
+   @Mapping(target = "restaurant", ignore = true)
+   @Mapping(target = "client", ignore = true)
    Order mapFromDTO(OrderDTO orderDTO);
 
    @Mapping(target = "orderId" , source = "order", qualifiedByName = "orderMapping")
@@ -35,5 +39,4 @@ public interface OrderDTOMapper {
    default Integer menuPositionMapping(MenuPosition menuPosition) {
       return menuPosition.getId();
    }
-
 }

@@ -1,6 +1,7 @@
 package code.component.manageOrder.domain;
 
 import code.component.manageAccount.domain.AccountEntity;
+import code.component.manageRestaurant.manageDelivery.AddressEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,6 +50,13 @@ public class OrderEntity {
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "client_id")
    private AccountEntity client;
+
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "address_id")
+   private AddressEntity address;
+
+   @Column(name = "restaurant_id")
+   private Integer restaurantId;
 
    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuPosition")
    private List<OrderPositionEntity> menuPositions;

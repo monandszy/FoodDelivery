@@ -4,6 +4,7 @@ import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +28,10 @@ public class RestaurantController {
    public String getMenusView(
        @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-       Model model
+       Model model,
+       HttpSession session
    ) {
+      session.setAttribute("RESTAURANT", restaurantId);
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);

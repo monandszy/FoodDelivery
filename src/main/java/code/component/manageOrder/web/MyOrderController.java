@@ -9,6 +9,9 @@ import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
+import code.component.manageRestaurant.manageDelivery.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.AddressDTOMapper;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +31,7 @@ public class MyOrderController {
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
    private RestaurantDTOMapper restaurantDTOMapper;
+   private AddressDTOMapper addressDTOMapper;
    private UserAccountDetailsService accountService;
 
    @GetMapping(ORDER + "/getByClient")
@@ -54,12 +58,17 @@ public class MyOrderController {
 
    @PostMapping(ORDER + "/add")
    public String postOrder(
-       @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions
-       // might need client id here too
+       @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions,
+       HttpSession session
    ) {
+      AddressDTO address = (AddressDTO) session.getAttribute("ADDRESS");
+      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
       orderService.addOrder(menuPositions.stream()
-          .map(restaurantDTOMapper::mapFromDTO)
-          .map(e -> OrderPosition.builder().menuPosition(e).build()).toList());
+              .map(restaurantDTOMapper::mapFromDTO)
+              .map(e -> OrderPosition.builder().menuPosition(e).build()).toList(),
+          addressDTOMapper.mapFromDTO(address),
+          restaurantId
+      );
       return "redirect:myOrders/getOrdersByClientId";
    }
 

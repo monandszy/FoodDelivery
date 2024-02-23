@@ -26,6 +26,10 @@ public class UserAccountDetailsService implements UserDetailsService {
       return SecurityContextHolder.getContext().getAuthentication().getName();
    }
 
+   public Account getAuthenticatedAccount() {
+      return accountManagementDAO.findByUserName(getAuthenticatedUserName()).orElseThrow();
+   }
+
    @Override
    @Transactional
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

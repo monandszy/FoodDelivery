@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderDAO {
 
 
-   List<OrderPosition> getOrderPositionsByOrderId(Integer orderId);
+   List<OrderPosition> getOrderPositions(Integer orderId);
 
    void addOrder(Order build);
 
