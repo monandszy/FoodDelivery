@@ -1,5 +1,7 @@
 package code.component.manageRestaurant.domain;
 
+import code.component.manageAccount.domain.Account;
+import code.component.manageRestaurant.manageDelivery.Address;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -16,6 +18,7 @@ import java.util.List;
 public class Restaurant {
 
    Integer id;
-   String sellerAccountCode;
+   Address address;
+   Account seller;
    List<Menu> menus;
 }

@@ -39,4 +39,4 @@ spring:
         springframework:
           security: DEBUG
   security:
-    enabled: false
+    enabled: true

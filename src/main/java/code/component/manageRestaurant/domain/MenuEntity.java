@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -39,8 +36,8 @@ public class MenuEntity {
    @Column(name ="menu_type")
    private Menu.MenuType menuType;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
-   private List<MenuPositionEntity> menuPositions;
+//   @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+//   private List<MenuPositionEntity> menuPositions;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "restaurant_id")

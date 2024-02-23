@@ -1,5 +1,6 @@
 package code.component.manageRestaurant.domain;
 
+import code.component.manageRestaurant.manageDelivery.AddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,6 @@ import lombok.With;
 public class RestaurantDTO {
 
    private Integer id;
-   private Integer sellerAccountCode;
+   private AddressDTO address;
+   private String seller;
 }
