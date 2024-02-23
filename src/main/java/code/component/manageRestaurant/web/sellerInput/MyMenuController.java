@@ -26,21 +26,21 @@ public class MyMenuController {
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_MENU + "/{menuId}")
+   @GetMapping(MY_MENU + "/get/{menuId}")
    public String getMenuViewById(
        @PathVariable(value = "menuId") Integer menuId,
        @RequestParam(value = "pageNumber") Integer pageNumber,
        @RequestParam(value = "restaurantId") Integer restaurantId,
        Model model
    ) {
-      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
-      List<MenuPosition> menu = menuPositionService.getPageByParent(menuId, pageNumber);
-      List<MenuPositionDTO> menuPage = menu.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("menuPositionDTO", MenuPositionDTO.builder().build());
-      model.addAttribute("menuPage", menuPage);
       model.addAttribute("menuId", menuId);
       model.addAttribute("restaurantId", restaurantId);
       model.addAttribute("pageNumber", pageNumber);
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      List<MenuPosition> menu = menuPositionService.getPageByParent(menuId, pageNumber);
+      List<MenuPositionDTO> menuPage = menu.stream().map(dtoMapper::mapToDTO).toList();
+      model.addAttribute("menuPage", menuPage);
       return "seller/myMenu";
    }
 

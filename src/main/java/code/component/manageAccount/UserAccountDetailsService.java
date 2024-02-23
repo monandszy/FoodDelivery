@@ -5,6 +5,7 @@ import code.component.manageAccount.domain.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +21,10 @@ import java.util.Set;
 public class UserAccountDetailsService implements UserDetailsService {
 
    private final AccountManagementDAO accountManagementDAO;
+
+   public String getAuthenticatedUserName() {
+      return SecurityContextHolder.getContext().getAuthentication().getName();
+   }
 
    @Override
    @Transactional

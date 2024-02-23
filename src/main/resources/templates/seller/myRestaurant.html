@@ -12,7 +12,10 @@
 <body>
 <div>
   <h2>Add Menu</h2>
-  <form action="#" th:action="@{/myRestaurant/add}" th:method="POST" th:object="${menuDTO}">
+  <form action="#"
+        th:action="@{/myRestaurant/add}"
+        th:method="POST"
+        th:object="${menuDTO}">
     <div>
     </div>
     <div>
@@ -35,13 +38,14 @@
     <tr th:each="myMenu : ${restaurantPage}">
       <td th:text="${myMenu.getId()}"></td>
       <td>
-        <form action="#" th:action="@{myMenu/{id}(id=${myMenu.id})
-        (restaurantId=${restaurantId})}" method="GET">
+        <form action="#" th:action="@{myMenu/get/{id}
+        (id=${myMenu.id})(restaurantId=${restaurantId})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
       <td>
-        <form action="#" th:action="@{myMenu/{id}(id=${myMenu.id})}" th:method="DELETE">
+        <form action="#" th:action="@{myRestaurant/delete/{id}
+        (id=${myMenu.id})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>
@@ -52,8 +56,8 @@
 
 <div>
   <h2>Page</h2>
-<!--  Will this reset sellerId?-->
-  <form action="#" th:action="@{myRestaurant/{id}(id=${restaurantId})}" method="GET">
+  <form action="#" th:action="@{myRestaurant/get/{id}
+  (id=${restaurantId})}" method="GET">
     <div>
       <label>
         <input type="text" placeholder="PageNumber" th:name="pageNumber"/>
@@ -66,7 +70,7 @@
 </div>
 
 <div>
-  <a th:href="@{myRestaurants/{id}(id=${sellerId})}">Go Back</a>
+  <a th:href="@{myRestaurants/get}">Go Back</a>
 </div>
 </body>
 </html>

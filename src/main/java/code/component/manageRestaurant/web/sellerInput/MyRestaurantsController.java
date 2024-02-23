@@ -1,5 +1,6 @@
 package code.component.manageRestaurant.web.sellerInput;
 
+import code.component.manageAccount.UserAccountDetailsService;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
@@ -23,21 +24,22 @@ public class MyRestaurantsController {
    public static final String MY_RESTAURANTS = "myRestaurants";
 
    private RestaurantService restaurantService;
+   private UserAccountDetailsService accountService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_RESTAURANTS + "/{sellerId}")
+   @GetMapping(MY_RESTAURANTS + "/get")
    public String getRestaurantsViewBySellerId(
-       @PathVariable(value = "sellerId") String sellerId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
+      model.addAttribute("restaurantDTO", RestaurantDTO.builder().build());
+      model.addAttribute("pageNumber", pageNumber);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      String sellerId = accountService.getAuthenticatedUserName();
+      model.addAttribute("sellerId", sellerId);
       List<Restaurant> restaurants = restaurantService.getPageByParent(sellerId, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
-      model.addAttribute("restaurantDTO", RestaurantDTO.builder().build());
       model.addAttribute("restaurantsPage", restaurantsPage);
-      model.addAttribute("sellerId", sellerId);
-      model.addAttribute("pageNumber", pageNumber);
       return "seller/myRestaurants";
    }
 
@@ -46,7 +48,7 @@ public class MyRestaurantsController {
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
       restaurantService.add(dtoMapper.mapFromDTO(restaurantDTO));
-      return "redirect:/myRestaurants";
+      return "redirect:/myRestaurants/{%s}".formatted(accountService.getAuthenticatedUserName());
    }
 
    @PostMapping(MY_RESTAURANTS + "/delete/{restaurantId}")
@@ -54,6 +56,6 @@ public class MyRestaurantsController {
        @PathVariable("restaurantId") Integer restaurantId
    ) {
       restaurantService.deleteById(restaurantId);
-      return "redirect:/myRestaurants";
+      return "redirect:/myRestaurants/{%s}".formatted(accountService.getAuthenticatedUserName());
    }
 }

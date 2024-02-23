@@ -12,7 +12,10 @@
 <body>
 <div>
   <h2>Add Restaurant</h2>
-  <form action="#" th:action="@{/myMenu/add}" th:method="POST" th:object="${menuPositionDTO}">
+  <form action="#"
+        th:action="@{/myMenu/add}"
+        th:method="POST"
+        th:object="${menuPositionDTO}">
     <div>
     </div>
     <div>
@@ -27,7 +30,6 @@
     <thead>
     <tr>
       <th>Id</th>
-      <th>Show</th>
       <th>Delete</th>
     </tr>
     </thead>
@@ -35,12 +37,8 @@
     <tr th:each="myMenuPosition : ${menuPage}">
       <td th:text="${myMenuPosition.getId()}"></td>
       <td>
-        <form action="#" th:action="@{myMenuPosition/{id}(id=${myMenuPosition.id})}" method="GET">
-          <button type="submit">+</button>
-        </form>
-      </td>
-      <td>
-        <form action="#" th:action="@{myMenuPosition/{id}(id=${myMenuPosition.id})}" th:method="DELETE">
+        <form action="#" th:action="@{myMenu/delete/{id}
+        (id=${myMenuPosition.id})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>
@@ -51,7 +49,7 @@
 
 <div>
   <h2>Page</h2>
-  <form action="#" th:action="@{myMenu/{id}(id=${menuId})}" method="GET">
+  <form action="#" th:action="@{myMenu/get/{id}(id=${menuId})}" method="GET">
     <div>
       <label>
         <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
@@ -64,7 +62,7 @@
 </div>
 
 <div>
-  <a th:href="@{myRestaurant/{id}(id=${restaurantId})}">Go Back</a>
+  <a th:href="@{myRestaurant/get/{id}(id=${restaurantId})}">Go Back</a>
 </div>
 </body>
 </html>

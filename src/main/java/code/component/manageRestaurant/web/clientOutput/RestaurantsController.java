@@ -30,12 +30,12 @@ public class RestaurantsController {
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
+      model.addAttribute("addressDTO", addressDTO);
+      model.addAttribute("pageNumber", pageNumber);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       List<Restaurant> restaurants = restaurantService.getPageByAddress(addressDTO, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsByAddressPage", restaurantsPage);
-      model.addAttribute("pageNumber", pageNumber);
-      model.addAttribute("addressDTO", addressDTO);
       return "client/discover";
    }
 }

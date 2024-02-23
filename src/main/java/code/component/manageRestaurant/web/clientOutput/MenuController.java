@@ -22,7 +22,7 @@ public class MenuController {
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping(MENU + "/{menuId}")
+   @GetMapping(MENU + "/get/{menuId}")
    public String getMenuPositions(
        @PathVariable(value = "menuId") Integer menuId,
        @RequestParam(value = "restaurantId") Integer restaurantId,

@@ -12,8 +12,14 @@
 <main>
   <h1>Discover</h1>
   <div>
+    <p th:text = "${clientId}">ClientId</p>
+  </div>
+  <div>
     <h2>Input Your Address</h2>
-      <form action="#" th:action="@{restaurants/getByAddress}" th:method="GET" th:object="${addressDTO}">
+      <form action="#"
+            th:action="@{restaurants/getByAddress}"
+            th:method="GET"
+            th:object="${addressDTO}">
         <div>
           <label>
 <!--            kind of an update to empty address, maybe change-->
@@ -39,7 +45,8 @@
       <tr th:each="restaurant : ${restaurantsByAddressPage}">
         <td th:text="${restaurant.id}"></td>
         <td>
-          <form action="#" th:action="@{restaurant/{id}(id=${restaurant.id})}" method="GET">
+          <form action="#" th:action="@{restaurant/get/{id}
+          (id=${restaurant.id})}" method="GET">
             <button type="submit">+</button>
           </form>
         </td>
@@ -50,7 +57,8 @@
 
   <div>
     <h2>Page</h2>
-      <form action="#" th:action="@{restaurants/getByAddress}" th:method="GET" th:object="${addressDTO}">
+      <form action="#" th:action="@{restaurants/getByAddress}"
+            th:method="GET" th:object="${addressDTO}">
         <div>
           <label>
             <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
@@ -63,7 +71,7 @@
   </div>
 
   <div>
-    <a th:href="@{/order/getByClient/{id}(id=${clientId})}">Your Orders</a>
+    <a th:href="@{/order/getByClient}">Your Orders</a>
     <a th:href="@{/manage}">Manage Restaurants (Seller Only)</a>
   </div>
 </main>

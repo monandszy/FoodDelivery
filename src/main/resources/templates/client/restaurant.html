@@ -22,8 +22,8 @@
     <tr th:each="menu : ${Page}">
       <td th:text="${menu.id}"></td>
       <td>
-        <form action="#" th:action="@{menu/{id}(id=${menu.id})
-        (restaurantId=${restaurantId})}" method="GET">
+        <form action="#" th:action="@{menu/get/{id}
+        (id=${menu.id})(restaurantId=${restaurantId})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
@@ -34,7 +34,8 @@
 
 <div>
   <h2>Page</h2>
-  <form action="#" th:action="@{restaurant/{id}(id=${restaurantId})}" method="GET">
+  <form action="#" th:action="@{restaurant/get/{id}
+  (id=${restaurantId})}" method="GET">
     <div>
       <label>
         <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>

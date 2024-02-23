@@ -1,5 +1,7 @@
 package code.component.manageRestaurant.web.sellerInput;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +13,8 @@ public class ManagementController {
 
    @GetMapping(MANAGEMENT)
    public String redirect(Model model) {
-      model.addAttribute("sellerId", 1); // TEMP SELLER ID - GET FROM SESSION
+      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      model.addAttribute("sellerId", authentication.getName());
       return "seller/manage";
    }
 }

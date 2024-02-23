@@ -24,14 +24,15 @@ public class OrderService {
    }
 
    public void deleteOrder(Order order) {
-
+      // check for the 20 minute mark!
+      // refresh?
    }
 
    public void completeOrder(Order order) {
 
    }
 
-   public List<Order> getIncompleteOrdersBySellerId(Integer sellerId) {
+   public List<Order> getIncompleteOrdersBySellerId(String sellerId) {
 
       return List.of();
    }

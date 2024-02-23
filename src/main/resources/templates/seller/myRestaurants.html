@@ -12,7 +12,10 @@
 <body>
 <div>
   <h2>Add Restaurant</h2>
-  <form action="#" th:action="@{/myRestaurants/add}" th:method="POST" th:object="${restaurantDTO}">
+  <form action="#"
+        th:action="@{/myRestaurants/add}"
+        th:method="POST"
+        th:object="${restaurantDTO}">
     <div>
 <!--      will it work with empty id?-->
 <!--      Id: <input type="text" th:field="*{id}"/>-->
@@ -37,11 +40,12 @@
     <tr th:each="myRestaurant : ${restaurantsPage}">
       <td th:text="${myRestaurant.getId()}"></td>
       <td>
-        <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})
-            (sellerId=${sellerId})}" method="GET">
+        <form action="#" th:action="@{myRestaurant/get/{id}
+        (id=${myRestaurant.id})}" method="GET">
           <button type="submit">+</button>
         </form>
-        <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})}" th:method="DELETE">
+        <form action="#" th:action="@{myRestaurants/delete/{id}
+        (id=${myRestaurant.id})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>
@@ -52,7 +56,7 @@
 
 <div>
   <h2>Page</h2>
-  <form action="#" th:action="@{myRestaurants/{id}(id=${sellerId})}" method="GET">
+  <form action="#" th:action="@{myRestaurants/get}" method="GET">
     <div>
       <label>
         <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>

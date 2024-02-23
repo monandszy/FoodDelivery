@@ -23,17 +23,17 @@ public class RestaurantController {
    private MenuService menuService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping(RESTAURANT + "/{restaurantId}")
+   @GetMapping(RESTAURANT + "/get/{restaurantId}")
    public String getMenusView(
        @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
+      model.addAttribute("pageNumber", pageNumber);
+      model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       List<Menu> menus = menuService.getPageByParent(restaurantId, pageNumber);
       List<MenuDTO> restaurantMenus = menus.stream().map(restaurantDtoMapper::mapToDTO).toList();
-      model.addAttribute("pageNumber", pageNumber);
-      model.addAttribute("restaurantId", restaurantId);
       model.addAttribute("restaurantPage", restaurantMenus);
       return "client/restaurant";
    }
