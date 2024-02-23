@@ -11,14 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 public class RestaurantService {
    private RestaurantDAO restaurantDAO;
-   private ProximityCalculationService proximityCalculationService;
 
    public void add(Restaurant restaurant) {
       restaurantDAO.add(restaurant);
-   }
-
-   public List<Restaurant> getPageByAddress(Object address, Integer page) {
-      return proximityCalculationService.getRestaurantsBasedOnProximity(address);
    }
 
    public List<Restaurant> getPageByParent(Object parentKey, Integer page) {

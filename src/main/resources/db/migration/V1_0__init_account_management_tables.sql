@@ -1,4 +1,4 @@
-CREATE TABLE account
+CREATE TABLE food_delivery.account
 (
     id SERIAL NOT NULL,
     user_name VARCHAR(32) NOT NULL,
@@ -7,12 +7,12 @@ CREATE TABLE account
     PRIMARY KEY (id)
 );
 
-CREATE TABLE account_role (
+CREATE TABLE food_delivery.account_role (
     account_id INT NOT NULL,
     role_id INT NOT NULL
 );
 
-CREATE TABLE role
+CREATE TABLE food_delivery.role
 (
     id SERIAL NOT NULL,
     role VARCHAR(32) NOT NULL,

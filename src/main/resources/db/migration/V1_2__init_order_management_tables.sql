@@ -1,17 +1,26 @@
-CREATE TABLE client_order
+CREATE TABLE food_delivery.client_order
 (
-    id SERIAL NOT NULL,
-    PRIMARY KEY (id)
+    id     SERIAL      NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    time_of_order timestamptz NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT status_in CHECK (
+        client_order.status IN
+        (
+         'IN PROGRESS',
+         'TRAVELLING',
+         'COMPLETED'
+            ))
 );
 
-CREATE TABLE order_position
+CREATE TABLE food_delivery.order_position
 (
-    id SERIAL NOT NULL,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE menu_position_code
-(
-    id SERIAL NOT NULL,
-    PRIMARY KEY (id)
+    order_id         INT NOT NULL,
+    menu_position_id INT NOT NULL,
+    CONSTRAINT fk_order_menu
+        FOREIGN KEY (menu_position_id)
+            REFERENCES food_delivery.menu_position (id),
+    CONSTRAINT fk_position_order
+        FOREIGN KEY (order_id)
+            REFERENCES food_delivery.client_order (id)
 );
