@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Objects;
 
+import static code.configuration.Constants.START_PAGE;
+
 
 @Controller
 @AllArgsConstructor
@@ -35,7 +37,7 @@ public class RestaurantsController {
    ) {
       session.setAttribute("ADDRESS", addressDTO);
       model.addAttribute("addressDTO", addressDTO);
-      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<Restaurant> restaurants = deliveryService.getPageByAddress(addressDTO, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();

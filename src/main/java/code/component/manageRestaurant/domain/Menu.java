@@ -21,6 +21,8 @@ public class Menu {
    Restaurant restaurant;
 
    public enum MenuType {
-      MENU_TYPE
+      MENU_TYPE1,
+      MENU_TYPE2,
+      MENU_TYPE3
    }
 }

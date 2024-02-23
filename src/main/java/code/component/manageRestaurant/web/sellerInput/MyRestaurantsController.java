@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Objects;
 
+import static code.configuration.Constants.START_PAGE;
+
 @Controller
 @AllArgsConstructor
 public class MyRestaurantsController {
@@ -33,7 +35,7 @@ public class MyRestaurantsController {
        Model model
    ) {
       model.addAttribute("restaurantDTO", RestaurantDTO.builder().build());
-      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
       model.addAttribute("sellerId", sellerId);

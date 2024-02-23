@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Objects;
 
+import static code.configuration.Constants.START_PAGE;
+
 
 @Controller
 @AllArgsConstructor
@@ -36,7 +38,7 @@ public class MyMenuController {
       model.addAttribute("menuPositionDTO", MenuPositionDTO.builder().build());
       model.addAttribute("menuId", menuId);
       model.addAttribute("restaurantId", restaurantId);
-      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<MenuPosition> menu = menuPositionService.getPageByMenu(menuId, pageNumber);
       List<MenuPositionDTO> menuPage = menu.stream().map(dtoMapper::mapToDTO).toList();

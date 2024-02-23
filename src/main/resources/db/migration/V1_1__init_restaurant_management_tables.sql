@@ -21,6 +21,14 @@ CREATE TABLE food_delivery.menu
 (
     id            SERIAL NOT NULL,
     restaurant_id INT    NOT NULL,
+    menu_type VARCHAR(32) NOT NULL,
+    CONSTRAINT menu_type_in CHECK (
+        menu_type IN (
+            'MENU_TYPE1'
+            'MENU_TYPE2'
+            'MENU_TYPE3'
+            )
+        ),
     PRIMARY KEY (id),
     CONSTRAINT fk_menu_restaurant
         FOREIGN KEY (restaurant_id) REFERENCES food_delivery.restaurant (id)
