@@ -11,10 +11,10 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderEntityMapper {
 
-   @Mapping(target = "menuPositions", source = "menuPositions", ignore = true)
+   @Mapping(target = "orderPositions", source = "orderPositions", ignore = true)
    OrderEntity mapToEntity(Order order);
 
-   @Mapping(target = "menuPositions", source = "menuPositions", ignore = true)
+   @Mapping(target = "orderPositions", source = "orderPositions", ignore = true)
    Order mapFromEntity(OrderEntity orderEntity);
 
    @Mapping(target = "order", source = "order", ignore = true)

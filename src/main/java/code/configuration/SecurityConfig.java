@@ -59,19 +59,19 @@ public class SecurityConfig {
               .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
               .requestMatchers("/home").hasAnyAuthority("ADMIN")
               .requestMatchers(
-                  "restaurants/**",
-                  "restaurant/**",
-                  "menu/**",
-                  "discover/**",
-                  "order/**" // might need to change one controller
+                  "/restaurants/**",
+                  "/restaurant/**",
+                  "/menu/**",
+                  "/discover/**",
+                  "/order/**" // might need to change one controller
               ).hasAnyAuthority("CLIENT")
               .requestMatchers(
-                  "myRestaurants/**",
-                  "myRestaurant/**",
-                  "myMenu/**",
-                  "manage/**",
-                  "discover/**",
-                  "order/**"
+                  "/myRestaurants/**",
+                  "/myRestaurant/**",
+                  "/myMenu/**",
+                  "/manage/**",
+                  "/discover/**",
+                  "/order/**"
               ).hasAnyAuthority("SELLER")
           )
           .exceptionHandling(e -> e

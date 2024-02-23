@@ -8,11 +8,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Error</title>
 </head>
-<body>
 <h1>Error</h1>
-<div>
-  <p th:if="${exceptionMessage}" th:text="${errorMessage}">Error</p>
-</div>
+<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+<p th:utext="${message}">Error</p>
 <div>
   <a th:href="@{/home}">Home</a>
   <a th:href="@{/discover}">Discover</a>

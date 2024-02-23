@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @AllArgsConstructor
-public class DeliveryRepo {
+public class DeliveryRepo implements DeliveryServiceDAO {
 
 }

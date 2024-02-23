@@ -10,16 +10,18 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.time.OffsetDateTime;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderDTOMapper {
 
-   @Mapping(target = "restaurantId", source = "restaurant", qualifiedByName = "restaurantMapping")
+   @Mapping(target = "timeOfOrder", source = "timeOfOrder", qualifiedByName = "timeToStringMapping")
    OrderDTO mapToDTO(Order order);
 
-   @Mapping(target = "menuPositions", ignore = true)
+   @Mapping(target = "orderPositions", ignore = true)
    @Mapping(target = "address", ignore = true)
-   @Mapping(target = "restaurant", ignore = true)
    @Mapping(target = "client", ignore = true)
+   @Mapping(target = "timeOfOrder", source = "timeOfOrder", qualifiedByName = "stringToTimeMapping")
    Order mapFromDTO(OrderDTO orderDTO);
 
    @Mapping(target = "orderId" , source = "order", qualifiedByName = "orderMapping")
@@ -38,5 +40,15 @@ public interface OrderDTOMapper {
    @Named("menuPositionMapping")
    default Integer menuPositionMapping(MenuPosition menuPosition) {
       return menuPosition.getId();
+   }
+
+   @Named("timeToStringMapping")
+   default String timeToStringMapping(OffsetDateTime offsetDateTime) {
+      return offsetDateTime.toString();
+   }
+
+   @Named("stringToTimeMapping")
+   default OffsetDateTime stringToTimeMapping(String time) {
+      return OffsetDateTime.parse(time);
    }
 }

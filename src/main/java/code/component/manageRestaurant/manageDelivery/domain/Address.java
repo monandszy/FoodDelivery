@@ -1,4 +1,4 @@
-package code.component.manageRestaurant.manageDelivery;
+package code.component.manageRestaurant.manageDelivery.domain;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

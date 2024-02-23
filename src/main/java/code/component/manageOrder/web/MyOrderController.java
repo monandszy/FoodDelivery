@@ -9,8 +9,8 @@ import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
-import code.component.manageRestaurant.manageDelivery.AddressDTO;
-import code.component.manageRestaurant.manageDelivery.AddressDTOMapper;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -58,6 +58,7 @@ public class MyOrderController {
 
    @PostMapping(ORDER + "/add")
    public String postOrder(
+
        @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions,
        HttpSession session
    ) {

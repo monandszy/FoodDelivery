@@ -3,7 +3,7 @@ package code.component.manageOrder;
 import code.component.manageAccount.UserAccountDetailsService;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderPosition;
-import code.component.manageRestaurant.manageDelivery.Address;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public class OrderService {
           .client(userAccountDetailsService.getAuthenticatedAccount())
           .status(Order.OrderStatus.IN_PROGRESS)
           .timeOfOrder(OffsetDateTime.now())
-          .menuPositions(order).build());
+          .orderPositions(order).build());
    }
 
    @Transactional

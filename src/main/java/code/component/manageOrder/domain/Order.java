@@ -1,7 +1,7 @@
 package code.component.manageOrder.domain;
 
 import code.component.manageAccount.domain.Account;
-import code.component.manageRestaurant.manageDelivery.Address;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -21,7 +21,7 @@ public class Order {
    Integer id;
    OrderStatus status;
    OffsetDateTime timeOfOrder;
-   List<OrderPosition> menuPositions;
+   List<OrderPosition> orderPositions;
    Account client;
    Address address;
    Integer restaurantId;

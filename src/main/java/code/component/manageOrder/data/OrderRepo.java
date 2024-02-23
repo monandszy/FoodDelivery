@@ -15,7 +15,7 @@ public class OrderRepo implements OrderDAO {
 
    @Override
    public List<OrderPosition> getOrderPositions(Integer orderId) {
-      return null;
+      return List.of();
    }
 
    @Override
@@ -35,11 +35,11 @@ public class OrderRepo implements OrderDAO {
 
    @Override
    public List<Order> getIncompleteOrdersBySellerId(String sellerId) {
-      return null;
+      return List.of();
    }
 
    @Override
    public List<Order> getOrdersByClientId(String clientId) {
-      return null;
+      return List.of();
    }
 }

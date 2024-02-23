@@ -1,7 +1,7 @@
 package code.component.manageRestaurant.domain;
 
 import code.component.manageAccount.domain.Account;
-import code.component.manageRestaurant.manageDelivery.Address;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

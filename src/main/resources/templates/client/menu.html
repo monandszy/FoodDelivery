@@ -10,8 +10,9 @@
 </head>
 <body>
 <div>
-<h2>Menu</h2>
-  <table>
+  <h2>Menu</h2>
+  <form action="#" th:action="@{/order/add}" method="post">
+    <table>
     <thead>
     <tr>
       <th>Id</th>
@@ -21,21 +22,26 @@
     <tbody>
     <tr th:each="menuPosition : ${menuPositions}">
       <td th:text="${menuPosition.id}"></td>
-      <td></td>
+      <td>
+        <th:block>
+          <input type="checkbox" name="selectedPositions" th:value="${menuPosition}"/>
+        </th:block>
+      </td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <td><button type="submit">Click to purchase!</button></td>
+    </tr>
+    </tfoot>
   </table>
+  </form>
 </div>
 
 <div>
-<!-- TODO ADD ORDER PURCHASE (somehow add checkboxes at the top and send a list of them here)-->
-<!--  if doesnt work stick with one menuPosition per purchase approach...-->
-<!--  add order confirmation-->
-  <h2>Purchase!</h2>
-  <form action="#" th:action="@{order/add/
-  ()}" method="POST">
-    <button type="submit">Click to purchase!</button>
-  </form>
+  <!-- TODO ADD ORDER PURCHASE (somehow add checkboxes at the top and send a list of them here)-->
+  <!--  if doesnt work stick with one menuPosition per purchase approach...-->
+  <!--  add order confirmation-->
 </div>
 
 <div>

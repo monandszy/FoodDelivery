@@ -1,6 +1,6 @@
 package code.component.manageOrder.domain;
 
-import code.component.manageRestaurant.manageDelivery.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
