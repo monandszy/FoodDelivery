@@ -23,7 +23,8 @@
     <tr th:each="order : ${orders}">
       <td th:text="${order.id}"></td>
       <td>
-        <form action="#" th:action="@{order/getIncompleteBySeller/{id}(id=${order.id})}" method="GET">
+        <form action="#" th:action="@{order/getForSeller/{id}(id=${order.id})
+            (sellerId=${sellerId})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
@@ -38,7 +39,7 @@
 </div>
 
 <div>
-  <a th:href="@{seller/manage}">Go Back</a>
+  <a th:href="@{/manage}">Go Back</a>
 </div>
 </body>
 </html>

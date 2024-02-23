@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,11 +25,13 @@ public class MenuController {
    @GetMapping(MENU + "/{menuId}")
    public String getMenuPositions(
        @PathVariable(value = "menuId") Integer menuId,
+       @RequestParam(value = "restaurantId") Integer restaurantId,
        Model model
    ) {
       List<MenuPosition> menu = menuPositionService.getMenuPositions(menuId);
       List<MenuPositionDTO> menuPositions = menu.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("menuPositions", menuPositions);
+      model.addAttribute("restaurantId", restaurantId);
       return "client/menu";
    }
 

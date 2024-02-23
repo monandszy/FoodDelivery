@@ -6,6 +6,7 @@ import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
+import code.component.manageRestaurant.domain.MenuPositionDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -21,43 +23,52 @@ import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
-public class OrderController {
+public class MyOrderController {
 
    public static final String ORDER = "order";
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
 
-   @GetMapping(ORDER + "getIncompleteBySeller/{sellerId}")
-   public String getIncompleteOrdersBySellerId(
-       @PathVariable Integer sellerId,
+   @GetMapping(ORDER + "getByClient/{clientId}")
+   public String getOrdersByClientId(
+       @PathVariable Integer clientId,
        Model model
    ) {
-      List<Order> orderList = orderService.getIncompleteOrdersBySellerId(sellerId);
+      List<Order> orderList = orderService.getIncompleteOrdersBySellerId(clientId);
       List<OrderDTO> orders = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
-      model.addAttribute("orders", orders);
-      return "seller/order/orders";
+      model.addAttribute("myOrders", orders);
+      return "client/order/myOrders";
    }
 
-   @GetMapping(ORDER + "getForSeller/{orderId}")
-   public String getOrderPositionsForSeller(
+   @GetMapping(ORDER + "getForClient/{orderId}")
+   public String getOrderPositionsForClient(
        @PathVariable Integer orderId,
-       @RequestParam(value = "sellerId", required = false) Integer sellerId,
+       @RequestParam(value = "clientId", required = false) Integer clientId,
        Model model
    ) {
       Set<OrderPosition> orderList = orderService.getOrderPositions(orderId);
       Set<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).collect(Collectors.toSet());
-      model.addAttribute("sellerId", sellerId);
+      model.addAttribute("clientId", clientId);
       model.addAttribute("orderPositions", orderPositions);
-      return "seller/order/order";
+      return "client/order/myOrder";
    }
 
-   @DeleteMapping(ORDER + "/complete")
-   public String completeOrder(
-       @ModelAttribute("orderDTO") OrderDTO orderDTO
-//       @RequestParam("sellerId") OrderDTO sellerId
-       // might need to refresh after update
+   @PostMapping(ORDER + "/add")
+   public String postOrder(
+       @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions
+       // might need client id here too
    ) {
-      orderService.completeOrder(orderDTOMapper.mapFromDTO(orderDTO));
-      return "redirect:/seller/order/order";
+      orderService.createOrder(menuPositions);
+      return "redirect:/client/orders";
+   }
+
+   @DeleteMapping(ORDER + "/delete")
+   public String deleteOrder(
+       @ModelAttribute("orderDTO") OrderDTO orderDTO
+   ) {
+      orderService.deleteOrder(orderDTOMapper.mapFromDTO(orderDTO));
+      // check for the 20 minute mark!
+      // refresh?
+      return "redirect:client/order/myOrders";
    }
 }

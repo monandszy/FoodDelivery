@@ -30,6 +30,7 @@
 <div>
 <!-- TODO ADD ORDER PURCHASE (somehow add checkboxes at the top and send a list of them here)-->
 <!--  if doesnt work stick with one menuPosition per purchase approach...-->
+<!--  add order confirmation-->
   <h2>Purchase!</h2>
   <form action="#" th:action="@{order/add/}" method="POST">
     <button type="submit">Click to purchase!</button>
@@ -37,7 +38,7 @@
 </div>
 
 <div>
-  <a th:href="@{client/restaurant}">Go Back</a>
+  <a th:href="@{/restaurant/{id}(id=${restaurantId})}">Go Back</a>
 </div>
 </body>
 </html>

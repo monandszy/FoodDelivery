@@ -10,8 +10,21 @@
 </head>
 
 <body>
-<h1>Restaurants</h1>
 <div>
+  <h2>Add Restaurant</h2>
+  <form action="#" th:action="@{/myRestaurants/add}" th:method="POST" th:object="${restaurantDTO}">
+    <div>
+<!--      will it work with empty id?-->
+<!--      Id: <input type="text" th:field="*{id}"/>-->
+    </div>
+    <div>
+      <input type="submit" value="Add Menu" name="button"/>
+    </div>
+  </form>
+</div>
+
+<div>
+  <h2>Your Restaurants</h2>
   <table>
     <thead>
     <tr>
@@ -24,7 +37,8 @@
     <tr th:each="myRestaurant : ${restaurantsPage}">
       <td th:text="${myRestaurant.getId()}"></td>
       <td>
-        <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})}" method="GET">
+        <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})
+            (sellerId=${sellerId})}" method="GET">
           <button type="submit">+</button>
         </form>
         <form action="#" th:action="@{myRestaurant/{id}(id=${myRestaurant.id})}" th:method="DELETE">
@@ -51,7 +65,7 @@
 </div>
 
 <div>
-  <a th:href="@{seller/manage}">Go Back</a>
+  <a th:href="@{/manage}">Go Back</a>
 </div>
 </body>
 </html>

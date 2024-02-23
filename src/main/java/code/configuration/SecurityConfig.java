@@ -62,14 +62,16 @@ public class SecurityConfig {
                   "restaurants/**",
                   "restaurant/**",
                   "menu/**",
-                  "discover/**"
+                  "discover/**",
+                  "order/**" // might need to change one controller
               ).hasAnyAuthority("CLIENT")
               .requestMatchers(
                   "myRestaurants/**",
                   "myRestaurant/**",
                   "myMenu/**",
                   "manage/**",
-                  "discover/**"
+                  "discover/**",
+                  "order/**"
               ).hasAnyAuthority("SELLER")
           )
           .exceptionHandling(e -> e

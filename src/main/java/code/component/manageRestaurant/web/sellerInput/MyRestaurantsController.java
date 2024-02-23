@@ -28,12 +28,13 @@ public class MyRestaurantsController {
    @GetMapping(MY_RESTAURANTS + "/{sellerId}")
    public String getRestaurantsViewBySellerId(
        @PathVariable(value = "sellerId") String sellerId,
-       @RequestParam(value = "pageNumber") Integer pageNumber,
+       @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       List<Restaurant> restaurants = restaurantService.getPageByParent(sellerId, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
+      model.addAttribute("restaurantDTO", RestaurantDTO.builder().build());
       model.addAttribute("restaurantsPage", restaurantsPage);
       model.addAttribute("sellerId", sellerId);
       model.addAttribute("pageNumber", pageNumber);

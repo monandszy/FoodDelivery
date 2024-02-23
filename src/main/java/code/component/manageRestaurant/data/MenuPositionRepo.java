@@ -22,4 +22,9 @@ public class MenuPositionRepo implements MenuPositionDAO {
    public void deleteById(Integer id) {
 
    }
+
+   @Override
+   public List<MenuPosition> getMenuPositions(Integer menuId) {
+      return null;
+   }
 }

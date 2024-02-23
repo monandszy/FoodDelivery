@@ -14,6 +14,7 @@ public class DiscoverController {
    @GetMapping(DISCOVERY)
    public String getDiscover(Model model) {
       model.addAttribute("addressDTO", new Object());
+      model.addAttribute("clientId", 1); // TEMP CLIENT ID
       return "client/discover";
    }
 }

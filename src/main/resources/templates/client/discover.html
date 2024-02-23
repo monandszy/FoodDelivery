@@ -14,13 +14,13 @@
   <div>
     <h2>Input Your Address</h2>
       <form action="#" th:action="@{restaurants/getByAddress}" th:method="GET" th:object="${addressDTO}">
-        <div class="form-group">
+        <div>
           <label>
 <!--            kind of an update to empty address, maybe change-->
 <!--            Id: <input type="text" placeholder="Field" th:field="*{}"/>-->
           </label>
         </div>
-        <div class="form-group">
+        <div>
           <input type="submit" value="Set address" name="button"/>
         </div>
       </form>
@@ -63,8 +63,8 @@
   </div>
 
   <div>
-    <a th:href="@{client/orders}">Your Orders</a>
-    <a th:href="@{seller/manage}">Manage Restaurants (Seller Only)</a>
+    <a th:href="@{/orders/getByClient/{id}(id=${clientId})}">Your Orders</a>
+    <a th:href="@{/manage}">Manage Restaurants (Seller Only)</a>
   </div>
 </main>
 </body>

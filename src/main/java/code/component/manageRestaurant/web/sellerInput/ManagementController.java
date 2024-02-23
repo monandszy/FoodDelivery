@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ManagementController {
 
-   public static final String MANAGEMENT = "/management";
+   public static final String MANAGEMENT = "/manage";
 
    @GetMapping(MANAGEMENT)
    public String redirect(Model model) {
       model.addAttribute("sellerId", 1); // TEMP SELLER ID - GET FROM SESSION
-      return "management";
+      return "seller/manage";
    }
 }

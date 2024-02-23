@@ -6,13 +6,16 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Tea Producer Home</title>
+  <title>Tea Producer's Home</title>
 </head>
 <body>
 <h1>Seller Home</h1>
 <div>
-  <a th:href="@{/seller/myRestaurants}">MyRestaurants</a>
-  <a th:href="@{/seller/myRestaurants}">MyRestaurants</a>
+  <p th:text="${sellerId}">SellerId</p>
+</div>
+<div>
+  <a th:href="@{order/getIncompleteBySeller/{id}(id=${sellerId})}">Orders</a>
+  <a th:href="@{myRestaurants/{id}(id=${sellerId})}">MyRestaurants</a>
   <a th:href="@{/discover}">Go To Discover</a>
 </div>
 </body>

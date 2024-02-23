@@ -1,9 +1,12 @@
 package code.component.manageOrder;
 
 import code.component.manageOrder.domain.Order;
+import code.component.manageOrder.domain.OrderPosition;
+import code.component.manageRestaurant.domain.MenuPositionDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -12,11 +15,11 @@ public class OrderService {
 
    private OrderDAO orderDAO;
 
-   public Set<Order> getOrderPositions() {
+   public Set<OrderPosition> getOrderPositions(Integer orderId) {
       return null;
    }
 
-   public void addOrder(Order order) {
+   public void createOrder(List<MenuPositionDTO> order) {
 
    }
 
@@ -27,4 +30,10 @@ public class OrderService {
    public void completeOrder(Order order) {
 
    }
+
+   public List<Order> getIncompleteOrdersBySellerId(Integer sellerId) {
+
+      return null;
+   }
+
 }

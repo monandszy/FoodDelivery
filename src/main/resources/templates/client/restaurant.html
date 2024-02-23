@@ -22,7 +22,8 @@
     <tr th:each="menu : ${Page}">
       <td th:text="${menu.id}"></td>
       <td>
-        <form action="#" th:action="@{menu/{id}(id=${menu.id})}" method="GET">
+        <form action="#" th:action="@{menu/{id}(id=${menu.id})
+        (restaurantId=${restaurantId})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
@@ -46,7 +47,7 @@
 </div>
 
 <div>
-  <a th:href="@{client/discover}">Go Back</a>
+  <a th:href="@{/discover}">Go Back</a>
 </div>
 </body>
 </html>
