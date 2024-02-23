@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class OrderController {
 
-   public static final String ORDER = "order";
+   public static final String ORDER = "order/";
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
 
@@ -58,6 +58,6 @@ public class OrderController {
        // might need to refresh after update
    ) {
       orderService.completeOrder(orderDTOMapper.mapFromDTO(orderDTO));
-      return "redirect:/seller/order/order";
+      return "redirect:/order";
    }
 }

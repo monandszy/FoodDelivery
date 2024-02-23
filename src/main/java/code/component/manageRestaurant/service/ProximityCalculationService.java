@@ -14,7 +14,7 @@ public class ProximityCalculationService {
    private ServiceDAO serviceDAO;
 
    List<Restaurant> getRestaurantsBasedOnProximity(Object address) {
-      return null;
+      return List.of();
    }
 
 }

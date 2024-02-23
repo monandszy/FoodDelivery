@@ -17,7 +17,7 @@ public class RestaurantRepo implements RestaurantDAO {
 
    @Override
    public List<Restaurant> getPageByParent(Object parentKey, Integer page) {
-      return null;
+      return List.of();
    }
 
    @Override
@@ -37,6 +37,6 @@ public class RestaurantRepo implements RestaurantDAO {
 
    @Override
    public List<Restaurant> getPage(Integer page) {
-      return null;
+      return List.of();
    }
 }

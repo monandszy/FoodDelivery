@@ -16,7 +16,7 @@ public class OrderService {
    private OrderDAO orderDAO;
 
    public Set<OrderPosition> getOrderPositions(Integer orderId) {
-      return null;
+      return Set.of();
    }
 
    public void createOrder(List<MenuPositionDTO> order) {
@@ -33,7 +33,7 @@ public class OrderService {
 
    public List<Order> getIncompleteOrdersBySellerId(Integer sellerId) {
 
-      return null;
+      return List.of();
    }
 
 }

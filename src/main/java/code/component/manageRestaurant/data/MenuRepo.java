@@ -15,7 +15,7 @@ public class MenuRepo implements MenuDAO {
 
    @Override
    public List<Menu> getPageByParent(Object parentKey, Integer page) {
-      return null;
+      return List.of();
    }
 
    @Override

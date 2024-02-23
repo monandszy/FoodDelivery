@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MyOrderController {
 
-   public static final String ORDER = "order";
+   public static final String ORDER = "order/";
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
 
@@ -59,7 +59,7 @@ public class MyOrderController {
        // might need client id here too
    ) {
       orderService.createOrder(menuPositions);
-      return "redirect:/client/orders";
+      return "redirect:myOrders";
    }
 
    @DeleteMapping(ORDER + "/delete")
@@ -69,6 +69,6 @@ public class MyOrderController {
       orderService.deleteOrder(orderDTOMapper.mapFromDTO(orderDTO));
       // check for the 20 minute mark!
       // refresh?
-      return "redirect:client/order/myOrders";
+      return "redirect:myOrders";
    }
 }

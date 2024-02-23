@@ -11,6 +11,6 @@ public class ServiceRepo implements ServiceDAO {
 
    @Override
    public List<Restaurant> getRestaurantsByAddressProximity() {
-      return null;
+      return List.of();
    }
 }

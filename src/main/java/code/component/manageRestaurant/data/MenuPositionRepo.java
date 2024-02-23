@@ -1,6 +1,7 @@
 package code.component.manageRestaurant.data;
 
 import code.component.manageRestaurant.dao.MenuPositionDAO;
+import code.component.manageRestaurant.data.jpa.MenuPositionJpaRepo;
 import code.component.manageRestaurant.domain.MenuPosition;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,9 @@ import java.util.List;
 
 @Repository
 public class MenuPositionRepo implements MenuPositionDAO {
+
+   MenuPositionJpaRepo menuPositionJpaRepo;
+
    @Override
    public void add(MenuPosition menuPosition) {
 
@@ -15,16 +19,15 @@ public class MenuPositionRepo implements MenuPositionDAO {
 
    @Override
    public List<MenuPosition> getPageByParent(Object parentKey, Integer page) {
-      return null;
+      return List.of();
    }
 
    @Override
    public void deleteById(Integer id) {
-
    }
 
    @Override
    public List<MenuPosition> getMenuPositions(Integer menuId) {
-      return null;
+      return List.of();
    }
 }

@@ -23,7 +23,7 @@ public class MyRestaurantController {
    public static final String MY_RESTAURANT = "myRestaurant";
 
    private MenuService menuService;
-   private RestaurantDTOMapper restaurantDtoMapper;
+   private RestaurantDTOMapper dtoMapper;
 
    @GetMapping(MY_RESTAURANT + "/{restaurantId}")
    public String getRestaurantViewById(
@@ -34,7 +34,7 @@ public class MyRestaurantController {
    ) {
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       List<Menu> menus = menuService.getPageByParent(restaurantId, pageNumber);
-      List<MenuDTO> restaurantMenus = menus.stream().map(restaurantDtoMapper::mapToDTO).toList();
+      List<MenuDTO> restaurantMenus = menus.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("menuDTO", MenuDTO.builder().build());
       model.addAttribute("restaurantPage", restaurantMenus);
       model.addAttribute("restaurantId", restaurantId);
@@ -46,14 +46,16 @@ public class MyRestaurantController {
    public String postMenu(
        @ModelAttribute("menuDTO") MenuDTO menuDTO
    ) {
-      return "redirect:seller/myRestaurant";
+      menuService.add(dtoMapper.mapFromDTO(menuDTO));
+      return "redirect:/myRestaurant";
    }
 
-   @PostMapping(MY_RESTAURANT + "/delete")
+   @PostMapping(MY_RESTAURANT + "/delete/{menuId}")
    public String deleteMenu(
-       @ModelAttribute("menuDTO") MenuDTO menuDTO
+       @PathVariable("menuId") Integer menuId
    ) {
-      return "redirect:seller/myRestaurant";
+      menuService.deleteById(menuId);
+      return "redirect:/myRestaurant";
    }
 
 }
