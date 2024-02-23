@@ -11,8 +11,8 @@ import java.util.List;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = {})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 public class Restaurant {
 
    Integer id;

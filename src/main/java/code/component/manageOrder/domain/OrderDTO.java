@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
+import java.time.OffsetDateTime;
+
 @With
 @Data
 @Builder
@@ -14,5 +16,6 @@ import lombok.With;
 public class OrderDTO {
 
    private Integer id;
-   private Integer clientCode;
+   private Order.OrderStatus status;
+   private OffsetDateTime timeOfOrder;
 }

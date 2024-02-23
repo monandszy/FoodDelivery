@@ -1,4 +1,4 @@
-package code.component.manageOrder.web.order;
+package code.component.manageOrder.web;
 
 import code.component.manageAccount.UserAccountDetailsService;
 import code.component.manageOrder.OrderService;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -44,8 +42,8 @@ public class OrderController {
        @PathVariable Integer orderId,
        Model model
    ) {
-      Set<OrderPosition> orderList = orderService.getOrderPositions(orderId);
-      Set<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).collect(Collectors.toSet());
+      List<OrderPosition> orderList = orderService.getOrderPositions(orderId);
+      List<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
       model.addAttribute("orderPositions", orderPositions);
       return "seller/order/order";
    }

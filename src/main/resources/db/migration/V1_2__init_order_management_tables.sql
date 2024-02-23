@@ -7,7 +7,7 @@ CREATE TABLE food_delivery.client_order
     CONSTRAINT status_in CHECK (
         client_order.status IN
         (
-         'IN PROGRESS',
+         'IN_PROGRESS',
          'TRAVELLING',
          'COMPLETED'
             ))

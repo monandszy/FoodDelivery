@@ -9,8 +9,8 @@ import lombok.With;
 @With
 @Value
 @Builder
-@EqualsAndHashCode(of = {})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 public class OrderPosition {
 
    Integer id;

@@ -28,7 +28,10 @@ public class AccountManagementRepository implements AccountManagementDAO {
 
    @Override
    public void addAccount(Account account) {
-      accountJpaRepo.save(entityMapper.mapToEntity(account));
+      AccountEntity accountEntity = entityMapper.mapToEntity(account);
+      accountEntity.setRoles(account.getRoles().stream()
+          .map(entityMapper::mapToEntity).collect(Collectors.toSet()));
+      accountJpaRepo.save(accountEntity);
    }
 
 }

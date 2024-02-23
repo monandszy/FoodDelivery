@@ -5,6 +5,7 @@ import code.component.manageAccount.domain.AccountDTO;
 import code.component.manageAccount.domain.Role;
 import code.component.manageAccount.domain.RoleDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -16,5 +17,6 @@ public interface AccountDTOMapper {
 
    AccountDTO mapToDTO(Account account);
 
+   @Mapping(target = "roles", ignore = true)
    Account mapFromDTO(AccountDTO accountDTO);
 }

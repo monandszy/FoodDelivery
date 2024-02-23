@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.With;
 
-import java.util.Set;
-
 @With
 @Data
 @EqualsAndHashCode(of = {"id"})
@@ -26,5 +24,4 @@ public class AccountDTO {
    @NotEmpty
    private String password;
    private Boolean active;
-   private Set<RoleDTO> roles;
 }

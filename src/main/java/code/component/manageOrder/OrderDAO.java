@@ -1,16 +1,22 @@
 package code.component.manageOrder;
 
 import code.component.manageOrder.domain.Order;
+import code.component.manageOrder.domain.OrderPosition;
 
-import java.util.Set;
+import java.util.List;
 
 public interface OrderDAO {
 
-   Set<Order> getOrders();
 
-   void addOrder(Order order);
+   List<OrderPosition> getOrderPositionsByOrderId(Integer orderId);
 
-   void deleteOrder(Order order);
+   void addOrder(Order build);
+
+   void cancelOrder();
 
    void updateOrder(Order order);
+
+   List<Order> getIncompleteOrdersBySellerId(String sellerId);
+
+   List<Order> getOrdersByClientId(String clientId);
 }

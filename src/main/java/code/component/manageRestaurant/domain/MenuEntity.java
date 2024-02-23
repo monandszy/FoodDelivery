@@ -22,8 +22,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

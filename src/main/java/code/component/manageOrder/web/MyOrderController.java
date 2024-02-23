@@ -1,4 +1,4 @@
-package code.component.manageOrder.web.order;
+package code.component.manageOrder.web;
 
 import code.component.manageAccount.UserAccountDetailsService;
 import code.component.manageOrder.OrderService;
@@ -8,6 +8,7 @@ import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
+import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -28,6 +27,7 @@ public class MyOrderController {
    public static final String ORDER = "order";
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
+   private RestaurantDTOMapper restaurantDTOMapper;
    private UserAccountDetailsService accountService;
 
    @GetMapping(ORDER + "/getByClient")
@@ -35,7 +35,7 @@ public class MyOrderController {
        Model model
    ) {
       String clientId = accountService.getAuthenticatedUserName();
-      List<Order> orderList = orderService.getIncompleteOrdersBySellerId(clientId);
+      List<Order> orderList = orderService.getOrdersByClientId(clientId);
       List<OrderDTO> orders = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
       model.addAttribute("myOrders", orders);
       return "client/order/myOrders";
@@ -46,8 +46,8 @@ public class MyOrderController {
        @PathVariable Integer orderId,
        Model model
    ) {
-      Set<OrderPosition> orderList = orderService.getOrderPositions(orderId);
-      Set<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).collect(Collectors.toSet());
+      List<OrderPosition> orderList = orderService.getOrderPositions(orderId);
+      List<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
       model.addAttribute("orderPositions", orderPositions);
       return "client/order/myOrder";
    }
@@ -57,7 +57,9 @@ public class MyOrderController {
        @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions
        // might need client id here too
    ) {
-      orderService.createOrder(menuPositions);
+      orderService.addOrder(menuPositions.stream()
+          .map(restaurantDTOMapper::mapFromDTO)
+          .map(e -> OrderPosition.builder().menuPosition(e).build()).toList());
       return "redirect:myOrders/getOrdersByClientId";
    }
 
@@ -65,7 +67,7 @@ public class MyOrderController {
    public String deleteOrder(
        @ModelAttribute("orderDTO") OrderDTO orderDTO
    ) {
-      orderService.deleteOrder(orderDTOMapper.mapFromDTO(orderDTO));
+      orderService.cancelOrder(orderDTOMapper.mapFromDTO(orderDTO));
       return "redirect:myOrders/getOrdersByClientId";
    }
 }

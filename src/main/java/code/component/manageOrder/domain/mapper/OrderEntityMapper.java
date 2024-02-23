@@ -14,10 +14,12 @@ public interface OrderEntityMapper {
    @Mapping(target = "menuPositions", source = "menuPositions", ignore = true)
    OrderEntity mapToEntity(Order order);
 
+   @Mapping(target = "menuPositions", source = "menuPositions", ignore = true)
    Order mapFromEntity(OrderEntity orderEntity);
 
    @Mapping(target = "order", source = "order", ignore = true)
    OrderPositionEntity mapToEntity(OrderPosition orderPosition);
 
+   @Mapping(target = "order", source = "order", ignore = true)
    OrderPosition mapFromEntity(OrderPositionEntity orderPositionEntity);
 }

@@ -21,8 +21,8 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
