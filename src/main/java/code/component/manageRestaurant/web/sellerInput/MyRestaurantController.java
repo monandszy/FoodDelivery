@@ -33,8 +33,8 @@ public class MyRestaurantController {
    ) {
       model.addAttribute("menuDTO", MenuDTO.builder().build());
       model.addAttribute("restaurantId", restaurantId);
-      model.addAttribute("pageNumber", pageNumber);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      model.addAttribute("pageNumber", pageNumber);
       List<Menu> menus = menuService.getPageByParent(restaurantId, pageNumber);
       List<MenuDTO> restaurantMenus = menus.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantPage", restaurantMenus);
@@ -42,18 +42,20 @@ public class MyRestaurantController {
    }
    @PostMapping(MY_RESTAURANT + "/add")
    public String postMenu(
-       @ModelAttribute("menuDTO") MenuDTO menuDTO
+       @ModelAttribute("menuDTO") MenuDTO menuDTO,
+       @RequestParam("restaurantId") Integer restaurantId
    ) {
       menuService.add(dtoMapper.mapFromDTO(menuDTO));
-      return "redirect:/myRestaurant";
+      return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 
    @PostMapping(MY_RESTAURANT + "/delete/{menuId}")
    public String deleteMenu(
-       @PathVariable("menuId") Integer menuId
+       @PathVariable("menuId") Integer menuId,
+       @RequestParam("restaurantId") Integer restaurantId
    ) {
       menuService.deleteById(menuId);
-      return "redirect:/myRestaurant";
+      return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 
 }

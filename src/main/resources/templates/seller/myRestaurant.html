@@ -13,7 +13,8 @@
 <div>
   <h2>Add Menu</h2>
   <form action="#"
-        th:action="@{/myRestaurant/add}"
+        th:action="@{/myRestaurant/add
+(restaurantId=${restaurantId})}"
         th:method="POST"
         th:object="${menuDTO}">
     <div>
@@ -45,7 +46,7 @@
       </td>
       <td>
         <form action="#" th:action="@{myRestaurant/delete/{id}
-        (id=${myMenu.id})}" th:method="DELETE">
+        (id=${myMenu.id})(restaurantId=${restaurantId})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>
@@ -70,7 +71,7 @@
 </div>
 
 <div>
-  <a th:href="@{myRestaurants/get}">Go Back</a>
+  <a th:href="@{myRestaurants/get/{id}(id=${restaurantId})}">Go Back</a>
 </div>
 </body>
 </html>

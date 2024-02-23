@@ -33,8 +33,8 @@ public class MyRestaurantsController {
        Model model
    ) {
       model.addAttribute("restaurantDTO", RestaurantDTO.builder().build());
-      model.addAttribute("pageNumber", pageNumber);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
       model.addAttribute("sellerId", sellerId);
       List<Restaurant> restaurants = restaurantService.getPageByParent(sellerId, pageNumber);
@@ -47,8 +47,9 @@ public class MyRestaurantsController {
    public String postRestaurant(
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
+      accountService.getAuthenticatedUserName();
       restaurantService.add(dtoMapper.mapFromDTO(restaurantDTO));
-      return "redirect:/myRestaurants/{%s}".formatted(accountService.getAuthenticatedUserName());
+      return "redirect:/myRestaurants/get";
    }
 
    @PostMapping(MY_RESTAURANTS + "/delete/{restaurantId}")
@@ -56,6 +57,6 @@ public class MyRestaurantsController {
        @PathVariable("restaurantId") Integer restaurantId
    ) {
       restaurantService.deleteById(restaurantId);
-      return "redirect:/myRestaurants/{%s}".formatted(accountService.getAuthenticatedUserName());
+      return "redirect:/myRestaurants/get";
    }
 }

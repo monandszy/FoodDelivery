@@ -13,7 +13,8 @@
 <div>
   <h2>Add Restaurant</h2>
   <form action="#"
-        th:action="@{/myMenu/add}"
+        th:action="@{/myMenu/add
+        (menuId=${menuId})}"
         th:method="POST"
         th:object="${menuPositionDTO}">
     <div>
@@ -38,7 +39,7 @@
       <td th:text="${myMenuPosition.getId()}"></td>
       <td>
         <form action="#" th:action="@{myMenu/delete/{id}
-        (id=${myMenuPosition.id})}" th:method="DELETE">
+        (id=${myMenuPosition.id})(menuId=${menuId})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>

@@ -31,8 +31,8 @@ public class RestaurantsController {
        Model model
    ) {
       model.addAttribute("addressDTO", addressDTO);
-      model.addAttribute("pageNumber", pageNumber);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
+      model.addAttribute("pageNumber", pageNumber);
       List<Restaurant> restaurants = restaurantService.getPageByAddress(addressDTO, pageNumber);
       List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantsByAddressPage", restaurantsPage);
