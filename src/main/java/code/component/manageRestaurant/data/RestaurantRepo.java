@@ -1,28 +1,50 @@
 package code.component.manageRestaurant.data;
 
+import code.component.manageAccount.data.AccountJpaRepo;
+import code.component.manageAccount.domain.AccountEntity;
 import code.component.manageRestaurant.dao.RestaurantDAO;
+import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
 import code.component.manageRestaurant.domain.Restaurant;
+import code.component.manageRestaurant.domain.RestaurantEntity;
+import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static code.configuration.Constants.PAGE_SIZE;
+
 @Repository
 @AllArgsConstructor
 public class RestaurantRepo implements RestaurantDAO {
-   @Override
-   public void add(Restaurant restaurant) {
 
-   }
+   private RestaurantJpaRepo restaurantJpaRepo;
+   private AccountJpaRepo accountJpaRepo;
+   private RestaurantEntityMapper entityMapper;
 
-   @Override
-   public List<Restaurant> getPageByParent(Object parentKey, Integer page) {
-      // get page by sellerId
-      return List.of();
+   public void add(Restaurant restaurant, String sellerId) {
+      RestaurantEntity save = entityMapper.mapToEntity(restaurant);
+      save.setSeller(accountJpaRepo.findByUserName(sellerId)
+          .orElseThrow(() -> new EntityNotFoundException("account not found")));
+      restaurantJpaRepo.save(save);
    }
 
    @Override
    public void deleteById(Integer id) {
-
+      restaurantJpaRepo.deleteById(id);
    }
+
+   @Override
+   public List<Restaurant> getPageBySeller(String sellerId, Integer page) {
+      AccountEntity seller = accountJpaRepo.findByUserName(sellerId).orElseThrow();
+      Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("id"));
+      Page<RestaurantEntity> pageBySeller = restaurantJpaRepo.getPageBySeller(seller, pageable);
+      return pageBySeller.getContent().stream().map(entityMapper::mapFromEntity).toList();
+   }
+
 }

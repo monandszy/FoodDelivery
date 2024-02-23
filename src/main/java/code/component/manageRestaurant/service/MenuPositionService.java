@@ -14,13 +14,13 @@ public class MenuPositionService {
    private MenuPositionDAO menuPositionDAO;
 
    @Transactional
-   public void add(MenuPosition menuPosition) {
-      menuPositionDAO.add(menuPosition);
+   public void add(MenuPosition menuPosition, Integer menuId) {
+      menuPositionDAO.add(menuPosition, menuId);
    }
 
    @Transactional
-   public List<MenuPosition> getPageByMenuId(Object menuId, Integer page) {
-      return menuPositionDAO.getPageByParent(menuId, page);
+   public List<MenuPosition> getPageByMenu(Integer menuId, Integer page) {
+      return menuPositionDAO.getPageByMenuId(menuId, page);
    }
 
    @Transactional

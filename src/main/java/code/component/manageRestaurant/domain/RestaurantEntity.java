@@ -2,6 +2,7 @@ package code.component.manageRestaurant.domain;
 
 import code.component.manageAccount.domain.AccountEntity;
 import code.component.manageRestaurant.manageDelivery.domain.AddressEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,9 +39,6 @@ public class RestaurantEntity {
    @Column(name ="id")
    private Integer id;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-   private List<MenuEntity> menus;
-
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "seller_id")
    private AccountEntity seller;
@@ -49,7 +47,7 @@ public class RestaurantEntity {
    @JoinColumn(name = "address_id")
    private AddressEntity address;
 
-//   @ManyToOne(fetch = FetchType.LAZY)
-//   @JoinColumn(name = "address_id")
-//   private AddressEntity address;
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant",
+       cascade = {CascadeType.REMOVE})
+   private List<MenuEntity> menus;
 }

@@ -35,7 +35,7 @@ public class MyRestaurantController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(1) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<Menu> menus = menuService.getPageByRestaurantId(restaurantId, pageNumber);
+      List<Menu> menus = menuService.getPageByRestaurant(restaurantId, pageNumber);
       List<MenuDTO> restaurantMenus = menus.stream().map(dtoMapper::mapToDTO).toList();
       model.addAttribute("restaurantPage", restaurantMenus);
       return "seller/myRestaurant";
@@ -45,7 +45,7 @@ public class MyRestaurantController {
        @ModelAttribute("menuDTO") MenuDTO menuDTO,
        @RequestParam("restaurantId") Integer restaurantId
    ) {
-      menuService.add(dtoMapper.mapFromDTO(menuDTO));
+      menuService.add(dtoMapper.mapFromDTO(menuDTO), restaurantId);
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 

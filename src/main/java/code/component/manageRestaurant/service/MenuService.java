@@ -15,13 +15,13 @@ public class MenuService {
    private MenuDAO menuDAO;
 
    @Transactional
-   public void add(Menu menu) {
-      menuDAO.add(menu);
+   public void add(Menu menu, Integer restaurantId) {
+      menuDAO.add(menu, restaurantId);
    }
 
    @Transactional
-   public List<Menu> getPageByRestaurantId(Integer restaurantId, Integer page) {
-      return menuDAO.getPageByParent(restaurantId, page);
+   public List<Menu> getPageByRestaurant(Integer restaurantId, Integer page) {
+      return menuDAO.getPageByRestaurantId(restaurantId, page);
    }
 
    @Transactional

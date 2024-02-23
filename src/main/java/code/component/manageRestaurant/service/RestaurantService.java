@@ -14,13 +14,13 @@ public class RestaurantService {
    private RestaurantDAO restaurantDAO;
 
    @Transactional
-   public void add(Restaurant restaurant) {
-      restaurantDAO.add(restaurant);
+   public void add(Restaurant restaurant, String sellerId) {
+      restaurantDAO.add(restaurant, sellerId);
    }
 
    @Transactional
-   public List<Restaurant> getPageBySellerId(Object sellerId, Integer page) {
-      return restaurantDAO.getPageByParent(sellerId, page);
+   public List<Restaurant> getPageBySellerId(String sellerId, Integer page) {
+      return restaurantDAO.getPageBySeller(sellerId, page);
    }
 
    @Transactional
