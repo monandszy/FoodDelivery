@@ -24,8 +24,8 @@ CREATE TABLE food_delivery.menu
     menu_type VARCHAR(32) NOT NULL,
     CONSTRAINT menu_type_in CHECK (
         menu_type IN (
-            'MENU_TYPE1'
-            'MENU_TYPE2'
+            'MENU_TYPE1',
+            'MENU_TYPE2',
             'MENU_TYPE3'
             )
         ),

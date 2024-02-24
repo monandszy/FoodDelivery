@@ -28,13 +28,18 @@ import java.util.List;
 public class MyOrderController {
 
    public static final String ORDER = "order";
+   public static final String ORDER_getByClient = ORDER + "/getByClient";
+   public static final String ORDER_getForClient = ORDER + "/getForClient/{orderId}";
+   public static final String ORDER_ADD = ORDER + "/add";
+   public static final String ORDER_DELETE = ORDER + "/delete";
+
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
    private RestaurantDTOMapper restaurantDTOMapper;
    private AddressDTOMapper addressDTOMapper;
    private UserAccountDetailsService accountService;
 
-   @GetMapping(ORDER + "/getByClient")
+   @GetMapping(ORDER_getByClient)
    public String getOrdersByClientId(
        Model model
    ) {
@@ -45,7 +50,7 @@ public class MyOrderController {
       return "client/order/myOrders";
    }
 
-   @GetMapping(ORDER + "/getForClient/{orderId}")
+   @GetMapping(ORDER_getForClient)
    public String getOrderPositionsForClient(
        @PathVariable Integer orderId,
        Model model
@@ -56,7 +61,7 @@ public class MyOrderController {
       return "client/order/myOrder";
    }
 
-   @PostMapping(ORDER + "/add")
+   @PostMapping(ORDER_ADD)
    public String postOrder(
 
        @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions,
@@ -73,7 +78,7 @@ public class MyOrderController {
       return "redirect:myOrders/getOrdersByClientId";
    }
 
-   @DeleteMapping(ORDER + "/delete")
+   @DeleteMapping(ORDER_DELETE)
    public String deleteOrder(
        @ModelAttribute("orderDTO") OrderDTO orderDTO
    ) {

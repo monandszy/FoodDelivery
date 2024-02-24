@@ -22,11 +22,14 @@ import java.util.List;
 public class OrderController {
 
    public static final String ORDER = "order";
+   public static final String ORDER_getBySeller = ORDER + "/getIncompleteBySeller";
+   public static final String ORDER_getForSeller = ORDER + "/getForSeller/{orderId}";
+   public static final String ORDER_COMPLETE = ORDER + "/complete";
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
    private UserAccountDetailsService accountService;
 
-   @GetMapping(ORDER + "/getIncompleteBySeller")
+   @GetMapping(ORDER_getBySeller)
    public String getIncompleteOrdersBySellerId(
        Model model
    ) {
@@ -37,7 +40,7 @@ public class OrderController {
       return "seller/order/orders";
    }
 
-   @GetMapping(ORDER + "/getForSeller/{orderId}")
+   @GetMapping(ORDER_getForSeller)
    public String getOrderPositionsForSeller(
        @PathVariable Integer orderId,
        Model model
@@ -48,7 +51,7 @@ public class OrderController {
       return "seller/order/order";
    }
 
-   @DeleteMapping(ORDER + "/complete")
+   @DeleteMapping(ORDER_COMPLETE)
    public String completeOrder(
        @ModelAttribute("orderDTO") OrderDTO orderDTO
    ) {

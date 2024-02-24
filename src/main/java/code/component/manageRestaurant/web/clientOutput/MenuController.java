@@ -18,11 +18,12 @@ import java.util.List;
 public class MenuController {
 
    public static final String MENU = "menu";
+   public static final String MENU_GET = MENU + "/get/{menuId}";
 
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping(MENU + "/get/{menuId}")
+   @GetMapping(MENU_GET)
    public String getMenuPositions(
        @PathVariable(value = "menuId") Integer menuId,
        @RequestParam(value = "restaurantId") Integer restaurantId,

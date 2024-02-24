@@ -22,11 +22,12 @@ import static code.configuration.Constants.START_PAGE;
 public class RestaurantController {
 
    public static final String RESTAURANT = "restaurant";
+   public static final String RESTAURANT_GET = RESTAURANT + "/get/{restaurantId}";
 
    private MenuService menuService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping(RESTAURANT + "/get/{restaurantId}")
+   @GetMapping(RESTAURANT_GET)
    public String getMenusView(
        @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,

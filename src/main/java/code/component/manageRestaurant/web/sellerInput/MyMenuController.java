@@ -7,6 +7,7 @@ import code.component.manageRestaurant.service.MenuPositionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,11 +25,14 @@ import static code.configuration.Constants.START_PAGE;
 public class MyMenuController {
 
    public static final String MY_MENU = "myMenu";
+   public static final String MY_MENU_GET = MY_MENU + "/get/{menuId}";
+   public static final String MY_MENU_ADD = MY_MENU + "/add";
+   public static final String MY_MENU_DELETE = MY_MENU + "/delete/{menuPositionId}";
 
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_MENU + "/get/{menuId}")
+   @GetMapping(MY_MENU_GET)
    public String getMenuViewById(
        @PathVariable(value = "menuId") Integer menuId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
@@ -46,7 +50,7 @@ public class MyMenuController {
       return "seller/myMenu";
    }
 
-   @PostMapping(MY_MENU + "/add")
+   @PostMapping(MY_MENU_ADD)
    public String postMenuPosition(
        @ModelAttribute("menuPositionDTO") MenuPositionDTO menuPositionDTO,
        @RequestParam("menuId") Integer menuId
@@ -55,7 +59,7 @@ public class MyMenuController {
       return "redirect:/myMenu/get/%s".formatted(menuId);
    }
 
-   @PostMapping(MY_MENU + "/delete/{menuPositionId}")
+   @DeleteMapping(MY_MENU_DELETE)
    public String deleteMenuPosition(
        @PathVariable("menuPositionId") Integer menuPositionId,
        @RequestParam("menuId") Integer menuId

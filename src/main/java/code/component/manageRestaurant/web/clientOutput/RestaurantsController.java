@@ -24,11 +24,12 @@ import static code.configuration.Constants.START_PAGE;
 public class RestaurantsController {
 
    public static final String RESTAURANTS = "restaurants";
+   public static final String RESTAURANTS_GET = RESTAURANTS + "/getByAddress";
 
    private DeliveryService deliveryService;
    private RestaurantDTOMapper restaurantDtoMapper;
 
-   @GetMapping(RESTAURANTS + "/getByAddress")
+   @GetMapping(RESTAURANTS_GET)
    String getRestaurantsViewByAddress(
        @ModelAttribute(value = "address") AddressDTO addressDTO,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,

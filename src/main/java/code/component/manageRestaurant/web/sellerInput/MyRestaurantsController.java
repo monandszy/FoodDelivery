@@ -8,6 +8,7 @@ import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +25,15 @@ import static code.configuration.Constants.START_PAGE;
 public class MyRestaurantsController {
 
    public static final String MY_RESTAURANTS = "myRestaurants";
+   public static final String MY_RESTAURANTS_GET = MY_RESTAURANTS + "/get";
+   public static final String MY_RESTAURANTS_ADD = MY_RESTAURANTS + "/add";
+   public static final String MY_RESTAURANTS_DELETE = MY_RESTAURANTS + "/delete/{restaurantId}";
 
    private RestaurantService restaurantService;
    private UserAccountDetailsService accountService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_RESTAURANTS + "/get")
+   @GetMapping(MY_RESTAURANTS_GET)
    public String getRestaurantsViewBySellerId(
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
@@ -45,7 +49,7 @@ public class MyRestaurantsController {
       return "seller/myRestaurants";
    }
 
-   @PostMapping(MY_RESTAURANTS + "/add")
+   @PostMapping(MY_RESTAURANTS_ADD)
    public String postRestaurant(
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
@@ -56,7 +60,7 @@ public class MyRestaurantsController {
       return "redirect:/myRestaurants/get";
    }
 
-   @PostMapping(MY_RESTAURANTS + "/delete/{restaurantId}")
+   @DeleteMapping(MY_RESTAURANTS_DELETE)
    public String deleteRestaurant(
        @PathVariable("restaurantId") Integer restaurantId
    ) {

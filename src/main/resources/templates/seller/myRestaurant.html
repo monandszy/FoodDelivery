@@ -14,10 +14,13 @@
   <h2>Add Menu</h2>
   <form action="#"
         th:action="@{/myRestaurant/add
-(restaurantId=${restaurantId})}"
+          (restaurantId=${restaurantId})}"
         th:method="POST"
         th:object="${menuDTO}">
     <div>
+      <label>
+        <input type="text" placeholder="MenuType" th:field="*{menuType}"/>
+      </label>
     </div>
     <div>
       <button type="submit">Add Menu</button>
