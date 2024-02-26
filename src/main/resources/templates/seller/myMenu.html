@@ -42,7 +42,7 @@
       <td th:text="${myMenuPosition.getId()}"></td>
       <td>
         <form action="#" th:action="@{/myMenu/delete/{id}
-        (id=${myMenuPosition.id})(menuId=${menuId})}" th:method="DELETE">
+        (id=${myMenuPosition.id}, menuId=${menuId})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>

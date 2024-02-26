@@ -33,7 +33,7 @@ public class SellerMenuController {
 
    @GetMapping(MY_MENU_GET)
    public String getMenuViewById(
-       @PathVariable(value = "menuId") Integer menuId,
+       @PathVariable(value = "menuId") String menuId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        @RequestParam(value = "restaurantId", required = false) Integer restaurantId,
        Model model
@@ -43,7 +43,8 @@ public class SellerMenuController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<MenuPositionDTO> menuPage = dtoMapper.mapMPToDTOList(menuPositionService.getPageByMenu(menuId, pageNumber));
+      List<MenuPositionDTO> menuPage = dtoMapper.mapMPToDTOList(
+          menuPositionService.getPageByMenu(Integer.valueOf(menuId), pageNumber));
       model.addAttribute("menuPage", menuPage);
       return "seller/myMenu";
    }
@@ -51,18 +52,18 @@ public class SellerMenuController {
    @PostMapping(MY_MENU_ADD)
    public String postMenuPosition(
        @ModelAttribute("menuPositionDTO") MenuPositionDTO menuPositionDTO,
-       @RequestParam("menuId") Integer menuId
+       @RequestParam("menuId") String menuId
    ) {
-      menuPositionService.add(dtoMapper.mapFromDTO(menuPositionDTO), menuId);
+      menuPositionService.add(dtoMapper.mapFromDTO(menuPositionDTO), Integer.valueOf(menuId));
       return "redirect:/myMenu/get/%s".formatted(menuId);
    }
 
    @DeleteMapping(MY_MENU_DELETE)
    public String deleteMenuPosition(
-       @PathVariable("menuPositionId") Integer menuPositionId,
-       @RequestParam("menuId") Integer menuId
+       @PathVariable("menuPositionId") String menuPositionId,
+       @RequestParam("menuId") String menuId
    ) {
-      menuPositionService.deleteById(menuPositionId);
+      menuPositionService.deleteById(Integer.valueOf(menuPositionId));
       return "redirect:/myMenu/get/%s".formatted(menuId);
    }
 }

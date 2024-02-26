@@ -1,5 +1,6 @@
 package code.component.manageRestaurant.domain;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class MenuPositionDTO {
 
-   private Integer id;
+   @Pattern(regexp = "[0-9]*")
+   private String id;
    private BigDecimal price;
 }

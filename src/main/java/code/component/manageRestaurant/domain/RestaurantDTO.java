@@ -1,6 +1,7 @@
 package code.component.manageRestaurant.domain;
 
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,11 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class RestaurantDTO {
 
-   private Integer id;
+   @Pattern(regexp = "[0-9]*")
+   private String id;
    private AddressDTO address;
    private String seller;
+
+   @Pattern(regexp = "[0-9]*")
    private BigInteger deliveryRange;
 }

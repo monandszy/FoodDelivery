@@ -42,8 +42,8 @@ public class SellerRestaurantsController {
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
       model.addAttribute("sellerId", sellerId);
-      List<RestaurantDTO> restaurantPage = dtoMapper.mapRToDTOList(restaurantService.getPageBySellerId(sellerId, pageNumber));
-      model.addAttribute("restaurantPage", restaurantPage);
+      List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(restaurantService.getPageBySellerId(sellerId, pageNumber));
+      model.addAttribute("restaurantsPage", restaurantsPage);
       return "seller/myRestaurants";
    }
 

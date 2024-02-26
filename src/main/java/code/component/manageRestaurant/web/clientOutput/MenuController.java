@@ -24,12 +24,13 @@ public class MenuController {
 
    @GetMapping(MENU_GET)
    public String getMenuPositions(
-       @PathVariable(value = "menuId") Integer menuId,
-       @RequestParam(value = "restaurantId") Integer restaurantId,
+       @PathVariable(value = "menuId") String menuId,
+       @RequestParam(value = "restaurantId") String restaurantId,
        Model model
    ) {
       model.addAttribute("restaurantId", restaurantId);
-      List<MenuPositionDTO> menuPositions = dtoMapper.mapMPToDTOList(menuPositionService.getAllMenuPositions(menuId));
+      List<MenuPositionDTO> menuPositions = dtoMapper.mapMPToDTOList(
+          menuPositionService.getAllMenuPositions(Integer.valueOf(menuId)));
       model.addAttribute("menuPositions", menuPositions);
       return "client/menu";
    }

@@ -45,15 +45,15 @@ public class SellerRestaurantsWebIT {
    void testGet() throws Exception {
       String userName = "seller";
       Integer pageNumber = 2;
-      List<RestaurantDTO> restaurantPage = List.of(WebEntityFixtures.getRestaurantDTO());
+      List<RestaurantDTO> restaurantsPage = List.of(WebEntityFixtures.getRestaurantDTO());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
-      Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
+      Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantsPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MY_RESTAURANTS_GET)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
           .andExpect(MockMvcResultMatchers.model().attribute("sellerId", userName))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
-          .andExpect(MockMvcResultMatchers.model().attribute("restaurantPage", restaurantPage))
+          .andExpect(MockMvcResultMatchers.model().attribute("restaurantsPage", restaurantsPage))
           .andExpect(MockMvcResultMatchers.view().name("seller/" + MY_RESTAURANTS));
       Mockito.verify(restaurantService).getPageBySellerId(userName, pageNumber);
    }

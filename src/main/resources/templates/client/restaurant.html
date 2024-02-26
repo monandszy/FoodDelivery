@@ -19,11 +19,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="menu : ${Page}">
+    <tr th:each="menu : ${restaurantPage}">
       <td th:text="${menu.id}"></td>
       <td>
         <form action="#" th:action="@{/menu/get/{id}
-        (id=${menu.id})(restaurantId=${restaurantId})}" method="GET">
+        (id=${menu.id}, restaurantId=${restaurantId})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>

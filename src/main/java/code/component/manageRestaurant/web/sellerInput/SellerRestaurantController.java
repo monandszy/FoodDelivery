@@ -32,7 +32,7 @@ public class SellerRestaurantController {
 
    @GetMapping(MY_RESTAURANT_GET)
    public String getRestaurantViewById(
-       @PathVariable(value = "restaurantId") Integer restaurantId,
+       @PathVariable(value = "restaurantId") String restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
@@ -40,25 +40,26 @@ public class SellerRestaurantController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<MenuDTO> restaurantPage = dtoMapper.mapMToDTOList(menuService.getPageByRestaurant(restaurantId, pageNumber));
+      List<MenuDTO> restaurantPage = dtoMapper.mapMToDTOList(
+          menuService.getPageByRestaurant(Integer.valueOf(restaurantId), pageNumber));
       model.addAttribute("restaurantPage", restaurantPage);
       return "seller/myRestaurant";
    }
    @PostMapping(MY_RESTAURANT_ADD)
    public String postMenu(
        @ModelAttribute("menuDTO") MenuDTO menuDTO,
-       @RequestParam("restaurantId") Integer restaurantId
+       @RequestParam("restaurantId") String restaurantId
    ) {
-      menuService.add(dtoMapper.mapFromDTO(menuDTO), restaurantId);
+      menuService.add(dtoMapper.mapFromDTO(menuDTO), Integer.valueOf(restaurantId));
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 
    @DeleteMapping(MY_RESTAURANT_DELETE)
    public String deleteMenu(
-       @PathVariable("menuId") Integer menuId,
-       @RequestParam("restaurantId") Integer restaurantId
+       @PathVariable("menuId") String menuId,
+       @RequestParam("restaurantId") String restaurantId
    ) {
-      menuService.deleteById(menuId);
+      menuService.deleteById(Integer.valueOf(menuId));
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 
