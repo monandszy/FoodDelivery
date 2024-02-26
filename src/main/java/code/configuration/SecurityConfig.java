@@ -53,7 +53,7 @@ public class SecurityConfig {
        havingValue = "true", matchIfMissing = true)
    SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
       return http
-          .csrf((AbstractHttpConfigurer::disable))
+          .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests
               .requestMatchers("/login", "/error", "/register", "register.html").permitAll()
               .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,7 +59,7 @@ public class SellerMenuController {
       return "redirect:/myMenu/get/%s".formatted(menuId);
    }
 
-   @DeleteMapping(MY_MENU_DELETE)
+   @PostMapping(MY_MENU_DELETE)
    public String deleteMenuPosition(
        @PathVariable("menuPositionId") Integer menuPositionId,
        @ModelAttribute("menuId") Integer menuId

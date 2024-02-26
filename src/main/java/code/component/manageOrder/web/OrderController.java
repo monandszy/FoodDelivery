@@ -9,8 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class OrderController {
       return "seller/order/order";
    }
 
-   @PatchMapping(ORDER_COMPLETE)
+   @PostMapping(ORDER_COMPLETE)
    public String completeOrder(
        @PathVariable("orderId") Integer orderId
    ) {

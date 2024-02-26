@@ -56,6 +56,7 @@
         </form>
         <form action="#" th:action="@{/myRestaurants/delete/{id}
         (id=${myRestaurant.id})}" th:method="DELETE">
+<!--          <input type="hidden" name="_method" value="put"/>   WHY?-->
           <button type="submit">-</button>
         </form>
       </td>

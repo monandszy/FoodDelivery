@@ -32,11 +32,11 @@ spring:
   mvc:
     hiddenmethod:
       filter:
-        enabled: true
-  #  logging:
-  #    level:
-  #      org:
-  #        springframework:
-  #          security: DEBUG
+        enabled: on
+    logging:
+      level:
+        org:
+          springframework:
+            security: DEBUG
   security:
     enabled: true

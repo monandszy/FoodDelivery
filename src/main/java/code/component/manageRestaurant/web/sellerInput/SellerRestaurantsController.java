@@ -7,7 +7,6 @@ import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +55,7 @@ public class SellerRestaurantsController {
       return "redirect:/myRestaurants/get";
    }
 
-   @DeleteMapping(MY_RESTAURANTS_DELETE)
+   @PostMapping(MY_RESTAURANTS_DELETE)
    public String deleteRestaurant(
        @PathVariable("restaurantId") Integer restaurantId
    ) {
