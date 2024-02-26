@@ -18,7 +18,7 @@ import java.math.BigInteger;
 public class RestaurantDTO {
 
    @Pattern(regexp = "[0-9]*")
-   private String id;
+   private Integer id;
    private AddressDTO address;
    private String seller;
 

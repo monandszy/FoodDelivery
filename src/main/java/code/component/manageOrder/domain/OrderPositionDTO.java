@@ -15,7 +15,7 @@ import lombok.With;
 public class OrderPositionDTO {
 
    @Pattern(regexp = "[0-9]*")
-   private String id;
+   private Integer id;
    private Integer orderId;
    private Integer menuPositionId;
 }

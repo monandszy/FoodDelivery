@@ -28,7 +28,7 @@ public class RestaurantController {
 
    @GetMapping(RESTAURANT_GET)
    public String getMenusView(
-       @PathVariable(value = "restaurantId") String restaurantId,
+       @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model,
        HttpSession session
@@ -38,7 +38,7 @@ public class RestaurantController {
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<MenuDTO> restaurantPage = dtoMapper.mapMToDTOList(
-          menuService.getPageByRestaurant(Integer.valueOf(restaurantId), pageNumber));
+          menuService.getPageByRestaurant(restaurantId, pageNumber));
       model.addAttribute("restaurantPage", restaurantPage);
       return "client/restaurant";
    }

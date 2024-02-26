@@ -38,11 +38,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="myMenuPosition : ${menuPage}">
-      <td th:text="${myMenuPosition.getId()}"></td>
+    <tr th:each="menuPosition : ${menuPage}">
+      <td th:text="${menuPosition.id}"></td>
       <td>
         <form action="#" th:action="@{/myMenu/delete/{id}
-        (id=${myMenuPosition.id}, menuId=${menuId})}" th:method="DELETE">
+        (id=${menuPosition.id})}" th:object="${menuId}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>

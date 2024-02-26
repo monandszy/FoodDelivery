@@ -40,20 +40,20 @@ public class OrderController {
 
    @GetMapping(ORDER_getForSeller)
    public String getOrderPositionsForSeller(
-       @PathVariable String orderId,
+       @PathVariable Integer orderId,
        Model model
    ) {
       List<OrderPositionDTO> orderPositions = dtoMapper.mapOPToDTOList(
-          orderService.getOrderPositions(Integer.valueOf(orderId)));
+          orderService.getOrderPositions(orderId));
       model.addAttribute("orderPositions", orderPositions);
       return "seller/order/order";
    }
 
    @PatchMapping(ORDER_COMPLETE)
    public String completeOrder(
-       @PathVariable("orderId") String orderId
+       @PathVariable("orderId") Integer orderId
    ) {
-      orderService.complete(Integer.valueOf(orderId));
+      orderService.complete(orderId);
       return "redirect:/order/getIncompleteBySeller";
    }
 }

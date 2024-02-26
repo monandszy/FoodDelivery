@@ -17,6 +17,6 @@ import java.math.BigDecimal;
 public class MenuPositionDTO {
 
    @Pattern(regexp = "[0-9]*")
-   private String id;
+   private Integer id;
    private BigDecimal price;
 }

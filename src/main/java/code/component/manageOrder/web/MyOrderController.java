@@ -51,11 +51,11 @@ public class MyOrderController {
 
    @GetMapping(ORDER_getForClient)
    public String getOrderPositionsForClient(
-       @PathVariable String orderId,
+       @PathVariable Integer orderId,
        Model model
    ) {
       List<OrderPositionDTO> orderPositions = orderDTOMapper.
-          mapOPToDTOList(orderService.getOrderPositions(Integer.valueOf(orderId)));
+          mapOPToDTOList(orderService.getOrderPositions(orderId));
       model.addAttribute("orderPositions", orderPositions);
       return "client/order/myOrder";
    }
@@ -66,7 +66,7 @@ public class MyOrderController {
        HttpSession session
    ) {
       AddressDTO address = (AddressDTO) session.getAttribute("ADDRESS");
-      Integer restaurantId = Integer.valueOf(session.getAttribute("RESTAURANT").toString());
+      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
       orderService.addOrder(menuPositions.stream()
               .map(restaurantDTOMapper::mapFromDTO)
               .map(menuPosition -> OrderPosition.builder()
@@ -79,9 +79,9 @@ public class MyOrderController {
 
    @DeleteMapping(ORDER_DELETE)
    public String deleteOrder(
-       @PathVariable("orderId") String orderId
+       @PathVariable("orderId") Integer orderId
    ) {
-      orderService.cancelOrder(Integer.valueOf(orderId));
+      orderService.cancelOrder(orderId);
       return "redirect:myOrders/getOrdersByClientId";
    }
 }

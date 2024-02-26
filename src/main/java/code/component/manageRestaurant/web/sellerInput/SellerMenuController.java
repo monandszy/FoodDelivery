@@ -3,6 +3,7 @@ package code.component.manageRestaurant.web.sellerInput;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,18 +34,19 @@ public class SellerMenuController {
 
    @GetMapping(MY_MENU_GET)
    public String getMenuViewById(
-       @PathVariable(value = "menuId") String menuId,
+       @PathVariable(value = "menuId") Integer menuId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-       @RequestParam(value = "restaurantId", required = false) Integer restaurantId,
+       HttpSession session,
        Model model
    ) {
+      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
       model.addAttribute("menuPositionDTO", MenuPositionDTO.builder().build());
       model.addAttribute("menuId", menuId);
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<MenuPositionDTO> menuPage = dtoMapper.mapMPToDTOList(
-          menuPositionService.getPageByMenu(Integer.valueOf(menuId), pageNumber));
+          menuPositionService.getPageByMenu(menuId, pageNumber));
       model.addAttribute("menuPage", menuPage);
       return "seller/myMenu";
    }
@@ -52,18 +54,18 @@ public class SellerMenuController {
    @PostMapping(MY_MENU_ADD)
    public String postMenuPosition(
        @ModelAttribute("menuPositionDTO") MenuPositionDTO menuPositionDTO,
-       @RequestParam("menuId") String menuId
+       @RequestParam("menuId") Integer menuId
    ) {
-      menuPositionService.add(dtoMapper.mapFromDTO(menuPositionDTO), Integer.valueOf(menuId));
+      menuPositionService.add(dtoMapper.mapFromDTO(menuPositionDTO), menuId);
       return "redirect:/myMenu/get/%s".formatted(menuId);
    }
 
    @DeleteMapping(MY_MENU_DELETE)
    public String deleteMenuPosition(
-       @PathVariable("menuPositionId") String menuPositionId,
-       @RequestParam("menuId") String menuId
+       @PathVariable("menuPositionId") Integer menuPositionId,
+       @ModelAttribute("menuId") Integer menuId
    ) {
-      menuPositionService.deleteById(Integer.valueOf(menuPositionId));
+      menuPositionService.deleteById(menuPositionId);
       return "redirect:/myMenu/get/%s".formatted(menuId);
    }
 }

@@ -43,13 +43,13 @@
       <td th:text="${myMenu.id}"></td>
       <td>
         <form action="#" th:action="@{/myMenu/get/{id}
-        (id=${myMenu.id}, restaurantId=${restaurantId})}" th:method="GET">
+        (id=${myMenu.id})}" th:method="GET">
           <button type="submit">+</button>
         </form>
       </td>
       <td>
         <form action="#" th:action="@{/myRestaurant/delete/{id}
-        (id=${myMenu.id}, restaurantId=${restaurantId})}" th:method="DELETE">
+        (id=${myMenu.id})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
       </td>

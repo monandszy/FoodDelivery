@@ -23,7 +23,7 @@
       <td th:text="${menu.id}"></td>
       <td>
         <form action="#" th:action="@{/menu/get/{id}
-        (id=${menu.id}, restaurantId=${restaurantId})}" method="GET">
+        (id=${menu.id})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>

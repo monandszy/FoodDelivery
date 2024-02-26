@@ -15,7 +15,7 @@ import lombok.With;
 public class MenuDTO {
 
    @Pattern(regexp = "[0-9]*")
-   private String id;
+   private Integer id;
    private Menu.MenuType menuType;
 
 }
