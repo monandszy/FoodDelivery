@@ -16,6 +16,8 @@ public class OrderPositionDTO {
 
    @Pattern(regexp = "[0-9]*")
    private Integer id;
+   @Pattern(regexp = "[0-9]*")
    private Integer orderId;
+   @Pattern(regexp = "[0-9]*")
    private Integer menuPositionId;
 }

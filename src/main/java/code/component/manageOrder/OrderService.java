@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,36 +25,35 @@ public class OrderService {
    }
 
    @Transactional
-   public void addOrder(List<OrderPosition> order, Address address, Integer restaurantId) {
-      if (order.isEmpty()) throw new RuntimeException(
-          "Your can't order nothing, pick an order Position before proceeding");
+   public void addOrder(Integer[] selected, Address address, Integer restaurantId) {
       orderDAO.addOrder(Order.builder()
           .address(address)
           .restaurantId(restaurantId)
           .client(accountService.getAuthenticatedAccount())
           .status(Order.OrderStatus.IN_PROGRESS)
           .timeOfOrder(OffsetDateTime.now())
-          .orderPositions(order).build());
+          .orderPositions(Arrays.stream(selected).map(e ->
+              OrderPosition.builder().menuPositionId(e).build()).toList()).build());
    }
 
    @Transactional
    public void cancelOrder(Integer orderId) {
       Order order = orderDAO.getOrderById(orderId);
-      // check for status! - can't cancel delivered
-      int i = order.getTimeOfOrder().compareTo(OffsetDateTime.now().minusMinutes(20));
-      if (i >= 0) {
-         orderDAO.cancelOrder(orderId);
-      } else {
-         throw new RuntimeException("Sorry you can't cancel your order anymore");
-      }
+      if (order.getStatus() != Order.OrderStatus.IN_PROGRESS)
+         throw new RuntimeException("Order status not IN_PROGRESS, cannot cancel");
+      if (order.getTimeOfOrder().isBefore(OffsetDateTime.now().minusMinutes(20)))
+         throw new RuntimeException("20 minute return timer has already expired");
+      orderDAO.cancelOrder(orderId);
    }
 
    @Transactional
    public void complete(Integer orderId) {
       Order order = orderDAO.getOrderById(orderId);
-      // verify seller session
-      // update data
-      orderDAO.updateOrder(order);
+      accountService.getAuthenticatedUserName();
+      // TODO verify seller session - restaurantId instead of SellerId in Order might be a bad idea?
+      // I need restaurantId for address comparing?
+      // add RestaurantEntity - from session and SellerEntity - from DTO?
+      orderDAO.completeOrder(order.withStatus(Order.OrderStatus.COMPLETED));
    }
 
    public List<Order> getIncompleteOrdersBySellerId(String sellerId) {

@@ -3,11 +3,9 @@ package code.orderManagement.web;
 import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.OrderDTO;
-import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageOrder.web.MyOrderController;
-import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
@@ -79,16 +77,16 @@ public class MyOrderIT {
    @Test
    void testAdd() throws Exception {
       int restaurantId = 1;
-      List<MenuPositionDTO> orderPositions = List.of(MenuPositionDTO.builder().id(1).build());
+      Integer[] selected = new Integer[]{1};
       AddressDTO addressDTO = WebEntityFixtures.getAddressDTO();
       Address address = Address.builder().id(1).build();
       Mockito.when(addressDTOMapper.mapFromDTO(addressDTO)).thenReturn(address);
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + ORDER_ADD)
-              .flashAttr("orderList", orderPositions)
+              .flashAttr("selectedPositions", selected)
               .sessionAttr("ADDRESS", addressDTO)
               .sessionAttr("RESTAURANT", restaurantId))
           .andExpect(MockMvcResultMatchers.view().name("redirect:myOrders/getOrdersByClientId"));
-      Mockito.verify(orderService).addOrder(List.of(OrderPosition.builder().build()), address, restaurantId);
+      Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }
 
    @WithMockUser(username = "seller", authorities = {"SELLER"})

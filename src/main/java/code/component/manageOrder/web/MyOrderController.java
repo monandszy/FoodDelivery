@@ -3,11 +3,8 @@ package code.component.manageOrder.web;
 import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.OrderDTO;
-import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
-import code.component.manageRestaurant.domain.MenuPositionDTO;
-import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import jakarta.servlet.http.HttpSession;
@@ -15,10 +12,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -33,7 +31,6 @@ public class MyOrderController {
 
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
-   private RestaurantDTOMapper restaurantDTOMapper;
    private AddressDTOMapper addressDTOMapper;
    private AccountService accountService;
 
@@ -61,19 +58,19 @@ public class MyOrderController {
 
    @PostMapping(ORDER_ADD)
    public String postOrder(
-       @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions,
+       @RequestParam("selectedPositions") Integer[] selected,
        HttpSession session
    ) {
+      if (selected.length == 0) throw new RuntimeException(
+          "Your can't order nothing, pick an order Position before proceeding");
       AddressDTO address = (AddressDTO) session.getAttribute("ADDRESS");
       Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
-      orderService.addOrder(menuPositions.stream()
-              .map(restaurantDTOMapper::mapFromDTO)
-              .map(menuPosition -> OrderPosition.builder()
-                  .menuPosition(menuPosition).build()).toList(),
+      System.out.println(Arrays.toString(selected));
+      orderService.addOrder(selected,
           addressDTOMapper.mapFromDTO(address),
           restaurantId
       );
-      return "redirect:myOrders/getOrdersByClientId";
+      return "redirect:order/getByClient";
    }
 
    @PostMapping(ORDER_DELETE)
@@ -81,6 +78,6 @@ public class MyOrderController {
        @PathVariable("orderId") Integer orderId
    ) {
       orderService.cancelOrder(orderId);
-      return "redirect:myOrders/getOrdersByClientId";
+      return "redirect:order/getByClient";
    }
 }

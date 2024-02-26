@@ -40,7 +40,6 @@ public class SellerRestaurantsController {
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
-      model.addAttribute("sellerId", sellerId);
       List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(restaurantService.getPageBySellerId(sellerId, pageNumber));
       model.addAttribute("restaurantsPage", restaurantsPage);
       return "seller/myRestaurants";

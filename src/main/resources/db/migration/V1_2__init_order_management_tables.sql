@@ -3,7 +3,7 @@ CREATE TABLE food_delivery.client_order
     id            SERIAL      NOT NULL,
     status        VARCHAR(20) NOT NULL,
     client_id     INT         NOT NULL,
-    address_id    INT         NOT NULL,
+    address_id    INT         ,
     restaurant_id INT         NOT NULL,
     time_of_order timestamptz NOT NULL,
     PRIMARY KEY (id),

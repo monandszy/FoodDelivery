@@ -1,10 +1,12 @@
 package code.component.manageRestaurant.web.clientOutput;
 
+import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.DeliveryService;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
+import code.component.manageRestaurant.service.RestaurantService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ public class RestaurantsController {
    private DeliveryService deliveryService;
    private RestaurantDTOMapper dtoMapper;
    private AddressDTOMapper addressDTOMapper;
+   private AccountService accountService;
+   private RestaurantService restaurantService;
 
    @GetMapping(RESTAURANTS_GET)
    public String getRestaurantsByAddress(
@@ -41,8 +45,12 @@ public class RestaurantsController {
       model.addAttribute("addressDTO", addressDTO);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(deliveryService.
-          getPageByAddress(addressDTOMapper.mapFromDTO(addressDTO), pageNumber));
+//      List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(deliveryService.
+//          getPageByAddress(addressDTOMapper.mapFromDTO(addressDTO), pageNumber));
+
+      // TODO address API integration
+      String sellerId = accountService.getAuthenticatedUserName();
+      List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(restaurantService.getPageBySellerId(sellerId, pageNumber));
       model.addAttribute("restaurantsByAddressPage", restaurantsPage);
       return "client/discover";
    }

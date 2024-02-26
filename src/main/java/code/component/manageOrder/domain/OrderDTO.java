@@ -19,6 +19,7 @@ public class OrderDTO {
    private Integer id;
    private Order.OrderStatus status;
    private String timeOfOrder;
+   @Pattern(regexp = "[0-9]*")
    private Integer restaurantId;
    private AddressDTO address;
 }

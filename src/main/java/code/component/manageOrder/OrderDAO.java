@@ -14,7 +14,7 @@ public interface OrderDAO {
 
    void cancelOrder(Integer orderId);
 
-   void updateOrder(Order order);
+   void completeOrder(Order order);
 
    List<Order> getIncompleteOrdersBySellerId(String sellerId);
 
