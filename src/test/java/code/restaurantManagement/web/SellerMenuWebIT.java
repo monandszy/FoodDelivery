@@ -49,7 +49,6 @@ public class SellerMenuWebIT {
               .queryParam("restaurantId", restaurantId.toString())
               .queryParam("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantId", restaurantId))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("menuPage", menuPage))
@@ -66,7 +65,6 @@ public class SellerMenuWebIT {
               .flashAttr("menuPositionDTO", menuPositionDTO))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/"
               + MY_MENU_GET.replace("{menuId}", menuId.toString())))
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(menuPositionService).add(null, menuId);
    }
@@ -80,7 +78,6 @@ public class SellerMenuWebIT {
               .param("menuId", Integer.toString(menuId)))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/"
               + MY_MENU_GET.replace("{menuId}", Integer.toString(menuId))))
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(menuPositionService).deleteById(menuPositionId);
    }

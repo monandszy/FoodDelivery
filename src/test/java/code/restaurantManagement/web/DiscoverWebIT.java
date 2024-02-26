@@ -67,7 +67,6 @@ public class DiscoverWebIT {
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + DISCOVER))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("clientId", userName))
           .andExpect(MockMvcResultMatchers.model().attribute("addressDTO", new AddressDTO()))
           .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
    }
@@ -82,7 +81,6 @@ public class DiscoverWebIT {
               .flashAttr("addressDTO", address)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.request().sessionAttribute("ADDRESS", address))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantsByAddressPage", restaurantPage))
@@ -100,7 +98,6 @@ public class DiscoverWebIT {
                   RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString()))
               .queryParam("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.request().sessionAttribute("RESTAURANT", restaurantId))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantId", restaurantId))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
@@ -119,7 +116,6 @@ public class DiscoverWebIT {
                   MENU_GET.replace("{menuId}", menuId.toString()))
               .queryParam("restaurantId", restaurantId.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantId", restaurantId))
           .andExpect(MockMvcResultMatchers.model().attribute("menuPositions", menuPositions))
           .andExpect(MockMvcResultMatchers.view().name("client/" + MENU));

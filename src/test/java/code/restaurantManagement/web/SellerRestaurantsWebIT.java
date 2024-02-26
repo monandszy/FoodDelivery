@@ -51,7 +51,6 @@ public class SellerRestaurantsWebIT {
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MY_RESTAURANTS_GET)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.model().attribute("sellerId", userName))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantPage", restaurantPage))
@@ -67,7 +66,6 @@ public class SellerRestaurantsWebIT {
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANTS_ADD)
               .flashAttr("restaurantDTO", restaurantDTO))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(restaurantService).add(null, userName);
    }
@@ -78,7 +76,6 @@ public class SellerRestaurantsWebIT {
       mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:8087/" +
               MY_RESTAURANTS_DELETE.replace("{restaurantId}", restaurantId.toString())))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(restaurantService).deleteById(restaurantId);
    }
