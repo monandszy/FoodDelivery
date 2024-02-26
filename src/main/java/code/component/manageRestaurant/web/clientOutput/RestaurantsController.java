@@ -1,10 +1,10 @@
 package code.component.manageRestaurant.web.clientOutput;
 
-import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.DeliveryService;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,11 +27,12 @@ public class RestaurantsController {
    public static final String RESTAURANTS_GET = RESTAURANTS + "/getByAddress";
 
    private DeliveryService deliveryService;
-   private RestaurantDTOMapper restaurantDtoMapper;
+   private RestaurantDTOMapper dtoMapper;
+   private AddressDTOMapper addressDTOMapper;
 
    @GetMapping(RESTAURANTS_GET)
-   String getRestaurantsViewByAddress(
-       @ModelAttribute(value = "address") AddressDTO addressDTO,
+   public String getRestaurantsByAddress(
+       @ModelAttribute(value = "addressDTO") AddressDTO addressDTO,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        HttpSession session,
        Model model
@@ -40,8 +41,8 @@ public class RestaurantsController {
       model.addAttribute("addressDTO", addressDTO);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<Restaurant> restaurants = deliveryService.getPageByAddress(addressDTO, pageNumber);
-      List<RestaurantDTO> restaurantsPage = restaurants.stream().map(restaurantDtoMapper::mapToDTO).toList();
+      List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(deliveryService.
+          getPageByAddress(addressDTOMapper.mapFromDTO(addressDTO), pageNumber));
       model.addAttribute("restaurantsByAddressPage", restaurantsPage);
       return "client/discover";
    }

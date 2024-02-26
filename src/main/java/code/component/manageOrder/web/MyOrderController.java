@@ -1,6 +1,6 @@
 package code.component.manageOrder.web;
 
-import code.component.manageAccount.UserAccountDetailsService;
+import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderDTO;
@@ -37,7 +37,7 @@ public class MyOrderController {
    private OrderDTOMapper orderDTOMapper;
    private RestaurantDTOMapper restaurantDTOMapper;
    private AddressDTOMapper addressDTOMapper;
-   private UserAccountDetailsService accountService;
+   private AccountService accountService;
 
    @GetMapping(ORDER_getByClient)
    public String getOrdersByClientId(

@@ -1,7 +1,6 @@
 package code.component.manageRestaurant.web.sellerInput;
 
-import code.component.manageAccount.UserAccountDetailsService;
-import code.component.manageRestaurant.domain.Restaurant;
+import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
@@ -22,7 +21,7 @@ import static code.configuration.Constants.START_PAGE;
 
 @Controller
 @AllArgsConstructor
-public class MyRestaurantsController {
+public class SellerRestaurantsController {
 
    public static final String MY_RESTAURANTS = "myRestaurants";
    public static final String MY_RESTAURANTS_GET = MY_RESTAURANTS + "/get";
@@ -30,7 +29,7 @@ public class MyRestaurantsController {
    public static final String MY_RESTAURANTS_DELETE = MY_RESTAURANTS + "/delete/{restaurantId}";
 
    private RestaurantService restaurantService;
-   private UserAccountDetailsService accountService;
+   private AccountService accountService;
    private RestaurantDTOMapper dtoMapper;
 
    @GetMapping(MY_RESTAURANTS_GET)
@@ -43,9 +42,8 @@ public class MyRestaurantsController {
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
       model.addAttribute("sellerId", sellerId);
-      List<Restaurant> restaurants = restaurantService.getPageBySellerId(sellerId, pageNumber);
-      List<RestaurantDTO> restaurantsPage = restaurants.stream().map(dtoMapper::mapToDTO).toList();
-      model.addAttribute("restaurantsPage", restaurantsPage);
+      List<RestaurantDTO> restaurantPage = dtoMapper.mapRToDTOList(restaurantService.getPageBySellerId(sellerId, pageNumber));
+      model.addAttribute("restaurantPage", restaurantPage);
       return "seller/myRestaurants";
    }
 
@@ -54,9 +52,7 @@ public class MyRestaurantsController {
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
       String sellerId = accountService.getAuthenticatedUserName();
-      restaurantService.add(
-          dtoMapper.mapFromDTO(restaurantDTO),
-          sellerId);
+      restaurantService.add(dtoMapper.mapFromDTO(restaurantDTO), sellerId);
       return "redirect:/myRestaurants/get";
    }
 

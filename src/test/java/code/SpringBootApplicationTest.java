@@ -29,7 +29,7 @@ public class SpringBootApplicationTest {
    private final TestRestTemplate restTemplate;
 
    @Test // test rest template probably has its own register page
-   public void thatRegisterPageWorksCorrectly() {
+   public void thatApplicationWorksCorrectly() {
       String url = String.format("http://localhost:%s/code/register", port);
 
       String renderedPage = this.restTemplate.getForObject(url, String.class);

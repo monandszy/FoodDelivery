@@ -1,6 +1,5 @@
 package code.component.manageRestaurant.web.clientOutput;
 
-import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
@@ -25,7 +24,7 @@ public class RestaurantController {
    public static final String RESTAURANT_GET = RESTAURANT + "/get/{restaurantId}";
 
    private MenuService menuService;
-   private RestaurantDTOMapper restaurantDtoMapper;
+   private RestaurantDTOMapper dtoMapper;
 
    @GetMapping(RESTAURANT_GET)
    public String getMenusView(
@@ -38,9 +37,8 @@ public class RestaurantController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<Menu> menus = menuService.getPageByRestaurant(restaurantId, pageNumber);
-      List<MenuDTO> restaurantMenus = menus.stream().map(restaurantDtoMapper::mapToDTO).toList();
-      model.addAttribute("restaurantPage", restaurantMenus);
+      List<MenuDTO> restaurantPage = dtoMapper.mapMToDTOList(menuService.getPageByRestaurant(restaurantId, pageNumber));
+      model.addAttribute("restaurantPage", restaurantPage);
       return "client/restaurant";
    }
 }

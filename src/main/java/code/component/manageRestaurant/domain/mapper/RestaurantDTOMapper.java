@@ -12,6 +12,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RestaurantDTOMapper {
 
@@ -37,4 +39,13 @@ public interface RestaurantDTOMapper {
    default String sellerMapping(Account account) {
       return account.getUserName();
    }
+
+   List<RestaurantDTO> mapRToDTOList(List<Restaurant> restaurants);
+   List<Restaurant> mapRFromDTOList(List<RestaurantDTO> restaurantDTOs);
+
+   List<MenuDTO> mapMToDTOList(List<Menu> menus);
+   List<Menu> mapMFromDTOList(List<MenuDTO> menuDTOs);
+
+   List<MenuPositionDTO> mapMPToDTOList(List<MenuPosition> menuPositions);
+   List<MenuPosition> mapMPFromDTOList(List<MenuPositionDTO> menuPositionDTOs);
 }

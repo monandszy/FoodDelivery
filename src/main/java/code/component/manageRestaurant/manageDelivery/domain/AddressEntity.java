@@ -22,7 +22,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "address", schema = "food_delivery")
+@Table(name = "addressDTO", schema = "food_delivery")
 public class AddressEntity {
 
    @Id

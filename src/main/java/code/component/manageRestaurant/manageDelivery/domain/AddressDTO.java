@@ -18,4 +18,6 @@ import org.springframework.stereotype.Component;
 public class AddressDTO {
 
    private Integer id;
+
+   private String someStringField;
 }

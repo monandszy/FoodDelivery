@@ -2,7 +2,6 @@ server:
   port: 8087
   servlet:
     context-path: /code
-
 spring:
   flyway:
     enabled: true
@@ -30,15 +29,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
-
   mvc:
     hiddenmethod:
       filter:
         enabled: true
-  logging:
-    level:
-      org:
-        springframework:
-          security: DEBUG
+  #  logging:
+  #    level:
+  #      org:
+  #        springframework:
+  #          security: DEBUG
   security:
     enabled: true

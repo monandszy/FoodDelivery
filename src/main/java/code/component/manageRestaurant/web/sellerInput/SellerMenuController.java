@@ -1,6 +1,5 @@
 package code.component.manageRestaurant.web.sellerInput;
 
-import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
@@ -22,7 +21,7 @@ import static code.configuration.Constants.START_PAGE;
 
 @Controller
 @AllArgsConstructor
-public class MyMenuController {
+public class SellerMenuController {
 
    public static final String MY_MENU = "myMenu";
    public static final String MY_MENU_GET = MY_MENU + "/get/{menuId}";
@@ -36,7 +35,7 @@ public class MyMenuController {
    public String getMenuViewById(
        @PathVariable(value = "menuId") Integer menuId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
-       @RequestParam(value = "restaurantId") Integer restaurantId,
+       @RequestParam(value = "restaurantId", required = false) Integer restaurantId,
        Model model
    ) {
       model.addAttribute("menuPositionDTO", MenuPositionDTO.builder().build());
@@ -44,8 +43,7 @@ public class MyMenuController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<MenuPosition> menu = menuPositionService.getPageByMenu(menuId, pageNumber);
-      List<MenuPositionDTO> menuPage = menu.stream().map(dtoMapper::mapToDTO).toList();
+      List<MenuPositionDTO> menuPage = dtoMapper.mapMPToDTOList(menuPositionService.getPageByMenu(menuId, pageNumber));
       model.addAttribute("menuPage", menuPage);
       return "seller/myMenu";
    }

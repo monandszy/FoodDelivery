@@ -1,6 +1,5 @@
 package code.component.manageRestaurant.web.sellerInput;
 
-import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
@@ -21,7 +20,7 @@ import static code.configuration.Constants.START_PAGE;
 
 @Controller
 @AllArgsConstructor
-public class MyRestaurantController {
+public class SellerRestaurantController {
 
    public static final String MY_RESTAURANT = "myRestaurant";
    public static final String MY_RESTAURANT_GET = MY_RESTAURANT + "/get/{restaurantId}";
@@ -41,9 +40,8 @@ public class MyRestaurantController {
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
-      List<Menu> menus = menuService.getPageByRestaurant(restaurantId, pageNumber);
-      List<MenuDTO> restaurantMenus = menus.stream().map(dtoMapper::mapToDTO).toList();
-      model.addAttribute("restaurantPage", restaurantMenus);
+      List<MenuDTO> restaurantPage = dtoMapper.mapMToDTOList(menuService.getPageByRestaurant(restaurantId, pageNumber));
+      model.addAttribute("restaurantPage", restaurantPage);
       return "seller/myRestaurant";
    }
    @PostMapping(MY_RESTAURANT_ADD)

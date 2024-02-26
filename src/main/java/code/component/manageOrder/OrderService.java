@@ -1,6 +1,6 @@
 package code.component.manageOrder;
 
-import code.component.manageAccount.UserAccountDetailsService;
+import code.component.manageAccount.AccountService;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
@@ -16,7 +16,7 @@ import java.util.List;
 public class OrderService {
 
    private OrderDAO orderDAO;
-   private UserAccountDetailsService userAccountDetailsService;
+   private AccountService accountService;
 
    @Transactional
    public List<OrderPosition> getOrderPositions(Integer orderId) {
@@ -30,7 +30,7 @@ public class OrderService {
       orderDAO.addOrder(Order.builder()
           .address(address)
           .restaurantId(restaurantId)
-          .client(userAccountDetailsService.getAuthenticatedAccount())
+          .client(accountService.getAuthenticatedAccount())
           .status(Order.OrderStatus.IN_PROGRESS)
           .timeOfOrder(OffsetDateTime.now())
           .orderPositions(order).build());

@@ -1,6 +1,6 @@
 package code.component.manageOrder.web;
 
-import code.component.manageAccount.UserAccountDetailsService;
+import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderDTO;
@@ -10,9 +10,9 @@ import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class OrderController {
    public static final String ORDER_COMPLETE = ORDER + "/complete";
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
-   private UserAccountDetailsService accountService;
+   private AccountService accountService;
 
    @GetMapping(ORDER_getBySeller)
    public String getIncompleteOrdersBySellerId(
@@ -51,7 +51,7 @@ public class OrderController {
       return "seller/order/order";
    }
 
-   @DeleteMapping(ORDER_COMPLETE)
+   @PatchMapping(ORDER_COMPLETE)
    public String completeOrder(
        @ModelAttribute("orderDTO") OrderDTO orderDTO
    ) {

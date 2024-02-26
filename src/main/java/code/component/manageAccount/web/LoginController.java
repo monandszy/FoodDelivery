@@ -9,7 +9,7 @@ class LoginController {
    public static final String LOGIN = "/login";
 
    @GetMapping(LOGIN)
-   String getLoginView() {
+   public String getLoginView() {
       return "login";
    }
 }
