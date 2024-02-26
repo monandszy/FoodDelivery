@@ -5,7 +5,7 @@ import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
 import code.component.manageRestaurant.web.sellerInput.SellerRestaurantController;
-import code.restaurantManagement.web.util.EntityFixtures;
+import code.util.WebEntityFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -42,12 +41,11 @@ public class SellerRestaurantWebIT {
    @MockBean
    private RestaurantDTOMapper dtoMapper;
 
-   @WithMockUser(username = "seller", authorities = {"SELLER"})
    @Test
    void testGet() throws Exception {
       Integer restaurantId = 1;
       Integer pageNumber = 2;
-      List<MenuDTO> restaurantPage = List.of(EntityFixtures.getMenuDTO());
+      List<MenuDTO> restaurantPage = List.of(WebEntityFixtures.getMenuDTO());
       Mockito.when(dtoMapper.mapMToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
                   MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString()))
@@ -61,11 +59,10 @@ public class SellerRestaurantWebIT {
       Mockito.verify(menuService).getPageByRestaurant(restaurantId, pageNumber);
    }
 
-   @WithMockUser(username = "seller", authorities = {"SELLER"})
    @Test
    void testAdd() throws Exception {
       Integer restaurantId = 1;
-      MenuDTO menuDTO = EntityFixtures.getMenuDTO();
+      MenuDTO menuDTO = WebEntityFixtures.getMenuDTO();
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANT_ADD)
               .param("restaurantId", restaurantId.toString())
               .flashAttr("menuDTO", menuDTO))
@@ -76,7 +73,6 @@ public class SellerRestaurantWebIT {
       Mockito.verify(menuService).add(null, restaurantId);
    }
 
-   @WithMockUser(username = "seller", authorities = {"SELLER"})
    @Test
    void testDelete() throws Exception {
       int restaurantId = 1;

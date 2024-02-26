@@ -2,7 +2,6 @@ package code.component.manageOrder.web;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
-import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
@@ -31,7 +30,7 @@ public class MyOrderController {
    public static final String ORDER_getByClient = ORDER + "/getByClient";
    public static final String ORDER_getForClient = ORDER + "/getForClient/{orderId}";
    public static final String ORDER_ADD = ORDER + "/add";
-   public static final String ORDER_DELETE = ORDER + "/delete";
+   public static final String ORDER_DELETE = ORDER + "/delete/{orderId}";
 
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
@@ -44,8 +43,8 @@ public class MyOrderController {
        Model model
    ) {
       String clientId = accountService.getAuthenticatedUserName();
-      List<Order> orderList = orderService.getOrdersByClientId(clientId);
-      List<OrderDTO> orders = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
+      List<OrderDTO> orders = orderDTOMapper.
+          mapOToDTOList(orderService.getOrdersByClientId(clientId));
       model.addAttribute("myOrders", orders);
       return "client/order/myOrders";
    }
@@ -55,15 +54,14 @@ public class MyOrderController {
        @PathVariable Integer orderId,
        Model model
    ) {
-      List<OrderPosition> orderList = orderService.getOrderPositions(orderId);
-      List<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
+      List<OrderPositionDTO> orderPositions = orderDTOMapper.
+          mapOPToDTOList(orderService.getOrderPositions(orderId));
       model.addAttribute("orderPositions", orderPositions);
       return "client/order/myOrder";
    }
 
    @PostMapping(ORDER_ADD)
    public String postOrder(
-
        @ModelAttribute("orderList") List<MenuPositionDTO> menuPositions,
        HttpSession session
    ) {
@@ -71,7 +69,8 @@ public class MyOrderController {
       Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
       orderService.addOrder(menuPositions.stream()
               .map(restaurantDTOMapper::mapFromDTO)
-              .map(e -> OrderPosition.builder().menuPosition(e).build()).toList(),
+              .map(menuPosition -> OrderPosition.builder()
+                  .menuPosition(menuPosition).build()).toList(),
           addressDTOMapper.mapFromDTO(address),
           restaurantId
       );
@@ -80,9 +79,9 @@ public class MyOrderController {
 
    @DeleteMapping(ORDER_DELETE)
    public String deleteOrder(
-       @ModelAttribute("orderDTO") OrderDTO orderDTO
+       @PathVariable("orderId") Integer orderId
    ) {
-      orderService.cancelOrder(orderDTOMapper.mapFromDTO(orderDTO));
+      orderService.cancelOrder(orderId);
       return "redirect:myOrders/getOrdersByClientId";
    }
 }

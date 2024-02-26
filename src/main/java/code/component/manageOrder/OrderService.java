@@ -37,18 +37,23 @@ public class OrderService {
    }
 
    @Transactional
-   public void cancelOrder(Order order) {
+   public void cancelOrder(Integer orderId) {
+      Order order = orderDAO.getOrderById(orderId);
+      // check for status! - can't cancel delivered
       int i = order.getTimeOfOrder().compareTo(OffsetDateTime.now().minusMinutes(20));
       if (i >= 0) {
-         orderDAO.cancelOrder();
+         orderDAO.cancelOrder(orderId);
       } else {
          throw new RuntimeException("Sorry you can't cancel your order anymore");
       }
    }
 
    @Transactional
-   public void completeOrder(Order order) {
-      orderDAO.updateOrder(order.withStatus(Order.OrderStatus.COMPLETED));
+   public void complete(Integer orderId) {
+      Order order = orderDAO.getOrderById(orderId);
+      // verify seller session
+      // update data
+      orderDAO.updateOrder(order);
    }
 
    public List<Order> getIncompleteOrdersBySellerId(String sellerId) {

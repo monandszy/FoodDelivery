@@ -12,11 +12,13 @@ public interface OrderDAO {
 
    void addOrder(Order build);
 
-   void cancelOrder();
+   void cancelOrder(Integer orderId);
 
    void updateOrder(Order order);
 
    List<Order> getIncompleteOrdersBySellerId(String sellerId);
 
    List<Order> getOrdersByClientId(String clientId);
+
+   Order getOrderById(Integer orderId);
 }

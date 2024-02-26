@@ -11,6 +11,7 @@ import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderDTOMapper {
@@ -51,4 +52,10 @@ public interface OrderDTOMapper {
    default OffsetDateTime stringToTimeMapping(String time) {
       return OffsetDateTime.parse(time);
    }
+
+   List<OrderPosition> mapOPFromDTOList(List<OrderPositionDTO> orderPositions);
+   List<OrderPositionDTO> mapOPToDTOList(List<OrderPosition> orderPositions);
+
+   List<Order> mapOFromDTOList(List<OrderDTO> orderPositions);
+   List<OrderDTO> mapOToDTOList(List<Order> orderPositions);
 }

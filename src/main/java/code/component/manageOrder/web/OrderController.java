@@ -2,16 +2,13 @@ package code.component.manageOrder.web;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
-import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderDTO;
-import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -24,9 +21,10 @@ public class OrderController {
    public static final String ORDER = "order";
    public static final String ORDER_getBySeller = ORDER + "/getIncompleteBySeller";
    public static final String ORDER_getForSeller = ORDER + "/getForSeller/{orderId}";
-   public static final String ORDER_COMPLETE = ORDER + "/complete";
+   public static final String ORDER_COMPLETE = ORDER + "/complete/{orderId}";
+
    private OrderService orderService;
-   private OrderDTOMapper orderDTOMapper;
+   private OrderDTOMapper dtoMapper;
    private AccountService accountService;
 
    @GetMapping(ORDER_getBySeller)
@@ -34,8 +32,8 @@ public class OrderController {
        Model model
    ) {
       String sellerId = accountService.getAuthenticatedUserName();
-      List<Order> orderList = orderService.getIncompleteOrdersBySellerId(sellerId);
-      List<OrderDTO> orders = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
+      List<OrderDTO> orders = dtoMapper.mapOToDTOList(
+          orderService.getIncompleteOrdersBySellerId(sellerId));
       model.addAttribute("orders", orders);
       return "seller/order/orders";
    }
@@ -45,17 +43,17 @@ public class OrderController {
        @PathVariable Integer orderId,
        Model model
    ) {
-      List<OrderPosition> orderList = orderService.getOrderPositions(orderId);
-      List<OrderPositionDTO> orderPositions = orderList.stream().map(orderDTOMapper::mapToDTO).toList();
+      List<OrderPositionDTO> orderPositions = dtoMapper.mapOPToDTOList(
+          orderService.getOrderPositions(orderId));
       model.addAttribute("orderPositions", orderPositions);
       return "seller/order/order";
    }
 
    @PatchMapping(ORDER_COMPLETE)
    public String completeOrder(
-       @ModelAttribute("orderDTO") OrderDTO orderDTO
+       @PathVariable("orderId") Integer orderId
    ) {
-      orderService.completeOrder(orderDTOMapper.mapFromDTO(orderDTO));
+      orderService.complete(orderId);
       return "redirect:/order/getIncompleteBySeller";
    }
 }

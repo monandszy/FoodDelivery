@@ -24,7 +24,7 @@ public class OrderRepo implements OrderDAO {
    }
 
    @Override
-   public void cancelOrder() {
+   public void cancelOrder(Integer orderId) {
 
    }
 
@@ -41,5 +41,10 @@ public class OrderRepo implements OrderDAO {
    @Override
    public List<Order> getOrdersByClientId(String clientId) {
       return List.of();
+   }
+
+   @Override
+   public Order getOrderById(Integer orderId) {
+      return null;
    }
 }
