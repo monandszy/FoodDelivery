@@ -1,4 +1,4 @@
-package code.restaurantManagement.data;
+package code.orderManagement.data;
 
 import code.component.manageAccount.domain.mapper.AccountEntityMapperImpl;
 import code.component.manageOrder.data.OrderRepo;
@@ -84,10 +84,12 @@ public class OrderRepoIT extends AbstractJpaIT {
    @Transactional
    void testUpdate() {
       String userName = "admin";
-      Order order = testAddOrder(1, userName, userName);
+      int order1Id = 1;
+      Order order = testAddOrder(order1Id, userName, userName);
+      testAddOrderPosition(order1Id, order);
       orderRepo.delete(order.getId());
       Assertions.assertThrows(Exception.class, () -> orderRepo.getById(order.getId()));
-      Order order2 = testAddOrder(1, userName, userName);
+      Order order2 = testAddOrder(2, userName, userName);
       orderRepo.updateOrderStatus(order2.getId(), Order.OrderStatus.COMPLETED);
       Order orderById = orderRepo.getById(order2.getId());
       Assertions.assertEquals(Order.OrderStatus.COMPLETED, orderById.getStatus());

@@ -3,6 +3,7 @@ package code.component.manageRestaurant.web.clientOutput;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
+import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class RestaurantController {
        Model model,
        HttpSession session
    ) {
-      session.setAttribute("RESTAURANT", restaurantId);
+      session.setAttribute(Constants.RESTAURANT, restaurantId);
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);

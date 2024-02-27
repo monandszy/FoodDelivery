@@ -85,7 +85,7 @@ public class MyOrderIT {
               .flashAttr("selectedPositions", selected)
               .sessionAttr("ADDRESS", addressDTO)
               .sessionAttr("RESTAURANT", restaurantId))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:myOrders/getOrdersByClientId"));
+          .andExpect(MockMvcResultMatchers.view().name("redirect:/orders/getOrdersByClientId"));
       Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }
 
@@ -95,7 +95,7 @@ public class MyOrderIT {
       Integer orderId = 1;
       mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:8087/" +
               ORDER_DELETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:myOrders/getOrdersByClientId"))
+          .andExpect(MockMvcResultMatchers.view().name("redirect:/orders/getOrdersByClientId"))
           .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(orderService).cancelOrder(orderId);

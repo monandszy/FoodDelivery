@@ -7,6 +7,7 @@ import code.component.manageRestaurant.manageDelivery.DeliveryService;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
+import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,8 @@ public class RestaurantsController {
        HttpSession session,
        Model model
    ) {
-      session.setAttribute("ADDRESS", addressDTO);
+      AddressDTO TEMP = AddressDTO.builder().id(1).build();
+      session.setAttribute(Constants.ADDRESS, TEMP);
       model.addAttribute("addressDTO", addressDTO);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);

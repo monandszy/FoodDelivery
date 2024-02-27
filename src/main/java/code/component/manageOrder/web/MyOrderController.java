@@ -7,6 +7,7 @@ import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
+import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -63,14 +64,14 @@ public class MyOrderController {
    ) {
       if (selected.length == 0) throw new RuntimeException(
           "Your can't order nothing, pick an order Position before proceeding");
-      AddressDTO address = (AddressDTO) session.getAttribute("ADDRESS");
-      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
+      AddressDTO address = (AddressDTO) session.getAttribute(Constants.ADDRESS);
+      Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       System.out.println(Arrays.toString(selected));
       orderService.addOrder(selected,
           addressDTOMapper.mapFromDTO(address),
           restaurantId
       );
-      return "redirect:order/getByClient";
+      return "redirect:/order/getByClient";
    }
 
    @PostMapping(ORDER_DELETE)
@@ -78,6 +79,6 @@ public class MyOrderController {
        @PathVariable("orderId") Integer orderId
    ) {
       orderService.cancelOrder(orderId);
-      return "redirect:order/getByClient";
+      return "redirect:/order/getByClient";
    }
 }

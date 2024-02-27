@@ -3,6 +3,7 @@ package code.component.manageRestaurant.web.sellerInput;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
+import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class SellerRestaurantController {
        HttpSession session,
        Model model
    ) {
-      session.setAttribute("RESTAURANT", restaurantId);
+      session.setAttribute(Constants.RESTAURANT, restaurantId);
       model.addAttribute("menuDTO", MenuDTO.builder().build());
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
@@ -52,7 +53,7 @@ public class SellerRestaurantController {
        @ModelAttribute("menuDTO") MenuDTO menuDTO,
        HttpSession session
    ) {
-      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
+      Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       menuService.add(dtoMapper.mapFromDTO(menuDTO), restaurantId);
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
@@ -62,7 +63,7 @@ public class SellerRestaurantController {
        @PathVariable("menuId") Integer menuId,
        HttpSession session
    ) {
-      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
+      Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       menuService.deleteById(menuId);
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }

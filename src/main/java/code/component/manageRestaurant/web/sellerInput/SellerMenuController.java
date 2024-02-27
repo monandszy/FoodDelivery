@@ -3,6 +3,7 @@ package code.component.manageRestaurant.web.sellerInput;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
+import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,19 +34,19 @@ public class SellerMenuController {
 
    @GetMapping(MY_MENU_GET)
    public String getMenuViewById(
-       @PathVariable(value = "menuId") Integer menuId,
+       @PathVariable(value = "menuId") String menuId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        HttpSession session,
        Model model
    ) {
-      Integer restaurantId = (Integer) session.getAttribute("RESTAURANT");
+      Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       model.addAttribute("menuPositionDTO", MenuPositionDTO.builder().build());
       model.addAttribute("menuId", menuId);
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<MenuPositionDTO> menuPage = dtoMapper.mapMPToDTOList(
-          menuPositionService.getPageByMenu(menuId, pageNumber));
+          menuPositionService.getPageByMenu(Integer.valueOf(menuId), pageNumber));
       model.addAttribute("menuPage", menuPage);
       return "seller/myMenu";
    }

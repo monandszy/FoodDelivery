@@ -30,9 +30,9 @@ public class OrderService {
    }
 
    @Transactional
-   public void addOrder(Integer[] selected, Address toSave, Integer restaurantId) {
+   public void addOrder(Integer[] selected, Address deliveryAddressToSave, Integer restaurantId) {
       Restaurant restaurant = restaurantDAO.getByRestaurantId(restaurantId);
-      Address address = addressDAO.add(toSave);
+      Address address = addressDAO.add(deliveryAddressToSave);
       Order orderToSave = Order.builder()
           .status(Order.OrderStatus.IN_PROGRESS)
           .timeOfOrder(OffsetDateTime.now()).build();

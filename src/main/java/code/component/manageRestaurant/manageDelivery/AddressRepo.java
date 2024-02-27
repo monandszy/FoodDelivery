@@ -20,6 +20,6 @@ public class AddressRepo implements AddressDAO {
 
    @Override
    public Address add(Address address) {
-      return null;
+      return Address.builder().id(1).build();
    }
 }

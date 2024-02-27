@@ -3,6 +3,7 @@ package code.component.manageOrder.domain;
 import code.component.manageAccount.domain.AccountEntity;
 import code.component.manageRestaurant.domain.RestaurantEntity;
 import code.component.manageRestaurant.manageDelivery.domain.AddressEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -64,6 +65,6 @@ public class OrderEntity {
    @JoinColumn(name = "restaurant_id")
    private RestaurantEntity restaurant;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = {CascadeType.REMOVE})
    private List<OrderPositionEntity> orderPositions;
 }
