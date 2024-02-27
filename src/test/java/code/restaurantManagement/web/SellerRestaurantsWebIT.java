@@ -5,7 +5,7 @@ import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import code.component.manageRestaurant.web.sellerInput.SellerRestaurantsController;
-import code.util.WebEntityFixtures;
+import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class SellerRestaurantsWebIT {
    void testGet() throws Exception {
       String userName = "seller";
       Integer pageNumber = 2;
-      List<RestaurantDTO> restaurantsPage = List.of(WebEntityFixtures.getRestaurantDTO());
+      List<RestaurantDTO> restaurantsPage = List.of(WebFixtures.getRestaurantDTO());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantsPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MY_RESTAURANTS_GET)
@@ -61,7 +61,7 @@ public class SellerRestaurantsWebIT {
    @Test
    void testAdd() throws Exception {
       String userName = "seller";
-      RestaurantDTO restaurantDTO = WebEntityFixtures.getRestaurantDTO();
+      RestaurantDTO restaurantDTO = WebFixtures.getRestaurantDTO();
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANTS_ADD)
               .flashAttr("restaurantDTO", restaurantDTO))

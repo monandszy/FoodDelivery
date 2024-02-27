@@ -1,5 +1,6 @@
 package code;
 
+import code.configuration.AbstractJpaIT;
 import code.configuration.DatabaseContainerTestConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -21,7 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 )
 @AutoConfigureMockMvc(addFilters = false)
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class SpringBootApplicationTest {
+public class SpringBootApplicationTest extends AbstractJpaIT {
 
    @LocalServerPort
    private int port;

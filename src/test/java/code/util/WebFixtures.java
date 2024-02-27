@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import static code.component.manageRestaurant.domain.Menu.MenuType.MENU_TYPE2;
 
 @UtilityClass
-public class WebEntityFixtures {
+public class WebFixtures {
 
    public RestaurantDTO getRestaurantDTO() {
       return RestaurantDTO.builder().seller("").build();

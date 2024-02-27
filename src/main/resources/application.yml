@@ -6,10 +6,6 @@ spring:
   flyway:
     enabled: true
     locations: classpath:/db/
-    url: jdbc:postgresql://localhost:5432/java_model
-    password: postgres
-    user: postgres
-    default-schema: food_delivery
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver

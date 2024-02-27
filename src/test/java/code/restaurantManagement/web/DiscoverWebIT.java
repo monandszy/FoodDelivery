@@ -14,7 +14,7 @@ import code.component.manageRestaurant.web.clientOutput.DiscoverController;
 import code.component.manageRestaurant.web.clientOutput.MenuController;
 import code.component.manageRestaurant.web.clientOutput.RestaurantController;
 import code.component.manageRestaurant.web.clientOutput.RestaurantsController;
-import code.util.WebEntityFixtures;
+import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -74,8 +74,8 @@ public class DiscoverWebIT {
    @Test
    void testGetRestaurants() throws Exception {
       Integer pageNumber = 2;
-      List<RestaurantDTO> restaurantPage = List.of(WebEntityFixtures.getRestaurantDTO());
-      AddressDTO address = WebEntityFixtures.getAddressDTO();
+      List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
+      AddressDTO address = WebFixtures.getAddressDTO();
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + RESTAURANTS_GET)
               .flashAttr("addressDTO", address)
@@ -92,7 +92,7 @@ public class DiscoverWebIT {
    void testGetRestaurant() throws Exception {
       Integer restaurantId = 1;
       Integer pageNumber = 2;
-      List<MenuDTO> restaurantPage = List.of(WebEntityFixtures.getMenuDTO());
+      List<MenuDTO> restaurantPage = List.of(WebFixtures.getMenuDTO());
       Mockito.when(dtoMapper.mapMToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
                   RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString()))
@@ -110,7 +110,7 @@ public class DiscoverWebIT {
    void testGetMenu() throws Exception {
       Integer menuId = 1;
       Integer restaurantId = 1;
-      List<MenuPositionDTO> menuPositions = List.of(WebEntityFixtures.getMenuPositionDTO());
+      List<MenuPositionDTO> menuPositions = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPositions);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
                   MENU_GET.replace("{menuId}", menuId.toString()))

@@ -4,7 +4,7 @@ import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.web.sellerInput.SellerMenuController;
-import code.util.WebEntityFixtures;
+import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,7 +42,7 @@ public class SellerMenuWebIT {
       Integer menuId = 1;
       Integer restaurantId = 1;
       Integer pageNumber = 2;
-      List<MenuPositionDTO> menuPage = List.of(WebEntityFixtures.getMenuPositionDTO());
+      List<MenuPositionDTO> menuPage = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
                   MY_MENU_GET.replace("{menuId}", menuId.toString()))
@@ -59,7 +59,7 @@ public class SellerMenuWebIT {
    @Test
    void testAdd() throws Exception {
       Integer menuId = 1;
-      MenuPositionDTO menuPositionDTO = WebEntityFixtures.getMenuPositionDTO();
+      MenuPositionDTO menuPositionDTO = WebFixtures.getMenuPositionDTO();
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_MENU_ADD)
               .param("menuId", menuId.toString())
               .flashAttr("menuPositionDTO", menuPositionDTO))

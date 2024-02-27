@@ -3,6 +3,7 @@ package code.configuration;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
@@ -17,14 +18,12 @@ public class DatabaseContainerTestConfiguration {
    public static final String CONTAINER = "postgres:16.1";
 
    @Bean
-   @SuppressWarnings("resource")
    PostgreSQLContainer<?> postgresqlContainer() {
-      PostgreSQLContainer<?> postgresqlContainer = new PostgreSQLContainer<>(CONTAINER)
-          .withUsername(USERNAME)
-          .withPassword(PASSWORD);
-      postgresqlContainer.start();
-      return postgresqlContainer;
+    return container;
    }
+
+   @ServiceConnection
+   static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16.1");
 
    @Bean
    DataSource dataSource(final PostgreSQLContainer<?> postgresqlContainer) {
