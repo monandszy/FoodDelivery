@@ -6,6 +6,7 @@ import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageOrder.web.OrderController;
+import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -53,7 +54,7 @@ public class OrderIT {
    @Test
    void testGetForSeller() throws Exception {
       Integer orderId = 1;
-      List<OrderPositionDTO> orderPositions = List.of(OrderPositionDTO.builder().id(1).build());
+      List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition());
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
               ORDER_getForSeller.replace("{orderId}", orderId.toString())))

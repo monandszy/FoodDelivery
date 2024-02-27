@@ -1,5 +1,6 @@
 package code.util;
 
+import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.RestaurantDTO;
@@ -28,5 +29,9 @@ public class WebFixtures {
 
    public AddressDTO getAddressDTO () {
       return AddressDTO.builder().someStringField("").build();
+   }
+
+   public static OrderPositionDTO getOrderPosition() {
+      return OrderPositionDTO.builder().build();
    }
 }

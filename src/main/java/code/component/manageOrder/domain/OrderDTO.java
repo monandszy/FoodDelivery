@@ -1,6 +1,5 @@
 package code.component.manageOrder.domain;
 
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +18,8 @@ public class OrderDTO {
    private Integer id;
    private Order.OrderStatus status;
    private String timeOfOrder;
-   @Pattern(regexp = "[0-9]*")
-   private Integer restaurantId;
-   private AddressDTO address;
+//   @Pattern(regexp = "[0-9]*")
+//   private Integer restaurantId;
+//   private Integer sellerId;
+//   private AddressDTO address;
 }

@@ -1,6 +1,7 @@
 package code.component.manageOrder.domain;
 
 import code.component.manageAccount.domain.Account;
+import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -23,8 +24,9 @@ public class Order {
    OffsetDateTime timeOfOrder;
    List<OrderPosition> orderPositions;
    Account client;
+   Account seller;
    Address address;
-   Integer restaurantId;
+   Restaurant restaurant;
 
    public enum OrderStatus {
       IN_PROGRESS,

@@ -7,18 +7,19 @@ import java.util.List;
 
 public interface OrderDAO {
 
-
    List<OrderPosition> getOrderPositions(Integer orderId);
 
-   void addOrder(Order build);
+   Order add(Order order, Integer addressId, String sellerId, String clientId, Integer restaurantId);
 
-   void cancelOrder(Integer orderId);
+   void addOrderPositions(List<OrderPosition> orderPositions, List<Integer> selected, Integer orderId);
 
-   void completeOrder(Order order);
+   void delete(Integer orderId);
+
+   void updateOrderStatus(Integer orderId, Order.OrderStatus updatedStatus);
 
    List<Order> getIncompleteOrdersBySellerId(String sellerId);
 
    List<Order> getOrdersByClientId(String clientId);
 
-   Order getOrderById(Integer orderId);
+   Order getById(Integer orderId);
 }

@@ -11,11 +11,10 @@ import java.util.List;
 public interface OrderJpaRepo extends JpaRepository<OrderEntity, Integer> {
    @Query(
        "SELECT od FROM OrderEntity od " +
-           "JOIN FETCH RestaurantEntity re on re.id = od.restaurantId " +
-           "JOIN FETCH AccountEntity ac on re.seller = ac " +
-           "WHERE ac.id = ?1 AND od.status = 'IN_PROGRESS'"
+           "JOIN FETCH AccountEntity ac on od.seller = ac " +
+           "WHERE ac.userName = ?1 AND od.status = 'IN_PROGRESS'"
    )
-   List<OrderEntity> findIncompleteBySeller_UserName(String sellerId);
+   List<OrderEntity> findIncompleteBySellerUserName(String sellerId);
 
-   List<OrderEntity> findByClient_UserName(String clientId);
+   List<OrderEntity> findByClientUserName(String clientId);
 }

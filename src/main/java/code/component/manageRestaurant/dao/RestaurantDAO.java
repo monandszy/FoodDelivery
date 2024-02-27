@@ -11,4 +11,5 @@ public interface RestaurantDAO extends CrudDAO<Restaurant> {
 
    void add(Restaurant restaurant, String sellerId);
 
+   Restaurant getByRestaurantId(Integer restaurantId);
 }

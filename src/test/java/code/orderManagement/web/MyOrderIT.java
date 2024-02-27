@@ -10,6 +10,7 @@ import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
+import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -64,7 +65,7 @@ public class MyOrderIT {
    @Test
    void testGetForClient() throws Exception {
       Integer orderId = 1;
-      List<OrderPositionDTO> orderPositions = List.of(OrderPositionDTO.builder().id(1).build());
+      List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition());
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
               ORDER_getForClient.replace("{orderId}", orderId.toString())))

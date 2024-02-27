@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class RestaurantRepoTest extends AbstractJpaIT {
    private MenuPositionRepo menuPositionRepo;
 
    @Test
+   @Transactional
    void thatCrudWorksCorrectly() {
       String sellerId = "admin";
       restaurantRepo.add(DataFixtures.getRestaurant(), sellerId);

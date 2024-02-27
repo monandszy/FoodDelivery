@@ -2,6 +2,7 @@ package code.component.manageRestaurant.data;
 
 import code.component.manageAccount.data.AccountJpaRepo;
 import code.component.manageAccount.domain.AccountEntity;
+import code.component.manageAccount.domain.mapper.AccountEntityMapper;
 import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
 import code.component.manageRestaurant.domain.Restaurant;
@@ -26,12 +27,21 @@ public class RestaurantRepo implements RestaurantDAO {
    private RestaurantJpaRepo restaurantJpaRepo;
    private AccountJpaRepo accountJpaRepo;
    private RestaurantEntityMapper entityMapper;
+   private AccountEntityMapper accountEntityMapper;
 
    public void add(Restaurant restaurant, String sellerId) {
+      // TODO add address adding
       RestaurantEntity save = entityMapper.mapToEntity(restaurant);
       save.setSeller(accountJpaRepo.findByUserName(sellerId)
           .orElseThrow(() -> new EntityNotFoundException("account not found")));
       restaurantJpaRepo.save(save);
+   }
+
+   @Override
+   public Restaurant getByRestaurantId(Integer restaurantId) {
+      RestaurantEntity restaurant = restaurantJpaRepo.findById(restaurantId).orElseThrow();
+      return entityMapper.mapFromEntity(restaurant).withSeller(
+          accountEntityMapper.mapFromEntity(restaurant.getSeller()));
    }
 
    @Override

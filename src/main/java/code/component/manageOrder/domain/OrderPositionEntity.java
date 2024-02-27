@@ -1,5 +1,6 @@
 package code.component.manageOrder.domain;
 
+import code.component.manageRestaurant.domain.MenuPositionEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -36,6 +37,7 @@ public class OrderPositionEntity {
    @JoinColumn(name = "order_id")
    private OrderEntity order;
 
-   @Column(name = "menu_position_id")
-   private Integer menuPositionId;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "menu_position_id")
+   private MenuPositionEntity menuPosition;
 }

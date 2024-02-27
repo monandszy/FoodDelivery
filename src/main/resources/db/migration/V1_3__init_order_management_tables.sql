@@ -3,7 +3,8 @@ CREATE TABLE food_delivery.client_order
     id            SERIAL      NOT NULL,
     status        VARCHAR(20) NOT NULL,
     client_id     INT         NOT NULL,
-    address_id    INT         ,
+    seller_id     INT         NOT NULL,
+    address_id    INT,
     restaurant_id INT         NOT NULL,
     time_of_order timestamptz NOT NULL,
     PRIMARY KEY (id),
@@ -17,6 +18,9 @@ CREATE TABLE food_delivery.client_order
     CONSTRAINT fk_client_account
         FOREIGN KEY (client_id)
             REFERENCES food_delivery.account (id),
+    CONSTRAINT fk_seller_account
+        FOREIGN KEY (seller_id)
+            REFERENCES food_delivery.account (id),
     CONSTRAINT fk_delivery_address
         FOREIGN KEY (address_id)
             REFERENCES food_delivery.address (id),
@@ -27,8 +31,10 @@ CREATE TABLE food_delivery.client_order
 
 CREATE TABLE food_delivery.order_position
 (
-    order_id         INT NOT NULL,
-    menu_position_id INT NOT NULL,
+    id               SERIAL NOT NULL,
+    order_id         INT    NOT NULL,
+    menu_position_id INT    NOT NULL,
+    PRIMARY KEY (id),
     CONSTRAINT fk_order_menu
         FOREIGN KEY (menu_position_id)
             REFERENCES food_delivery.menu_position (id),

@@ -1,11 +1,15 @@
 package code.util;
 
+import code.component.manageOrder.domain.Order;
+import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.OffsetDateTime;
 
 public class DataFixtures {
    public static Restaurant getRestaurant() {
@@ -24,5 +28,20 @@ public class DataFixtures {
       return MenuPosition.builder()
           .price(BigDecimal.valueOf(1))
           .build();
+   }
+
+   public static Order getOrder() {
+      return Order.builder()
+          .status(Order.OrderStatus.IN_PROGRESS)
+          .timeOfOrder(OffsetDateTime.now())
+          .build();
+   }
+
+   public static Address getAddress() {
+      return Address.builder().build();
+   }
+
+   public static OrderPosition getOrderPosition() {
+      return OrderPosition.builder().build();
    }
 }
