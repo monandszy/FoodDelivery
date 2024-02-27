@@ -28,11 +28,11 @@ public class MenuRepo implements MenuDAO {
    private RestaurantEntityMapper entityMapper;
 
    @Override
-   public void add(Menu menu, Integer restaurantId) {
+   public Menu add(Menu menu, Integer restaurantId) {
       MenuEntity save = entityMapper.mapToEntity(menu);
       save.setRestaurant(restaurantJpaRepo.findById(restaurantId)
           .orElseThrow(() -> new EntityNotFoundException("restaurant not found")));
-      menuJpaRepo.save(save);
+      return entityMapper.mapFromEntity(menuJpaRepo.save(save));
    }
 
    @Override

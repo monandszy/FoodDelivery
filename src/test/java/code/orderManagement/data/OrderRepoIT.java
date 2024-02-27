@@ -8,6 +8,10 @@ import code.component.manageOrder.domain.mapper.OrderEntityMapperImpl;
 import code.component.manageRestaurant.data.MenuPositionRepo;
 import code.component.manageRestaurant.data.MenuRepo;
 import code.component.manageRestaurant.data.RestaurantRepo;
+import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
+import code.component.manageRestaurant.domain.Menu;
+import code.component.manageRestaurant.domain.MenuPosition;
+import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapperImpl;
 import code.component.manageRestaurant.manageDelivery.AddressRepo;
 import code.component.manageRestaurant.manageDelivery.domain.AddressEntityMapperImpl;
@@ -41,14 +45,15 @@ public class OrderRepoIT extends AbstractJpaIT {
    private MenuRepo menuRepo;
    private MenuPositionRepo menuPositionRepo;
    private AddressRepo addressRepo;
+   private RestaurantJpaRepo restaurantJpaRepo;
 
    @Test
    @Transactional
    void testGet() {
       String sellerId = "admin";
       String clientId = "admin";
-      Order order = testAddOrder(1, sellerId, clientId);
-      testAddOrderPosition(1, order);
+      Order order = testAddOrder(sellerId, clientId);
+      testAddOrderPosition(order.getRestaurant().getId(), order);
 
       List<Order> ordersByClientId = orderRepo.getOrdersByClientId(clientId);
       List<Order> incompleteOrdersBySellerId = orderRepo.getIncompleteOrdersBySellerId(sellerId);
@@ -63,20 +68,20 @@ public class OrderRepoIT extends AbstractJpaIT {
       Assertions.assertFalse(orderPositions.isEmpty());
    }
 
-   private Order testAddOrder(int id, String sellerId, String clientId) {
-      restaurantRepo.add(DataFixtures.getRestaurant().withId(id), sellerId);
-      addressRepo.add(DataFixtures.getAddress().withId(id));
+   private Order testAddOrder(String sellerId, String clientId) {
+      Restaurant add = restaurantRepo.add(DataFixtures.getRestaurant(), sellerId);
+      addressRepo.add(DataFixtures.getAddress());
 
       return orderRepo.add(DataFixtures.getOrder(),
-          id, sellerId, clientId, id
-      );
+          null, sellerId, clientId, add.getId()
+      ).withRestaurant(add);
    }
 
-   private void testAddOrderPosition(int id, Order order) {
-      menuRepo.add(DataFixtures.getMenu().withId(id), id);
-      menuPositionRepo.add(DataFixtures.getMenuPosition().withId(id), id);
+   private void testAddOrderPosition(int restaurantId, Order order) {
+      Menu add = menuRepo.add(DataFixtures.getMenu(), restaurantId);
+      MenuPosition add1 = menuPositionRepo.add(DataFixtures.getMenuPosition(), add.getId());
       orderRepo.addOrderPositions(List.of(DataFixtures.getOrderPosition()),
-          List.of(id), order.getId());
+          List.of(add1.getId()), order.getId());
    }
 
 
@@ -84,12 +89,11 @@ public class OrderRepoIT extends AbstractJpaIT {
    @Transactional
    void testUpdate() {
       String userName = "admin";
-      int order1Id = 1;
-      Order order = testAddOrder(order1Id, userName, userName);
-      testAddOrderPosition(order1Id, order);
+      Order order = testAddOrder(userName, userName);
+      testAddOrderPosition(order.getRestaurant().getId(), order);
       orderRepo.delete(order.getId());
       Assertions.assertThrows(Exception.class, () -> orderRepo.getById(order.getId()));
-      Order order2 = testAddOrder(2, userName, userName);
+      Order order2 = testAddOrder(userName, userName);
       orderRepo.updateOrderStatus(order2.getId(), Order.OrderStatus.COMPLETED);
       Order orderById = orderRepo.getById(order2.getId());
       Assertions.assertEquals(Order.OrderStatus.COMPLETED, orderById.getStatus());

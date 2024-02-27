@@ -78,14 +78,15 @@ public class MyOrderIT {
    void testAdd() throws Exception {
       int restaurantId = 1;
       Integer[] selected = new Integer[]{1};
+      String selectedString = "1";
       AddressDTO addressDTO = WebFixtures.getAddressDTO();
       Address address = Address.builder().id(1).build();
       Mockito.when(addressDTOMapper.mapFromDTO(addressDTO)).thenReturn(address);
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + ORDER_ADD)
-              .flashAttr("selectedPositions", selected)
+              .param("selectedPositions", selectedString)
               .sessionAttr("ADDRESS", addressDTO)
               .sessionAttr("RESTAURANT", restaurantId))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/orders/getOrdersByClientId"));
+          .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getByClient"));
       Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }
 
@@ -93,9 +94,9 @@ public class MyOrderIT {
    @Test
    void testDelete() throws Exception {
       Integer orderId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
               ORDER_DELETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/orders/getOrdersByClientId"))
+          .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getByClient"))
           .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(orderService).cancelOrder(orderId);

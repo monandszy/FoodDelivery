@@ -66,7 +66,7 @@ public class OrderIT {
    @Test
    void testCompleteOrder() throws Exception {
       Integer orderId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.patch("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
               ORDER_COMPLETE.replace("{orderId}", orderId.toString())))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getIncompleteBySeller"));
       Mockito.verify(orderService).complete(orderId);

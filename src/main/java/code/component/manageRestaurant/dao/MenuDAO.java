@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MenuDAO extends CrudDAO<Menu> {
 
-   void add(Menu menu, Integer restaurantId);
+   Menu add(Menu menu, Integer restaurantId);
 
    List<Menu> getPageByRestaurantId(Integer restaurantId, Integer page);
 }

@@ -15,7 +15,7 @@ import static code.component.manageRestaurant.domain.Menu.MenuType.MENU_TYPE2;
 public class WebFixtures {
 
    public RestaurantDTO getRestaurantDTO() {
-      return RestaurantDTO.builder().seller("").build();
+      return RestaurantDTO.builder().id(1).build();
    }
 
 

@@ -2,6 +2,7 @@ package code.restaurantManagement.web;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.web.sellerInput.SellerHomeController;
+import code.configuration.Constants;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -31,7 +32,7 @@ public class SellerHomeWebIT {
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MANAGE))
           .andExpect(MockMvcResultMatchers.view().name("seller/" + MANAGE))
-          .andExpect(MockMvcResultMatchers.model().attribute("sellerId", userName));
+          .andExpect(MockMvcResultMatchers.model().attribute(Constants.USERNAME, userName));
    }
 
 

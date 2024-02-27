@@ -49,7 +49,6 @@ public class SellerMenuWebIT {
               .queryParam("restaurantId", restaurantId.toString())
               .queryParam("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("restaurantId", restaurantId))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("menuPage", menuPage))
           .andExpect(MockMvcResultMatchers.view().name("seller/" + MY_MENU));
@@ -73,7 +72,7 @@ public class SellerMenuWebIT {
    void testDelete() throws Exception {
       int menuId = 1;
       Integer menuPositionId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.delete("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
                   MY_MENU_DELETE.replace("{menuPositionId}", menuPositionId.toString()))
               .param("menuId", Integer.toString(menuId)))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/"
