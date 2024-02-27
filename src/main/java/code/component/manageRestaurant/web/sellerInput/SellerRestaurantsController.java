@@ -3,6 +3,7 @@ package code.component.manageRestaurant.web.sellerInput;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class SellerRestaurantsController {
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
+      model.addAttribute("addressDTO", new AddressDTO());
       model.addAttribute("restaurantDTO", new RestaurantDTO());
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);

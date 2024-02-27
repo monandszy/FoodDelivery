@@ -16,15 +16,19 @@
     <thead>
     <tr>
       <th>Id</th>
+      <th>Price</th>
       <th>Select</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="menuPosition : ${menuPositions}">
       <td th:text="${menuPosition.id}"></td>
+      <td th:text="${menuPosition.price}"></td>
       <td>
         <th:block>
-          <input type="checkbox" name="selectedPositions" th:value="${menuPosition.id}"/>
+          <label>
+            <input type="checkbox" name="selectedPositions" th:value="${menuPosition.id}"/>
+          </label>
         </th:block>
       </td>
     </tr>

@@ -11,7 +11,8 @@
 <body>
 <h1>Seller Home</h1>
 <div>
-  <p th:text="${sellerId}">SellerId</p>
+  <h2 th:inline = "text">
+    <small> Restaurants of The Glorious </small>[[${USERNAME}]]</h2>
 </div>
 <div>
   <a th:href="@{/order/getIncompleteBySeller}">Orders</a>

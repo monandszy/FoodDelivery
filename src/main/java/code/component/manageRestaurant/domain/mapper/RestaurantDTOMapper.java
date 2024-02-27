@@ -7,21 +7,25 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantDTO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
+import java.util.Objects;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RestaurantDTOMapper {
 
-   @Mapping(target = "seller", source = "seller", qualifiedByName = "sellerMapping")
+   @Mapping(target = "sellerOutput", source = "seller", qualifiedByName = "sellerMapping")
+   @Mapping(target = "addressOutput", source = "address", qualifiedByName = "addressMapping")
    RestaurantDTO mapToDTO(Restaurant restaurant);
 
    @Mapping(target = "menus", ignore = true)
-   @Mapping(target = "seller", source = "seller", ignore = true)
+   @Mapping(target = "seller", ignore = true)
+   @Mapping(target = "address", source = "addressInput", ignore = true)
    Restaurant mapFromDTO(RestaurantDTO restaurantDTO);
 
    MenuDTO mapToDTO(Menu menu);
@@ -37,7 +41,14 @@ public interface RestaurantDTOMapper {
 
    @Named("sellerMapping")
    default String sellerMapping(Account account) {
+      if (Objects.isNull(account)) return null;
       return account.getUserName();
+   }
+
+   @Named("addressMapping")
+   default String addressMapping(Address address) {
+      if (Objects.isNull(address)) return null;
+      return address.toString();
    }
 
    List<RestaurantDTO> mapRToDTOList(List<Restaurant> restaurants);

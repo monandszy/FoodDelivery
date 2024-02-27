@@ -53,7 +53,7 @@ public class RestaurantsController {
       // TODO address API integration
       String sellerId = accountService.getAuthenticatedUserName();
       List<RestaurantDTO> restaurantsPage = dtoMapper.mapRToDTOList(restaurantService.getPageBySellerId(sellerId, pageNumber));
-      model.addAttribute("restaurantsByAddressPage", restaurantsPage);
-      return "client/discover";
+      session.setAttribute(Constants.RESTAURANT_PAGE, restaurantsPage);
+      return "redirect:/discover";
    }
 }

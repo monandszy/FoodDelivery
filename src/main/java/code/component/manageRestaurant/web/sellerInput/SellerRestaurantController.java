@@ -39,7 +39,7 @@ public class SellerRestaurantController {
        Model model
    ) {
       session.setAttribute(Constants.RESTAURANT, restaurantId);
-      model.addAttribute("menuDTO", MenuDTO.builder().build());
+      model.addAttribute("menuDTO", new MenuDTO());
       model.addAttribute("restaurantId", restaurantId);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
@@ -48,6 +48,7 @@ public class SellerRestaurantController {
       model.addAttribute("restaurantPage", restaurantPage);
       return "seller/myRestaurant";
    }
+
    @PostMapping(MY_RESTAURANT_ADD)
    public String postMenu(
        @ModelAttribute("menuDTO") MenuDTO menuDTO,

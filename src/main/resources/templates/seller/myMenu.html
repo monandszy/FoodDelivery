@@ -34,12 +34,14 @@
     <thead>
     <tr>
       <th>Id</th>
+      <th>Price</th>
       <th>Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="menuPosition : ${menuPage}">
       <td th:text="${menuPosition.id}"></td>
+      <td th:text="${menuPosition.price}"></td>
       <td>
         <form action="#" th:action="@{/myMenu/delete/{id}
         (id=${menuPosition.id})}" th:object="${menuId}" th:method="DELETE">

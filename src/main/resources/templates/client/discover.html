@@ -12,7 +12,8 @@
 <main>
   <h1>Discover</h1>
   <div>
-    <p th:text = "${clientId}">ClientId</p>
+    <h2 th:inline = "text">
+      <small>Restaurant Search box of The Mighty </small>[[${USERNAME}]]</h2>
   </div>
   <div>
     <h2>Input Your Address</h2>
@@ -22,8 +23,8 @@
             th:object="${addressDTO}">
         <div>
           <label>
-<!--            kind of an update to empty addressDTO, maybe change-->
-<!--            Id: <input type="text" placeholder="Field" th:field="*{}"/>-->
+            <input type="text" placeholder="someStringField"
+                   th:field="*{someStringField}"/>
           </label>
         </div>
         <div>
@@ -38,12 +39,18 @@
       <thead>
       <tr>
         <th>Id</th>
+        <th>Range</th>
+        <th>SellerId</th>
+        <th>Address</th>
         <th>Show</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="restaurant : ${restaurantsByAddressPage}">
         <td th:text="${restaurant.id}"></td>
+        <td th:text="${restaurant.deliveryRange}"></td>
+        <td th:text="${restaurant.sellerOutput}"></td>
+        <td th:text="${restaurant.addressOutput}"></td>
         <td>
           <form action="#" th:action="@{/restaurant/get/{id}
           (id=${restaurant.id})}" method="GET">

@@ -1,6 +1,7 @@
 package code.component.manageRestaurant.web.sellerInput;
 
 import code.component.manageAccount.AccountService;
+import code.configuration.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ public class SellerHomeController {
 
    @GetMapping(MANAGE)
    public String redirect(Model model) {
-      model.addAttribute("sellerId", accountService.getAuthenticatedUserName());
+      model.addAttribute(Constants.USERNAME, accountService.getAuthenticatedUserName());
       return "seller/manage";
    }
 }

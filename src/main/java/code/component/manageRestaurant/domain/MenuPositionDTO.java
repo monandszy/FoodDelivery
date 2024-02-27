@@ -18,5 +18,6 @@ public class MenuPositionDTO {
 
    @Pattern(regexp = "[0-9]*")
    private Integer id;
+   @Pattern(regexp = "[0-9]*")
    private BigDecimal price;
 }

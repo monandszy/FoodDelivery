@@ -19,7 +19,11 @@
         th:object="${menuDTO}">
     <div>
       <label>
-        <input type="text" placeholder="MenuType" th:field="*{menuType}"/>
+        <select th:field="*{menuType}">
+          <option value="MENU_TYPE1">MENU_TYPE1</option>
+          <option value="MENU_TYPE2">MENU_TYPE2</option>
+          <option value="MENU_TYPE3">MENU_TYPE3</option>
+        </select>
       </label>
     </div>
     <div>
@@ -34,6 +38,7 @@
     <thead>
     <tr>
       <th>Id</th>
+      <th>MenuType</th>
       <th>Show</th>
       <th>Delete</th>
     </tr>
@@ -41,6 +46,7 @@
     <tbody>
     <tr th:each="myMenu : ${restaurantPage}">
       <td th:text="${myMenu.id}"></td>
+      <td th:text="${myMenu.menuType}"></td>
       <td>
         <form action="#" th:action="@{/myMenu/get/{id}
         (id=${myMenu.id})}" method="GET">

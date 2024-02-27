@@ -7,5 +7,7 @@ public interface Constants {
 
    String ADDRESS = "ADDRESS";
    String RESTAURANT = "RESTAURANT";
+   String USERNAME = "USERNAME";
 
+   String RESTAURANT_PAGE = "RESTAURANT_PAGE";
 }

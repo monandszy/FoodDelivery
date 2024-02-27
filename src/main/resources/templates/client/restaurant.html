@@ -15,12 +15,14 @@
     <thead>
     <tr>
       <th>Id</th>
+      <th>MenuType</th>
       <th>Show</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="menu : ${restaurantPage}">
       <td th:text="${menu.id}"></td>
+      <td th:text="${menu.menuType}"></td>
       <td>
         <form action="#" th:action="@{/menu/get/{id}
         (id=${menu.id})}" method="GET">
