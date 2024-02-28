@@ -37,8 +37,9 @@ public class SellerRestaurantsController {
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
-      model.addAttribute("addressDTO", new AddressDTO());
-      model.addAttribute("restaurantDTO", new RestaurantDTO());
+      RestaurantDTO emptyRestaurant = new RestaurantDTO();
+      emptyRestaurant.setAddressInput(new AddressDTO());
+      model.addAttribute("restaurantDTO", emptyRestaurant);
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();

@@ -30,7 +30,7 @@ public class OrderService {
    }
 
    @Transactional
-   public void addOrder(Integer[] selected, Address deliveryAddressToSave, Integer restaurantId) {
+   public Order addOrder(Integer[] selected, Address deliveryAddressToSave, Integer restaurantId) {
       Restaurant restaurant = restaurantDAO.getByRestaurantId(restaurantId);
       Address address = addressDAO.add(deliveryAddressToSave);
       Order orderToSave = Order.builder()
@@ -45,6 +45,7 @@ public class OrderService {
       List<Integer> selectedList = Arrays.asList(selected);
       orderDAO.addOrderPositions(selectedList.stream().map(selection ->
           OrderPosition.builder().build()).toList(), selectedList, order.getId());
+      return order;
    }
 
    @Transactional

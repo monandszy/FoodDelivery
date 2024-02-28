@@ -32,7 +32,6 @@ public class RestaurantRepo implements RestaurantDAO {
    public Restaurant add(Restaurant restaurant, String sellerId) {
       // TODO add address adding
       RestaurantEntity save = entityMapper.mapToEntity(restaurant);
-      System.out.println(save.getId());
       save.setSeller(accountJpaRepo.findByUserName(sellerId)
           .orElseThrow(() -> new EntityNotFoundException("account not found")));
       return entityMapper.mapFromEntity(restaurantJpaRepo.save(save));
@@ -41,6 +40,7 @@ public class RestaurantRepo implements RestaurantDAO {
    @Override
    public Restaurant getByRestaurantId(Integer restaurantId) {
       RestaurantEntity restaurant = restaurantJpaRepo.findById(restaurantId).orElseThrow();
+      System.out.println(restaurantId);
       return entityMapper.mapFromEntity(restaurant).withSeller(
           accountEntityMapper.mapFromEntity(restaurant.getSeller()));
    }

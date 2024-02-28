@@ -44,8 +44,8 @@ public class OrderRepo implements OrderDAO {
    public Order add(Order order, Integer addressId, String sellerId, String clientId, Integer restaurantId) {
       OrderEntity entity = orderMapper.mapToEntity(order);
 //      entity.setAddress(addressJpaRepo.findById(addressId).orElseThrow());
-      entity.setClient(accountJpaRepo.findByUserName(sellerId).orElseThrow());
-      entity.setSeller(accountJpaRepo.findByUserName(clientId).orElseThrow());
+      entity.setClient(accountJpaRepo.findByUserName(clientId).orElseThrow());
+      entity.setSeller(accountJpaRepo.findByUserName(sellerId).orElseThrow());
       entity.setRestaurant(restaurantJpaRepo.findById(restaurantId).orElseThrow());
       orderJpaRepo.save(entity);
       return orderMapper.mapFromEntity(entity);

@@ -5,6 +5,8 @@ import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageRestaurant.domain.MenuPosition;
+import code.component.manageRestaurant.domain.Restaurant;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -17,11 +19,12 @@ import java.util.Objects;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderDTOMapper {
 
+   @Mapping(target = "addressOutput", source = "address", qualifiedByName = "addressMapping")
+   @Mapping(target = "restaurantId", source = "restaurant", qualifiedByName = "restaurantMapping")
    @Mapping(target = "timeOfOrder", source = "timeOfOrder", qualifiedByName = "timeToStringMapping")
    OrderDTO mapToDTO(Order order);
 
    @Mapping(target = "orderPositions", ignore = true)
-   @Mapping(target = "address", ignore = true)
    @Mapping(target = "client", ignore = true)
    @Mapping(target = "timeOfOrder", source = "timeOfOrder", qualifiedByName = "stringToTimeMapping")
    Order mapFromDTO(OrderDTO orderDTO);
@@ -33,6 +36,18 @@ public interface OrderDTOMapper {
    @Mapping(target = "order", ignore = true)
    @Mapping(target = "menuPosition", ignore = true)
    OrderPosition mapFromDTO(OrderPositionDTO orderPositionDTO);
+
+   @Named("addressMapping")
+   default String addressMapping(Address address) {
+      if (Objects.isNull(address)) return null;
+      return address.toString();
+   }
+
+   @Named("restaurantMapping")
+   default Integer restaurantMapping(Restaurant restaurant) {
+      if (Objects.isNull(restaurant)) return null;
+      return restaurant.getId();
+   }
 
    @Named("orderMapping")
    default Integer orderIdMapping(Order order) {

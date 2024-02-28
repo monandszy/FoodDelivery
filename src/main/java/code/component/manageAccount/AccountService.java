@@ -27,7 +27,11 @@ public class AccountService implements UserDetailsService {
    private PasswordEncoder passwordEncoder;
 
    public String getAuthenticatedUserName() {
-      return SecurityContextHolder.getContext().getAuthentication().getName();
+      try {
+         return SecurityContextHolder.getContext().getAuthentication().getName();
+      } catch (Exception e) {
+         return "anonymousUser";
+      }
    }
 
    public Account getAuthenticatedAccount() {

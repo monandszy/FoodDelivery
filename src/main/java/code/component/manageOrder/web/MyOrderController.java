@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -66,7 +65,6 @@ public class MyOrderController {
           "Your can't order nothing, pick an order Position before proceeding");
       AddressDTO address = (AddressDTO) session.getAttribute(Constants.ADDRESS);
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
-      System.out.println(Arrays.toString(selected));
       orderService.addOrder(selected,
           addressDTOMapper.mapFromDTO(address),
           restaurantId

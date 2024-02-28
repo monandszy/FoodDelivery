@@ -19,12 +19,12 @@
     <div>
       <label>
         <input type="text" placeholder="deliveryRange"
-               th:value="${restaurantDTO.deliveryRange}" name="name"/>
+               th:field="*{deliveryRange}" name="name"/>
       </label>
       <br>
       <label>
         <input type="text" placeholder="someStringField"
-               th:value="${addressDTO.someStringField}" name="someStringField"/>
+               th:field="*{addressInput.someStringField}" name="someStringField"/>
       </label>
     </div>
     <div>
