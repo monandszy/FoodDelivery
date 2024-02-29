@@ -3,7 +3,9 @@ package code.component.manageRestaurant.web.sellerInput;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
+import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,8 @@ public class SellerRestaurantsController {
 
    private RestaurantService restaurantService;
    private AccountService accountService;
+   private AddressService addressService;
+   private AddressDTOMapper addressDTOMapper;
    private RestaurantDTOMapper dtoMapper;
 
    @GetMapping(MY_RESTAURANTS_GET)
@@ -37,9 +41,7 @@ public class SellerRestaurantsController {
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
    ) {
-      RestaurantDTO emptyRestaurant = new RestaurantDTO();
-      emptyRestaurant.setAddressInput(new AddressDTO());
-      model.addAttribute("restaurantDTO", emptyRestaurant);
+      model.addAttribute("restaurantDTO", new RestaurantDTO());
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       String sellerId = accountService.getAuthenticatedUserName();
@@ -52,8 +54,10 @@ public class SellerRestaurantsController {
    public String postRestaurant(
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
+      AddressDTO address = addressService.getAddress(accountService.getCurrentIp());
       String sellerId = accountService.getAuthenticatedUserName();
-      restaurantService.add(dtoMapper.mapFromDTO(restaurantDTO), sellerId);
+      restaurantService.add(dtoMapper.mapFromDTO(restaurantDTO)
+          , addressDTOMapper.mapFromDTO(address), sellerId);
       return "redirect:/myRestaurants/get";
    }
 

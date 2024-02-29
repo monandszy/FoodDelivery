@@ -10,4 +10,5 @@ public interface Constants {
    String USERNAME = "USERNAME";
 
    String RESTAURANT_PAGE = "RESTAURANT_PAGE";
+   String IP = "IP";
 }

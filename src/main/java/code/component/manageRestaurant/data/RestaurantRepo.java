@@ -8,7 +8,7 @@ import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantEntity;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapper;
-import jakarta.persistence.EntityNotFoundException;
+import code.component.manageRestaurant.manageDelivery.AddressJpaRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,21 +26,20 @@ public class RestaurantRepo implements RestaurantDAO {
 
    private RestaurantJpaRepo restaurantJpaRepo;
    private AccountJpaRepo accountJpaRepo;
+   private AddressJpaRepo addressJpaRepo;
    private RestaurantEntityMapper entityMapper;
    private AccountEntityMapper accountEntityMapper;
 
-   public Restaurant add(Restaurant restaurant, String sellerId) {
-      // TODO add address adding
+   public Restaurant add(Restaurant restaurant, Integer addressId, String sellerId) {
       RestaurantEntity save = entityMapper.mapToEntity(restaurant);
-      save.setSeller(accountJpaRepo.findByUserName(sellerId)
-          .orElseThrow(() -> new EntityNotFoundException("account not found")));
+      save.setSeller(accountJpaRepo.findByUserName(sellerId).orElseThrow());
+//      save.setAddress(addressJpaRepo.findById(addressId).orElseThrow()); TODO
       return entityMapper.mapFromEntity(restaurantJpaRepo.save(save));
    }
 
    @Override
    public Restaurant getByRestaurantId(Integer restaurantId) {
       RestaurantEntity restaurant = restaurantJpaRepo.findById(restaurantId).orElseThrow();
-      System.out.println(restaurantId);
       return entityMapper.mapFromEntity(restaurant).withSeller(
           accountEntityMapper.mapFromEntity(restaurant.getSeller()));
    }

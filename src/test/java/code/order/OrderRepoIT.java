@@ -13,6 +13,7 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapperImpl;
 import code.component.manageRestaurant.manageDelivery.AddressRepo;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.configuration.AbstractJpaIT;
 import code.util.DataFixtures;
 import lombok.AllArgsConstructor;
@@ -66,12 +67,13 @@ public class OrderRepoIT extends AbstractJpaIT {
    }
 
    private Order testAddOrder(String sellerId, String clientId) {
-      Restaurant add = restaurantRepo.add(DataFixtures.getRestaurant(), sellerId);
-      addressRepo.add(DataFixtures.getAddress());
+      Address add = addressRepo.add(DataFixtures.getAddress());
+      Restaurant restaurant = restaurantRepo.add(
+          DataFixtures.getRestaurant(), add.getId(), sellerId);
 
       return orderRepo.add(DataFixtures.getOrder(),
-          null, sellerId, clientId, add.getId()
-      ).withRestaurant(add);
+          add.getId(), sellerId, clientId, restaurant.getId()
+      ).withRestaurant(restaurant);
    }
 
    private void testAddOrderPosition(int restaurantId, Order order) {

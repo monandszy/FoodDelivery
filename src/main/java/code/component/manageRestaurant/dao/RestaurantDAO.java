@@ -9,7 +9,7 @@ public interface RestaurantDAO extends CrudDAO<Restaurant> {
 
    List<Restaurant> getPageBySeller(String sellerId, Integer page);
 
-   Restaurant add(Restaurant restaurant, String sellerId);
+   Restaurant add(Restaurant restaurant, Integer addressId, String sellerId);
 
    Restaurant getByRestaurantId(Integer restaurantId);
 }

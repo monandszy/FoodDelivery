@@ -3,6 +3,8 @@ package code.restaurant.web;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
+import code.component.manageRestaurant.manageDelivery.AddressService;
+import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import code.component.manageRestaurant.web.sellerInput.SellerRestaurantsController;
 import code.util.WebFixtures;
@@ -34,12 +36,14 @@ public class SellerRestaurantsWebIT {
 
    @MockBean
    private RestaurantService restaurantService;
-
    @MockBean
    private AccountService accountService;
-
    @MockBean
    private RestaurantDTOMapper dtoMapper;
+   @MockBean
+   private AddressDTOMapper addressDTOMapper;
+   @MockBean
+   private AddressService addressService;
 
    @Test
    void testGet() throws Exception {
@@ -59,14 +63,17 @@ public class SellerRestaurantsWebIT {
 
    @Test
    void testAdd() throws Exception {
+      String ip = "ip";
       String userName = "seller";
       RestaurantDTO restaurantDTO = WebFixtures.getRestaurantDTO();
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
+      Mockito.when(accountService.getCurrentIp()).thenReturn(ip);
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANTS_ADD)
               .flashAttr("restaurantDTO", restaurantDTO))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
           .andExpect(MockMvcResultMatchers.status().isFound());
-      Mockito.verify(restaurantService).add(null, userName);
+      Mockito.verify(restaurantService).add(null, null, userName);
+      Mockito.verify(addressService).getAddress(ip);
    }
 
    @Test

@@ -52,8 +52,7 @@ public class DeliveryWebIT {
       String ip = "ip";
       List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
       AddressDTO address = WebFixtures.getAddressDTO();
-      Mockito.when(accountService.getCurrentIp()).thenReturn(ip);
-      Mockito.when(apiClient.getAddressDTO(any())).thenReturn(address);
+      Mockito.when(addressService.getAddress(ip)).thenReturn(address);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + DISCOVER)
               .param("pageNumber", pageNumber.toString()))
@@ -62,9 +61,7 @@ public class DeliveryWebIT {
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantsByAddressPage", restaurantPage))
           .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
-      Mockito.verify(accountService).getCurrentIp();
-      Mockito.verify(apiClient).getAddressDTO(ip);
       Mockito.verify(addressService).getPageByAddress(null, pageNumber);
-
+      Mockito.verify(addressService).getAddress(ip);
    }
 }

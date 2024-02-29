@@ -8,6 +8,9 @@ import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapperImpl;
+import code.component.manageRestaurant.manageDelivery.AddressRepo;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.component.manageRestaurant.manageDelivery.domain.AddressEntityMapperImpl;
 import code.configuration.AbstractJpaIT;
 import code.util.DataFixtures;
 import lombok.AllArgsConstructor;
@@ -21,23 +24,30 @@ import java.util.List;
 
 @Import(value = {
     RestaurantRepo.class,
+    AddressRepo.class,
     MenuRepo.class,
     MenuPositionRepo.class,
     RestaurantEntityMapperImpl.class,
-    AccountEntityMapperImpl.class
+    AccountEntityMapperImpl.class,
+    AddressEntityMapperImpl.class
 })
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class RestaurantRepoIT extends AbstractJpaIT {
 
    private RestaurantRepo restaurantRepo;
+   private AddressRepo addressRepo;
    private MenuRepo menuRepo;
    private MenuPositionRepo menuPositionRepo;
 
    @Test
    @Transactional
    void thatCrudWorksCorrectly() {
+
+      Address address = DataFixtures.getAddress();
+      addressRepo.add(address);
+
       String sellerId = "admin";
-      restaurantRepo.add(DataFixtures.getRestaurant(), sellerId);
+      restaurantRepo.add(DataFixtures.getRestaurant(), address.getId(), sellerId);
       List<Restaurant> pageBySeller = restaurantRepo.getPageBySeller(sellerId, 0);
       Assertions.assertFalse(pageBySeller.isEmpty());
       Integer restaurantId = pageBySeller.getFirst().getId();

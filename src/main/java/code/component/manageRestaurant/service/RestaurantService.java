@@ -2,6 +2,8 @@ package code.component.manageRestaurant.service;
 
 import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.domain.Restaurant;
+import code.component.manageRestaurant.manageDelivery.AddressDAO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 public class RestaurantService {
    private RestaurantDAO restaurantDAO;
+   private AddressDAO addressDAO;
 
    @Transactional
-   public void add(Restaurant restaurant, String sellerId) {
-      restaurantDAO.add(restaurant, sellerId);
+   public void add(Restaurant restaurant, Address address, String sellerId) {
+      Address add = addressDAO.add(address);
+      restaurantDAO.add(restaurant, add.getId(), sellerId);
    }
 
    @Transactional

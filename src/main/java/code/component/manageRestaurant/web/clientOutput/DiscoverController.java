@@ -1,6 +1,5 @@
 package code.component.manageRestaurant.web.clientOutput;
 
-import code.api.ipAddressApi.ApiClientImpl;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
@@ -29,7 +28,6 @@ public class DiscoverController {
    private RestaurantDTOMapper dtoMapper;
    private AddressDTOMapper addressDTOMapper;
    private AccountService accountService;
-   private ApiClientImpl apiClient;
 
    @GetMapping(DISCOVER)
    public String getRestaurantsByIp(
@@ -44,9 +42,10 @@ public class DiscoverController {
       model.addAttribute("pageNumber", pageNumber);
 
       AddressDTO address = (AddressDTO) session.getAttribute(Constants.ADDRESS);
-      if (Objects.isNull(address) || Objects.nonNull(ip))
-         address = getAddress(ip, session);
-
+      if (Objects.isNull(address) || Objects.nonNull(ip)) {
+         address = addressService.getAddress(ip);
+         session.setAttribute(Constants.ADDRESS, address);
+      }
       List<RestaurantDTO> restaurantPage = dtoMapper.mapRToDTOList(
           addressService.getPageByAddress(addressDTOMapper.mapFromDTO(address), pageNumber));
       model.addAttribute("restaurantsByAddressPage", restaurantPage);
@@ -54,11 +53,4 @@ public class DiscoverController {
       return "client/discover";
    }
 
-   private AddressDTO getAddress(String ip, HttpSession session) {
-      if (Objects.isNull(ip))
-         ip = accountService.getCurrentIp();
-      AddressDTO address = apiClient.getAddressDTO(ip);
-      session.setAttribute(Constants.ADDRESS, address);
-      return address;
-   }
 }
