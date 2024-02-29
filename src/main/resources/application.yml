@@ -36,3 +36,6 @@ spring:
             security: DEBUG
   security:
     enabled: false
+api:
+  abstract:
+    url: https://ipgeolocation.abstractapi.com/v1

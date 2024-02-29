@@ -1,4 +1,4 @@
-package code.api;
+package code.api.orderApi;
 
 import code.component.manageOrder.domain.OrderPositionDTO;
 import lombok.AllArgsConstructor;

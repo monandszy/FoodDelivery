@@ -1,4 +1,4 @@
-package code.api;
+package code.api.orderApi;
 
 import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.Order;
@@ -7,6 +7,7 @@ import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +55,7 @@ public class OrderRestController {
           .build();
    }
 
-   @PostMapping(ORDER_DELETE)
+   @DeleteMapping(ORDER_DELETE)
    public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
       // TODO add custom error handling - for cancellation timeout
       orderService.cancelOrder(orderId);

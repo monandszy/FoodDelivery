@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "${springBoot}"
     id 'io.spring.dependency-management' version "${springDependencyManagement}"
+    id 'org.openapi.generator' version "${openApiGenerator}"
 }
 
 group = 'code'
@@ -29,17 +30,23 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'org.flywaydb:flyway-core'
-//    runtimeOnly 'org.flywaydb:flyway-database-postgresql'
     runtimeOnly 'org.postgresql:postgresql'
+
+    implementation "org.openapitools:jackson-databind-nullable:${jacksonDatabindNullable}"
+    implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApi}"
+    implementation "io.swagger.core.v3:swagger-annotations:${swaggerAnnotations}"
+
+    implementation "com.google.code.findbugs:jsr305:${jsr305}"
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation "org.mapstruct:mapstruct:${mapstruct}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstruct}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBinding}"
 
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
@@ -63,5 +70,29 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+// https://docs.abstractapi.com/ip-geolocation
+// https://petstore.swagger.io/?url=https://api.apis.guru/v2/specs/abstractapi.com/geolocation/1.0.0/openapi.json
+openApiGenerate {
+    generatorName = "java"
+    library = "webclient"
+    configOptions = [
+            serializableModel : "true",
+            dateLibrary : "java8",
+            serializationLibrary: "jackson"
+    ]
 
+    outputDir = "$buildDir/generated-sources/openapi".toString()
+    inputSpec = "$rootDir/src/main/resources/openApi/abstractapi.com_geolocation_1.0.0_openapi.json".toString()
+    apiPackage = "code.api.infrastructure"
+    modelPackage = "code.api.model"
+}
+
+sourceSets {
+    main {
+        java.srcDirs += "$buildDir/generated-sources/openapi/src/main/java"
+    }
+}
+
+
+compileJava.dependsOn tasks.openApiGenerate
 compileJava.options.encoding = 'UTF-8'

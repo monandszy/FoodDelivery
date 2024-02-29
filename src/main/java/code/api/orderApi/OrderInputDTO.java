@@ -1,4 +1,4 @@
-package code.api;
+package code.api.orderApi;
 
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import lombok.AllArgsConstructor;

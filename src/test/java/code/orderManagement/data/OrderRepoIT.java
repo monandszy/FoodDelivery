@@ -8,7 +8,6 @@ import code.component.manageOrder.domain.mapper.OrderEntityMapperImpl;
 import code.component.manageRestaurant.data.MenuPositionRepo;
 import code.component.manageRestaurant.data.MenuRepo;
 import code.component.manageRestaurant.data.RestaurantRepo;
-import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
@@ -45,7 +44,6 @@ public class OrderRepoIT extends AbstractJpaIT {
    private MenuRepo menuRepo;
    private MenuPositionRepo menuPositionRepo;
    private AddressRepo addressRepo;
-   private RestaurantJpaRepo restaurantJpaRepo;
 
    @Test
    @Transactional
