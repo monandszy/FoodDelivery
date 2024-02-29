@@ -1,4 +1,4 @@
-package code.restaurantManagement.web;
+package code.restaurant.web;
 
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;

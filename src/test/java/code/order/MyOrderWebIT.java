@@ -1,4 +1,4 @@
-package code.orderManagement.web;
+package code.order;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
@@ -34,7 +34,7 @@ import static org.mockito.ArgumentMatchers.any;
 @WebMvcTest(controllers = MyOrderController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class MyOrderIT {
+public class MyOrderWebIT {
 
    private MockMvc mockMvc;
 

@@ -1,4 +1,4 @@
-package code.restaurantManagement.data;
+package code.restaurant.data;
 
 import code.component.manageAccount.domain.mapper.AccountEntityMapperImpl;
 import code.component.manageRestaurant.data.MenuPositionRepo;
@@ -27,7 +27,7 @@ import java.util.List;
     AccountEntityMapperImpl.class
 })
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class RestaurantRepoTest extends AbstractJpaIT {
+public class RestaurantRepoIT extends AbstractJpaIT {
 
    private RestaurantRepo restaurantRepo;
    private MenuRepo menuRepo;

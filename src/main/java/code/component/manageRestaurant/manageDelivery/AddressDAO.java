@@ -1,12 +1,15 @@
 package code.component.manageRestaurant.manageDelivery;
 
-import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
 
-public interface AddressDAO {
-   void updateAddress(Restaurant restaurant);
+import java.util.Optional;
 
-   void updateRange(Restaurant restaurant);
+public interface AddressDAO {
+   void updateAddress(Address address, Integer restaurantId);
+
+   void updateRange(Integer range, Integer restaurantId);
 
    Address add(Address address);
+
+   Optional<Address> getByIp(String ip);
 }

@@ -32,7 +32,7 @@ public class DiscoverController {
    private ApiClientImpl apiClient;
 
    @GetMapping(DISCOVER)
-   public String getDiscover(
+   public String getRestaurantsByIp(
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        @RequestParam(value = "ip", required = false) String ip,
        Model model,

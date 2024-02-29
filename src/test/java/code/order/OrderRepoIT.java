@@ -1,4 +1,4 @@
-package code.orderManagement.data;
+package code.order;
 
 import code.component.manageAccount.domain.mapper.AccountEntityMapperImpl;
 import code.component.manageOrder.data.OrderRepo;
@@ -13,7 +13,6 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapperImpl;
 import code.component.manageRestaurant.manageDelivery.AddressRepo;
-import code.component.manageRestaurant.manageDelivery.domain.AddressEntityMapperImpl;
 import code.configuration.AbstractJpaIT;
 import code.util.DataFixtures;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ import java.util.List;
     MenuRepo.class,
     MenuPositionRepo.class,
     OrderEntityMapperImpl.class,
-    AddressEntityMapperImpl.class,
+//    AddressEntityMapperImpl.class,
     RestaurantEntityMapperImpl.class,
     AccountEntityMapperImpl.class,
 })

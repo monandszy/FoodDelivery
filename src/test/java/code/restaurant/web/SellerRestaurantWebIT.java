@@ -1,4 +1,4 @@
-package code.restaurantManagement.web;
+package code.restaurant.web;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.MenuDTO;

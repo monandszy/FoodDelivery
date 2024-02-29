@@ -12,13 +12,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AddressService {
 
-   private DeliveryServiceDAO deliveryServiceDAO;
+   private AddressDAO addressDAO;
 
    public List<Restaurant> getPageByAddress(Address address, Integer pageNumber) {
       return List.of();
    }
 
    public Optional<Address> getAddressByIp(String ip) {
-      return Optional.of(Address.builder().build());
+      return addressDAO.getByIp(ip);
    }
+
 }

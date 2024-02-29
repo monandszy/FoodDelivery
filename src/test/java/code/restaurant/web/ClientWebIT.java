@@ -1,4 +1,4 @@
-package code.restaurantManagement.web;
+package code.restaurant.web;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.MenuDTO;
@@ -41,7 +41,7 @@ import static org.mockito.ArgumentMatchers.any;
 })
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class DiscoverWebIT {
+public class ClientWebIT {
 
    private MockMvc mockMvc;
 
@@ -69,24 +69,6 @@ public class DiscoverWebIT {
           .andExpect(MockMvcResultMatchers.model().attribute("addressDTO", new AddressDTO()))
           .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
    }
-
-//   @Test
-//   @Disabled
-//   void testGetRestaurants() throws Exception {
-//      Integer pageNumber = 2;
-//      List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
-//      AddressDTO address = WebFixtures.getAddressDTO();
-//      Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
-//      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + RESTAURANTS_GET)
-//              .flashAttr("addressDTO", address)
-//              .param("pageNumber", pageNumber.toString()))
-//          .andExpect(MockMvcResultMatchers.status().isOk())
-//          .andExpect(MockMvcResultMatchers.request().sessionAttribute("ADDRESS", address))
-//          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
-//          .andExpect(MockMvcResultMatchers.model().attribute("restaurantsByAddressPage", restaurantPage))
-//          .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
-//      Mockito.verify(deliveryService).getPageByAddress(null, pageNumber);
-//   }
 
    @Test
    void testGetRestaurant() throws Exception {
