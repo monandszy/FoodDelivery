@@ -44,7 +44,7 @@ public class RestaurantRepoIT extends AbstractJpaIT {
    void thatCrudWorksCorrectly() {
 
       Address address = DataFixtures.getAddress();
-      addressRepo.add(address);
+      addressRepo.addOrFind(address);
 
       String sellerId = "admin";
       restaurantRepo.add(DataFixtures.getRestaurant(), address.getId(), sellerId);
@@ -75,6 +75,16 @@ public class RestaurantRepoIT extends AbstractJpaIT {
       restaurantRepo.deleteById(restaurantId);
       pageBySeller = restaurantRepo.getPageBySeller(sellerId, 0);
       Assertions.assertTrue(pageBySeller.isEmpty());
+   }
+
+   @Test
+   public void testUpdateAddress() {
+       // TODO
+   }
+
+   @Test
+   public void testUpdateRange() {
+
    }
 
 }

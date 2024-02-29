@@ -38,7 +38,13 @@ public class DataFixtures {
    }
 
    public static Address getAddress() {
-      return Address.builder().build();
+      return Address.builder()
+          .ipAddress("ip")
+          .city("city")
+          .latitude(BigDecimal.valueOf(1))
+          .longitude(BigDecimal.valueOf(2))
+          .postalCode("code")
+          .build();
    }
 
    public static OrderPosition getOrderPosition() {

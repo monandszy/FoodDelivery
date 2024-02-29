@@ -67,7 +67,7 @@ public class OrderRepoIT extends AbstractJpaIT {
    }
 
    private Order testAddOrder(String sellerId, String clientId) {
-      Address add = addressRepo.add(DataFixtures.getAddress());
+      Address add = addressRepo.addOrFind(DataFixtures.getAddress());
       Restaurant restaurant = restaurantRepo.add(
           DataFixtures.getRestaurant(), add.getId(), sellerId);
 

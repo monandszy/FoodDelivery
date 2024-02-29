@@ -11,17 +11,7 @@ import java.util.Optional;
 public class AddressRepo implements AddressDAO {
 
    @Override
-   public void updateAddress(Address address, Integer restaurantId) {
-
-   }
-
-   @Override
-   public void updateRange(Integer range, Integer restaurantId) {
-
-   }
-
-   @Override
-   public Address add(Address address) {
+   public Address addOrFind(Address address) {
       return Address.builder().id(1).build();
    }
 

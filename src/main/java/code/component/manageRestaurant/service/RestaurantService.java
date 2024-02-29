@@ -18,7 +18,7 @@ public class RestaurantService {
 
    @Transactional
    public void add(Restaurant restaurant, Address address, String sellerId) {
-      Address add = addressDAO.add(address);
+      Address add = addressDAO.addOrFind(address);
       restaurantDAO.add(restaurant, add.getId(), sellerId);
    }
 

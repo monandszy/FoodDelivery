@@ -10,26 +10,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
-
 @Component
 @AllArgsConstructor
 public class ApiClientImpl implements ApiDAO {
 
-   private WebClient webClient;
-   private DefaultApi defaultApi;
    private final AddressApiMapper addressApiMapper;
    private final AddressDTOMapper addressDTOMapper;
    private final AddressService addressService;
+   private WebClient webClient;
+   private DefaultApi defaultApi;
 
-   public Address getAddressDTO(String ip) {
-      Optional<Address> address = addressService.getAddressByIp(ip);
-      if (address.isPresent()) {
-         return address.get();
-      } else {
-         Mono<InlineResponse200> inlineResponse200Mono = defaultApi.v1Get(ApiDAO.KEY, ip, ApiDAO.FIELDS);
-         InlineResponse200 block = inlineResponse200Mono.block();
-         return addressApiMapper.mapToAddress(block);
-      }
+   public Address getAddressFromApi(String ip) {
+      Mono<InlineResponse200> inlineResponse200Mono = defaultApi.v1Get(ApiDAO.KEY, ip, ApiDAO.FIELDS);
+      InlineResponse200 block = inlineResponse200Mono.block();
+      return addressApiMapper.mapToAddress(block);
    }
 }
