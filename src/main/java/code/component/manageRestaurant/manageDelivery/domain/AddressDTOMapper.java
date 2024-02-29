@@ -9,7 +9,7 @@ public class AddressDTOMapper {
       return null;
    }
 
-   public Address mapToDTO(AddressDTO address) {
+   public AddressDTO mapToDTO(Address address) {
       return null;
    }
 }

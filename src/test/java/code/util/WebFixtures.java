@@ -28,7 +28,7 @@ public class WebFixtures {
    }
 
    public AddressDTO getAddressDTO () {
-      return AddressDTO.builder().someStringField("").build();
+      return AddressDTO.builder().city("a").build();
    }
 
    public static OrderPositionDTO getOrderPosition() {

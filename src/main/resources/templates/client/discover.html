@@ -12,25 +12,23 @@
 <main>
   <h1>Discover</h1>
   <div>
-    <h2 th:inline = "text">
+    <h2 th:inline="text">
       <small>Restaurant Search box of The Mighty </small>[[${USERNAME}]]</h2>
   </div>
   <div>
-    <h2>Input Your Address</h2>
-      <form action="#"
-            th:action="@{/restaurants/getByAddress}"
-            th:method="GET"
-            th:object="${addressDTO}">
-        <div>
-          <label>
-            <input type="text" placeholder="someStringField"
-                   th:field="*{someStringField}"/>
-          </label>
-        </div>
-        <div>
-          <button type="submit">Set address</button>
-        </div>
-      </form>
+    <h2>Input IpAddress (Current is default)</h2>
+    <form action="#"
+          th:action="@{/discover}"
+          th:method="GET">
+      <div>
+        <label>
+          <input type="text" placeholder="Your ip" th:name="ip"/>
+        </label>
+      </div>
+      <div>
+        <button type="submit">Set address</button>
+      </div>
+    </form>
   </div>
 
   <div>
@@ -64,17 +62,17 @@
 
   <div>
     <h2>Page</h2>
-      <form action="#" th:action="@{/restaurants/getByAddress}"
-            th:method="GET" th:object="${addressDTO}">
-        <div>
-          <label>
-            <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
-          </label>
-        </div>
-        <div>
-          <button type="submit">Set Page</button>
-        </div>
-      </form>
+    <form action="#" th:action="@{/discover}"
+          th:method="GET">
+      <div>
+        <label>
+          <input type="text" placeholder="PageNumber" th:name="pageNumber"/>
+        </label>
+      </div>
+      <div>
+        <button type="submit">Set Page</button>
+      </div>
+    </form>
   </div>
 
   <div>

@@ -5,8 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 @With
 @Data
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-@Scope("session")
 public class AddressDTO {
 
    private Integer id;
-
-   private String someStringField;
+   private String city;
+   private String postalCode;
+   private String ipAddress;
+   private BigDecimal latitude;
+   private BigDecimal longitude;
 }

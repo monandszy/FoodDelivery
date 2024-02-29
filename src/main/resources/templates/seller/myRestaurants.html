@@ -12,6 +12,7 @@
 <body>
 <div>
   <h2>Add Restaurant</h2>
+  <p>Address is automatically assigned based on your ip address</p>
   <form action="#"
         th:action="@{/myRestaurants/add}"
         th:method="POST"
@@ -20,11 +21,6 @@
       <label>
         <input type="text" placeholder="deliveryRange"
                th:field="*{deliveryRange}" name="name"/>
-      </label>
-      <br>
-      <label>
-        <input type="text" placeholder="someStringField"
-               th:field="*{addressInput.someStringField}" name="someStringField"/>
       </label>
     </div>
     <div>

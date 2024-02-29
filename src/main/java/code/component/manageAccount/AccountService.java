@@ -1,7 +1,9 @@
 package code.component.manageAccount;
 
+import code.api.ipAddressApi.ApiDAO;
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.Role;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +27,7 @@ public class AccountService implements UserDetailsService {
 
    private AccountManagementDAO managementDAO;
    private PasswordEncoder passwordEncoder;
+   private HttpServletRequest request;
 
    public String getAuthenticatedUserName() {
       try {
@@ -76,4 +79,18 @@ public class AccountService implements UserDetailsService {
           .withRoles(Set.of(Role.builder().role(ACCOUNT).build())));
    }
 
+   public String getCurrentIp() {
+      String remoteAddr = "";
+      request.getRemoteAddr();
+      if (request != null) {
+         remoteAddr = request.getHeader("X-FORWARDED-FOR");
+         if (remoteAddr == null || "".equals(remoteAddr)) {
+            remoteAddr = request.getRemoteAddr();
+         }
+      }
+      if (remoteAddr.equals("127.0.0.1")) {
+         return ApiDAO.TEST_IP;
+      }
+      return remoteAddr;
+   }
 }
