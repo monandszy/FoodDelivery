@@ -10,6 +10,7 @@ import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.configuration.Constants;
+import code.util.DataFixtures;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -79,7 +80,7 @@ public class MyOrderWebIT {
       int restaurantId = 1;
       Integer[] selected = new Integer[]{1};
       String selectedString = "1";
-      Address address = WebFixtures.getAddress();
+      Address address = DataFixtures.getAddress();
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + ORDER_ADD)
               .param("selectedPositions", selectedString)
               .sessionAttr(Constants.ADDRESS, address)

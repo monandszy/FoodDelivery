@@ -16,6 +16,7 @@ public class MenuService {
 
    @Transactional
    public void add(Menu menu, Integer restaurantId) {
+      // TODO picture adding
       menuDAO.add(menu, restaurantId);
    }
 

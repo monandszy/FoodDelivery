@@ -5,7 +5,7 @@ import code.component.manageRestaurant.manageDelivery.domain.Address;
 import java.util.Optional;
 
 public interface AddressDAO {
-   Address addOrFind(Address address);
+   Address addOrFindByIp(Address address);
 
    Optional<Address> getByIp(String ip);
 }

@@ -7,6 +7,5 @@ import org.mapstruct.ReportingPolicy;
 public interface AddressEntityMapper {
 
    public Address mapFromEntity(AddressEntity address);
-
    public AddressEntity mapToEntity(Address address);
 }

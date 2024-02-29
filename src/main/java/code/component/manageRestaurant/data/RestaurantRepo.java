@@ -34,7 +34,7 @@ public class RestaurantRepo implements RestaurantDAO {
    public Restaurant add(Restaurant restaurant, Integer addressId, String sellerId) {
       RestaurantEntity save = entityMapper.mapToEntity(restaurant);
       save.setSeller(accountJpaRepo.findByUserName(sellerId).orElseThrow());
-//      save.setAddress(addressJpaRepo.findById(addressId).orElseThrow()); TODO
+      save.setAddress(addressJpaRepo.findById(addressId).orElseThrow());
       return entityMapper.mapFromEntity(restaurantJpaRepo.save(save));
    }
 

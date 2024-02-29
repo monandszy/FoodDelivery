@@ -14,6 +14,7 @@ import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapperImpl;
 import code.component.manageRestaurant.manageDelivery.AddressRepo;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.component.manageRestaurant.manageDelivery.domain.AddressEntityMapperImpl;
 import code.configuration.AbstractJpaIT;
 import code.util.DataFixtures;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ import java.util.List;
     MenuRepo.class,
     MenuPositionRepo.class,
     OrderEntityMapperImpl.class,
-//    AddressEntityMapperImpl.class,
+    AddressEntityMapperImpl.class,
     RestaurantEntityMapperImpl.class,
     AccountEntityMapperImpl.class,
 })
@@ -67,7 +68,7 @@ public class OrderRepoIT extends AbstractJpaIT {
    }
 
    private Order testAddOrder(String sellerId, String clientId) {
-      Address add = addressRepo.addOrFind(DataFixtures.getAddress());
+      Address add = addressRepo.addOrFindByIp(DataFixtures.getAddress());
       Restaurant restaurant = restaurantRepo.add(
           DataFixtures.getRestaurant(), add.getId(), sellerId);
 

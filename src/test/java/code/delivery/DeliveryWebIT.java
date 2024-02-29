@@ -9,6 +9,7 @@ import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.web.clientOutput.DiscoverController;
 import code.configuration.Constants;
+import code.util.DataFixtures;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -51,17 +52,18 @@ public class DeliveryWebIT {
       Integer pageNumber = 2;
       String ip = "ip";
       List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
-      Address address = WebFixtures.getAddress();
+      Address address = DataFixtures.getAddress();
       Mockito.when(addressService.getAddress(ip)).thenReturn(address);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + DISCOVER)
+              .param("ip", ip)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
           .andExpect(MockMvcResultMatchers.request().sessionAttribute(Constants.ADDRESS, address))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantsByAddressPage", restaurantPage))
           .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
-      Mockito.verify(addressService).getPageByAddress(null, pageNumber);
+      Mockito.verify(addressService).getPageByAddress(address, pageNumber);
       Mockito.verify(addressService).getAddress(ip);
    }
 }

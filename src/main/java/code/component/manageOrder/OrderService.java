@@ -32,7 +32,7 @@ public class OrderService {
    @Transactional
    public Order addOrder(Integer[] selected, Address address, Integer restaurantId) {
       Restaurant restaurant = restaurantDAO.getByRestaurantId(restaurantId);
-      address = addressDAO.addOrFind(address);
+      address = addressDAO.addOrFindByIp(address);
       Order orderToSave = Order.builder()
           .status(Order.OrderStatus.IN_PROGRESS)
           .timeOfOrder(OffsetDateTime.now()).build();

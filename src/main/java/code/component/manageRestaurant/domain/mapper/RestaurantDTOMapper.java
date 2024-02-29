@@ -25,7 +25,6 @@ public interface RestaurantDTOMapper {
 
    @Mapping(target = "menus", ignore = true)
    @Mapping(target = "seller", ignore = true)
-   @Mapping(target = "address", source = "addressInput", ignore = true)
    Restaurant mapFromDTO(RestaurantDTO restaurantDTO);
 
    MenuDTO mapToDTO(Menu menu);

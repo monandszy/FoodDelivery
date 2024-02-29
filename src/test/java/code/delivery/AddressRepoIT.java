@@ -29,11 +29,11 @@ public class AddressRepoIT extends AbstractJpaIT {
    @Test
    public void testAddOrFind() {
       Address someAddress = DataFixtures.getAddress();
-      Address address1 = addressRepo.addOrFind(someAddress);
+      Address address1 = addressRepo.addOrFindByIp(someAddress);
       List<AddressEntity> all1 = addressJpaRepo.findAll();
       Assertions.assertTrue(all1.size() == 1);
-      Address address2 = addressRepo.addOrFind(someAddress);
-      Assertions.assertEquals(someAddress, address2);
+      Address address2 = addressRepo.addOrFindByIp(someAddress);
+      Assertions.assertEquals(address1, address2);
       List<AddressEntity> all2 = addressJpaRepo.findAll();
       Assertions.assertTrue(all2.size() == 1);
    }
@@ -41,8 +41,8 @@ public class AddressRepoIT extends AbstractJpaIT {
    @Test
    public void testGetByIp() {
       String ip = "ip";
-      Address address = DataFixtures.getAddress().withIpAddress(ip);
-      addressRepo.addOrFind(address);
+      Address address = addressRepo.addOrFindByIp(
+          DataFixtures.getAddress().withIpAddress(ip));
       Optional<Address> byIp = addressRepo.getByIp(ip);
       Assertions.assertTrue(byIp.isPresent());
       Assertions.assertEquals(address, byIp.get());

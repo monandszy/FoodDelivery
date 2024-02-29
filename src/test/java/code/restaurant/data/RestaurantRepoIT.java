@@ -43,8 +43,7 @@ public class RestaurantRepoIT extends AbstractJpaIT {
    @Transactional
    void thatCrudWorksCorrectly() {
 
-      Address address = DataFixtures.getAddress();
-      addressRepo.addOrFind(address);
+      Address address = addressRepo.addOrFindByIp(DataFixtures.getAddress());
 
       String sellerId = "admin";
       restaurantRepo.add(DataFixtures.getRestaurant(), address.getId(), sellerId);
