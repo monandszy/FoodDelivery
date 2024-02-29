@@ -31,4 +31,5 @@ public class AddressRepo implements AddressDAO {
       return addressJpaRepo.findByIpAddress(ip)
           .map(e -> entityMapper.mapFromEntity(e));
    }
+
 }

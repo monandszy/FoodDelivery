@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @Getter
@@ -41,7 +40,7 @@ public class RestaurantEntity {
    private Integer id;
 
    @Column(name = "delivery_range")
-   private BigInteger deliveryRange;
+   private Double deliveryRange;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "seller_id")

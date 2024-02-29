@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
@@ -39,7 +37,7 @@ public class AddressEntity {
    @Column(name = "ip_address")
    private String ipAddress;
    @Column(name = "latitude")
-   private BigDecimal latitude;
+   private Double latitude;
    @Column(name = "longitude")
-   private BigDecimal longitude;
+   private Double longitude;
 }

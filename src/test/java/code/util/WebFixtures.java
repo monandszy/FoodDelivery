@@ -7,7 +7,6 @@ import code.component.manageRestaurant.domain.RestaurantDTO;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import static code.component.manageRestaurant.domain.Menu.MenuType.MENU_TYPE2;
 
@@ -15,7 +14,7 @@ import static code.component.manageRestaurant.domain.Menu.MenuType.MENU_TYPE2;
 public class WebFixtures {
 
    public RestaurantDTO getRestaurantDTO() {
-      return RestaurantDTO.builder().deliveryRange(BigInteger.valueOf(1)).build();
+      return RestaurantDTO.builder().deliveryRange(1D).build();
    }
 
    public MenuDTO getMenuDTO() {

@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.With;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @With
 @Data
 @Builder
@@ -21,6 +19,6 @@ public class AddressDTO {
    private String city;
    private String postalCode;
    private String ipAddress;
-   private BigDecimal latitude;
-   private BigDecimal longitude;
+   private Double latitude;
+   private Double longitude;
 }

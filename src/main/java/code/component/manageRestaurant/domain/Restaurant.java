@@ -8,7 +8,6 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @With
@@ -21,6 +20,6 @@ public class Restaurant {
    Integer id;
    Address address;
    Account seller;
-   BigInteger deliveryRange;
+   Double deliveryRange;
    List<Menu> menus;
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,4 +22,8 @@ public interface RestaurantJpaRepo extends JpaRepository<RestaurantEntity, Integ
        attributePaths = "seller"
    )
    Optional<RestaurantEntity> findById(@NonNull Integer restaurantId);
+
+
+   @Override
+   List<RestaurantEntity> findAll();
 }

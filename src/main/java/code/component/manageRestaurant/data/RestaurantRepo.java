@@ -68,4 +68,9 @@ public class RestaurantRepo implements RestaurantDAO {
 
    }
 
+   @Override
+   public List<Restaurant> getAllWithAddress() {
+      return entityMapper.mapRFromEntityList(restaurantJpaRepo.findAll());
+   }
+
 }

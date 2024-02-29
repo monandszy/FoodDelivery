@@ -17,4 +17,6 @@ public interface RestaurantDAO extends CrudDAO<Restaurant> {
    void updateAddress(Address address, Integer restaurantId);
 
    void updateRange(Integer range, Integer restaurantId);
+
+   List<Restaurant> getAllWithAddress();
 }

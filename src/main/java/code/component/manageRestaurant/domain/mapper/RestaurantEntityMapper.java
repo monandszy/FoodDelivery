@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RestaurantEntityMapper {
    @Mapping(target = "menus", source = "menus", ignore = true)
@@ -31,4 +33,7 @@ public interface RestaurantEntityMapper {
 
    @Mapping(target = "menu", source = "menu", ignore = true)
    MenuPosition mapFromEntity(MenuPositionEntity menuPositionEntity);
+
+   List<Restaurant> mapRFromEntityList(List<RestaurantEntity> all);
+   List<RestaurantEntity> mapRToEntityList(List<Restaurant> all);
 }

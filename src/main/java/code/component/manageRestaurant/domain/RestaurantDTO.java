@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
-import java.math.BigInteger;
-
 @With
 @Data
 @Builder
@@ -24,5 +22,5 @@ public class RestaurantDTO {
    private String sellerOutput;
 
    @Pattern(regexp = "[0-9]*")
-   private BigInteger deliveryRange;
+   private Double deliveryRange;
 }

@@ -6,8 +6,6 @@ import lombok.ToString;
 import lombok.Value;
 import lombok.With;
 
-import java.math.BigDecimal;
-
 @With
 @Value
 @Builder
@@ -19,7 +17,7 @@ public class Address {
    String city;
    String postalCode;
    String ipAddress;
-   BigDecimal latitude;
-   BigDecimal longitude;
+   Double latitude;
+   Double longitude;
 
 }
