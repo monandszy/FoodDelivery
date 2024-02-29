@@ -4,7 +4,7 @@ import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
@@ -41,13 +41,13 @@ public class DiscoverController {
       pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
 
-      AddressDTO address = (AddressDTO) session.getAttribute(Constants.ADDRESS);
+      Address address = (Address) session.getAttribute(Constants.ADDRESS);
       if (Objects.isNull(address) || Objects.nonNull(ip)) {
          address = addressService.getAddress(ip);
          session.setAttribute(Constants.ADDRESS, address);
       }
       List<RestaurantDTO> restaurantPage = dtoMapper.mapRToDTOList(
-          addressService.getPageByAddress(addressDTOMapper.mapFromDTO(address), pageNumber));
+          addressService.getPageByAddress(address, pageNumber));
       model.addAttribute("restaurantsByAddressPage", restaurantPage);
 
       return "client/discover";

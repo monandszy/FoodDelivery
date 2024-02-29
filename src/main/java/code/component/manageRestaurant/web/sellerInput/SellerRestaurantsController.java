@@ -4,7 +4,7 @@ import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
@@ -54,10 +54,10 @@ public class SellerRestaurantsController {
    public String postRestaurant(
        @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
    ) {
-      AddressDTO address = addressService.getAddress(accountService.getCurrentIp());
+      Address address = addressService.getAddress(accountService.getCurrentIp());
       String sellerId = accountService.getAuthenticatedUserName();
       restaurantService.add(dtoMapper.mapFromDTO(restaurantDTO)
-          , addressDTOMapper.mapFromDTO(address), sellerId);
+          , address, sellerId);
       return "redirect:/myRestaurants/get";
    }
 

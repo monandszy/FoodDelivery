@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
@@ -29,4 +31,15 @@ public class AddressEntity {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name ="id")
    private Integer id;
+
+   @Column(name = "city")
+   private String city;
+   @Column(name = "postal_code")
+   private String postalCode;
+   @Column(name = "ip_address")
+   private String ipAddress;
+   @Column(name = "latitude")
+   private BigDecimal latitude;
+   @Column(name = "longitude")
+   private BigDecimal longitude;
 }

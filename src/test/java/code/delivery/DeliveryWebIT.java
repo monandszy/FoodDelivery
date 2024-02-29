@@ -5,7 +5,7 @@ import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.web.clientOutput.DiscoverController;
 import code.configuration.Constants;
@@ -51,7 +51,7 @@ public class DeliveryWebIT {
       Integer pageNumber = 2;
       String ip = "ip";
       List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
-      AddressDTO address = WebFixtures.getAddressDTO();
+      Address address = WebFixtures.getAddress();
       Mockito.when(addressService.getAddress(ip)).thenReturn(address);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + DISCOVER)

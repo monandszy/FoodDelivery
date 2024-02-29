@@ -8,8 +8,8 @@ import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageOrder.web.MyOrderController;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -79,13 +79,11 @@ public class MyOrderWebIT {
       int restaurantId = 1;
       Integer[] selected = new Integer[]{1};
       String selectedString = "1";
-      AddressDTO addressDTO = WebFixtures.getAddressDTO();
-      Address address = Address.builder().id(1).build();
-      Mockito.when(addressDTOMapper.mapFromDTO(addressDTO)).thenReturn(address);
+      Address address = WebFixtures.getAddress();
       mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + ORDER_ADD)
               .param("selectedPositions", selectedString)
-              .sessionAttr("ADDRESS", addressDTO)
-              .sessionAttr("RESTAURANT", restaurantId))
+              .sessionAttr(Constants.ADDRESS, address)
+              .sessionAttr(Constants.RESTAURANT, restaurantId))
           .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getByClient"));
       Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }

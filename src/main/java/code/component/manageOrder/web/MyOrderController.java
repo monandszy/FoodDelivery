@@ -5,7 +5,7 @@ import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
@@ -63,10 +63,10 @@ public class MyOrderController {
    ) {
       if (selected.length == 0) throw new RuntimeException(
           "Your can't order nothing, pick an order Position before proceeding");
-      AddressDTO address = (AddressDTO) session.getAttribute(Constants.ADDRESS);
+      Address address = (Address) session.getAttribute(Constants.ADDRESS);
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       orderService.addOrder(selected,
-          addressDTOMapper.mapFromDTO(address),
+          address,
           restaurantId
       );
       return "redirect:/order/getByClient";

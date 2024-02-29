@@ -4,6 +4,7 @@ import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.RestaurantDTO;
+import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import lombok.experimental.UtilityClass;
 
@@ -29,6 +30,10 @@ public class WebFixtures {
 
    public AddressDTO getAddressDTO () {
       return AddressDTO.builder().city("a").build();
+   }
+
+   public Address getAddress () {
+      return Address.builder().city("a").build();
    }
 
    public static OrderPositionDTO getOrderPosition() {

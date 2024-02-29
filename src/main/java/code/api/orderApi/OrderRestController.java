@@ -48,7 +48,6 @@ public class OrderRestController {
    public ResponseEntity<?> addOrder(
        @RequestBody OrderInputDTO orderInputDTO
    ) {
-      System.out.println(orderInputDTO);
       Order order = orderService.addOrder(orderInputDTO.getSelected(),
           addressDTOMapper.mapFromDTO(orderInputDTO.getAddressDTO()), orderInputDTO.getRestaurantId());
       return ResponseEntity.created(URI.create(ORDER_GET_DETAILS.replace("{orderId}", order.getId().toString())))

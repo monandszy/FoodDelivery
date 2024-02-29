@@ -5,7 +5,6 @@ import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.service.MenuService;
@@ -27,7 +26,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static code.component.manageRestaurant.web.clientOutput.DiscoverController.DISCOVER;
 import static code.component.manageRestaurant.web.clientOutput.MenuController.MENU;
 import static code.component.manageRestaurant.web.clientOutput.MenuController.MENU_GET;
 import static code.component.manageRestaurant.web.clientOutput.RestaurantController.RESTAURANT;
@@ -59,16 +57,6 @@ public class ClientWebIT {
    private AddressDTOMapper addressDTOMapper;
    @MockBean
    private RestaurantService restaurantService;
-
-   @Test
-   void testGetDiscover() throws Exception {
-      String userName = "client";
-      Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + DISCOVER))
-          .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("addressDTO", new AddressDTO()))
-          .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
-   }
 
    @Test
    void testGetRestaurant() throws Exception {

@@ -4,7 +4,6 @@ import code.api.infrastructure.DefaultApi;
 import code.api.model.InlineResponse200;
 import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,10 +22,10 @@ public class ApiClientImpl implements ApiDAO {
    private final AddressDTOMapper addressDTOMapper;
    private final AddressService addressService;
 
-   public AddressDTO getAddressDTO(String ip) {
+   public Address getAddressDTO(String ip) {
       Optional<Address> address = addressService.getAddressByIp(ip);
       if (address.isPresent()) {
-         return addressDTOMapper.mapToDTO(address.get());
+         return address.get();
       } else {
          Mono<InlineResponse200> inlineResponse200Mono = defaultApi.v1Get(ApiDAO.KEY, ip, ApiDAO.FIELDS);
          InlineResponse200 block = inlineResponse200Mono.block();

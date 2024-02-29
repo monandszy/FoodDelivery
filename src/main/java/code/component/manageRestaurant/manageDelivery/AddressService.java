@@ -4,7 +4,6 @@ import code.api.ipAddressApi.ApiClientImpl;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,10 +27,10 @@ public class AddressService {
       return addressDAO.getByIp(ip);
    }
 
-   public AddressDTO getAddress(String ip) {
+   public Address getAddress(String ip) {
       if (Objects.isNull(ip))
          ip = accountService.getCurrentIp();
-      AddressDTO address = apiClient.getAddressDTO(ip);
+      Address address = apiClient.getAddressDTO(ip);
       return address;
    }
 
