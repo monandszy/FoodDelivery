@@ -24,4 +24,5 @@ public class AccountDTO {
    @NotEmpty
    private String password;
    private Boolean active;
+   private String roles;
 }

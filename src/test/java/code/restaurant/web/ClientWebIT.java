@@ -12,6 +12,7 @@ import code.component.manageRestaurant.service.RestaurantService;
 import code.component.manageRestaurant.web.clientOutput.DiscoverController;
 import code.component.manageRestaurant.web.clientOutput.MenuController;
 import code.component.manageRestaurant.web.clientOutput.RestaurantController;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ public class ClientWebIT {
       Integer pageNumber = 2;
       List<MenuDTO> restaurantPage = List.of(WebFixtures.getMenuDTO());
       Mockito.when(dtoMapper.mapMToDTOList(any())).thenReturn(restaurantPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
                   RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString()))
               .queryParam("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
@@ -82,7 +83,7 @@ public class ClientWebIT {
       int restaurantId = 1;
       List<MenuPositionDTO> menuPositions = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPositions);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
                   MENU_GET.replace("{menuId}", menuId.toString()))
               .queryParam("restaurantId", Integer.toString(restaurantId)))
           .andExpect(MockMvcResultMatchers.status().isOk())

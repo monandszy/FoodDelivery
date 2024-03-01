@@ -57,7 +57,7 @@ public class MyOrderWebIT {
       List<OrderDTO> orders = List.of(OrderDTO.builder().id(1).build());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(orderDTOMapper.mapOToDTOList(any())).thenReturn(orders);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + ORDER_getByClient))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getByClient))
           .andExpect(MockMvcResultMatchers.model().attribute("myOrders", orders))
           .andExpect(MockMvcResultMatchers.view().name("client/order/myOrders"));
       Mockito.verify(orderService).getOrdersByClientId(userName);
@@ -68,7 +68,7 @@ public class MyOrderWebIT {
       Integer orderId = 1;
       List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition());
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
               ORDER_getForClient.replace("{orderId}", orderId.toString())))
           .andExpect(MockMvcResultMatchers.model().attribute("orderPositions", orderPositions))
           .andExpect(MockMvcResultMatchers.view().name("client/order/myOrder"));
@@ -81,11 +81,11 @@ public class MyOrderWebIT {
       Integer[] selected = new Integer[]{1};
       String selectedString = "1";
       Address address = DataFixtures.getAddress();
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + ORDER_ADD)
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + ORDER_ADD)
               .param("selectedPositions", selectedString)
               .sessionAttr(Constants.ADDRESS, address)
               .sessionAttr(Constants.RESTAURANT, restaurantId))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getByClient"));
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getByClient"));
       Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }
 
@@ -93,9 +93,9 @@ public class MyOrderWebIT {
    @Test
    void testDelete() throws Exception {
       Integer orderId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
               ORDER_DELETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getByClient"))
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getByClient"))
           .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(orderService).cancelOrder(orderId);

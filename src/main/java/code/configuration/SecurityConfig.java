@@ -57,7 +57,7 @@ public class SecurityConfig {
           .authorizeHttpRequests(requests -> requests
               .requestMatchers("/login", "/error", "/register", "register.html").permitAll()
               .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
-              .requestMatchers("/home").hasAnyAuthority("ADMIN")
+              .requestMatchers("/home/**").hasAnyAuthority("ADMIN")
               .requestMatchers(
                   "/restaurants/**",
                   "/restaurant/**",
@@ -79,7 +79,7 @@ public class SecurityConfig {
           )
           .formLogin(form -> form
               .loginPage("/login")
-              .defaultSuccessUrl("/discover", true)
+              .defaultSuccessUrl("/queue", true)
               .permitAll()
           )
           .logout(logout -> logout.logoutSuccessUrl("/login")

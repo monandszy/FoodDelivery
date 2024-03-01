@@ -48,7 +48,7 @@ public class SellerRestaurantWebIT {
       Integer pageNumber = 2;
       List<MenuDTO> restaurantPage = List.of(WebFixtures.getMenuDTO());
       Mockito.when(dtoMapper.mapMToDTOList(any())).thenReturn(restaurantPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
                   MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString()))
               .queryParam("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
@@ -63,10 +63,10 @@ public class SellerRestaurantWebIT {
    void testAdd() throws Exception {
       Integer restaurantId = 1;
       MenuDTO menuDTO = WebFixtures.getMenuDTO();
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANT_ADD)
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + MY_RESTAURANT_ADD)
               .sessionAttr(Constants.RESTAURANT, restaurantId)
               .flashAttr("menuDTO", menuDTO))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/"
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/"
               + MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString())))
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(menuService).add(null, restaurantId);
@@ -76,10 +76,10 @@ public class SellerRestaurantWebIT {
    void testDelete() throws Exception {
       int restaurantId = 1;
       Integer menuId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
                   MY_RESTAURANT_DELETE.replace("{menuId}", menuId.toString()))
               .sessionAttr(Constants.RESTAURANT, restaurantId))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/"
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/"
               + MY_RESTAURANT_GET.replace("{restaurantId}", Integer.toString(restaurantId))))
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(menuService).deleteById(menuId);

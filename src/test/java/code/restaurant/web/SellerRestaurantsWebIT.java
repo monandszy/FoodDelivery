@@ -7,6 +7,7 @@ import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import code.component.manageRestaurant.web.sellerInput.SellerRestaurantsController;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,7 @@ public class SellerRestaurantsWebIT {
       List<RestaurantDTO> restaurantsPage = List.of(WebFixtures.getRestaurantDTO());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantsPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MY_RESTAURANTS_GET)
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + MY_RESTAURANTS_GET)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
@@ -68,9 +69,9 @@ public class SellerRestaurantsWebIT {
       RestaurantDTO restaurantDTO = WebFixtures.getRestaurantDTO();
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(accountService.getCurrentIp()).thenReturn(ip);
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANTS_ADD)
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + MY_RESTAURANTS_ADD)
               .flashAttr("restaurantDTO", restaurantDTO))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/" + MY_RESTAURANTS_GET))
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(restaurantService).add(null, null, userName);
       Mockito.verify(addressService).getAddress(ip);
@@ -79,9 +80,9 @@ public class SellerRestaurantsWebIT {
    @Test
    void testDelete() throws Exception {
       Integer restaurantId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
               MY_RESTAURANTS_DELETE.replace("{restaurantId}", restaurantId.toString())))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/" + MY_RESTAURANTS_GET))
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(restaurantService).deleteById(restaurantId);
    }

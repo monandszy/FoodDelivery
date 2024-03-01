@@ -1,6 +1,6 @@
 package code.component.manageAccount.web;
 
-import code.component.manageAccount.AccountService;
+import code.component.manageAccount.LoginService;
 import code.component.manageAccount.domain.AccountDTO;
 import code.component.manageAccount.domain.mapper.AccountDTOMapper;
 import jakarta.validation.Valid;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @AllArgsConstructor
 public class RegisterController {
 
-   private AccountService accountService;
+   private LoginService loginService;
    private AccountDTOMapper accountDTOMapper;
 
    public static final String REGISTER = "/register";
@@ -31,7 +31,7 @@ public class RegisterController {
    public String processRegister(
        @Valid @ModelAttribute("account") AccountDTO account
    ) {
-      accountService.register(accountDTOMapper.mapFromDTO(account));
+      loginService.register(accountDTOMapper.mapFromDTO(account));
       return "login";
    }
 }
