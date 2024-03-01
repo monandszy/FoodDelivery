@@ -68,7 +68,8 @@
   <form action="#" th:action="@{/myRestaurants/get}" method="GET">
     <div>
       <label>
-        <input type="text" placeholder="PageNumber" th:name="pageNumber"/>
+        <input type="text" th:name = "pageNumber"
+               placeholder="PageNumber" th:placeholder="${pageNumber}"/>
       </label>
     </div>
     <div>

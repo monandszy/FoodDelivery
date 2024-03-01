@@ -1,5 +1,7 @@
 package code.util;
 
+import code.component.manageAccount.domain.Account;
+import code.component.manageAccount.domain.Role;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageRestaurant.domain.Menu;
@@ -9,6 +11,7 @@ import code.component.manageRestaurant.manageDelivery.domain.Address;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 public class DataFixtures {
    public static Restaurant getRestaurant() {
@@ -66,5 +69,21 @@ public class DataFixtures {
 
    public static Address getAddressLonLat1() {
       return getAddress().withLatitude(1D).withLongitude(1D);
+   }
+
+   public static Account getAccount() {
+      return Account.builder().active(true)
+          .roles(Set.of(getAccountRole()))
+          .userName("someTest")
+          .password("someTest")
+          .build();
+   }
+
+   public static Role getAccountRole() {
+      return Role.builder().role(Role.ACCOUNT_ROLE.ACCOUNT).build();
+   }
+
+   public static Role getSellerRole() {
+      return Role.builder().role(Role.ACCOUNT_ROLE.SELLER).build();
    }
 }

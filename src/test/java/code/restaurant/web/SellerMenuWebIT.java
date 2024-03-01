@@ -4,6 +4,7 @@ import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.web.sellerInput.SellerMenuController;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class SellerMenuWebIT {
       Integer pageNumber = 2;
       List<MenuPositionDTO> menuPage = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
                   MY_MENU_GET.replace("{menuId}", menuId.toString()))
               .queryParam("restaurantId", restaurantId.toString())
               .queryParam("pageNumber", pageNumber.toString()))
@@ -59,10 +60,10 @@ public class SellerMenuWebIT {
    void testAdd() throws Exception {
       Integer menuId = 1;
       MenuPositionDTO menuPositionDTO = WebFixtures.getMenuPositionDTO();
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_MENU_ADD)
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + MY_MENU_ADD)
               .param("menuId", menuId.toString())
               .flashAttr("menuPositionDTO", menuPositionDTO))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/"
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/"
               + MY_MENU_GET.replace("{menuId}", menuId.toString())))
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(menuPositionService).add(null, menuId);
@@ -72,10 +73,10 @@ public class SellerMenuWebIT {
    void testDelete() throws Exception {
       int menuId = 1;
       Integer menuPositionId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
                   MY_MENU_DELETE.replace("{menuPositionId}", menuPositionId.toString()))
               .param("menuId", Integer.toString(menuId)))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/"
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/"
               + MY_MENU_GET.replace("{menuId}", Integer.toString(menuId))))
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(menuPositionService).deleteById(menuPositionId);

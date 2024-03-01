@@ -30,7 +30,7 @@ public class SellerHomeWebIT {
    void testGet() throws Exception {
       String userName = "seller";
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MANAGE))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + MANAGE))
           .andExpect(MockMvcResultMatchers.view().name("seller/" + MANAGE))
           .andExpect(MockMvcResultMatchers.model().attribute(Constants.USERNAME, userName));
    }

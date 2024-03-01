@@ -5,8 +5,9 @@ import code.component.manageAccount.domain.AccountEntity;
 import code.component.manageAccount.domain.Role;
 import code.component.manageAccount.domain.RoleEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.Set;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AccountEntityMapper {
@@ -15,9 +16,11 @@ public interface AccountEntityMapper {
 
    Role mapFromEntity(RoleEntity roleEntity);
 
-   @Mapping(target = "roles", source = "roles", ignore = true)
    AccountEntity mapToEntity(Account Account);
 
-   @Mapping(target = "roles", source = "roles", ignore = true)
    Account mapFromEntity(AccountEntity AccountEntity);
+
+   Set<Role> mapRFromEntityList(Set<RoleEntity> roles);
+
+   Set<RoleEntity> mapRToEntityList(Set<Role> roles);
 }

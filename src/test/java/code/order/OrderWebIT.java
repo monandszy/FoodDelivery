@@ -6,6 +6,7 @@ import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageOrder.web.OrderController;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class OrderWebIT {
       List<OrderDTO> orders = List.of(OrderDTO.builder().id(1).build());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(orderDTOMapper.mapOToDTOList(any())).thenReturn(orders);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + ORDER_getBySeller))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getBySeller))
           .andExpect(MockMvcResultMatchers.model().attribute("orders", orders))
           .andExpect(MockMvcResultMatchers.view().name("seller/order/orders"));
       Mockito.verify(orderService).getIncompleteOrdersBySellerId(userName);
@@ -56,7 +57,7 @@ public class OrderWebIT {
       Integer orderId = 1;
       List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition());
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
               ORDER_getForSeller.replace("{orderId}", orderId.toString())))
           .andExpect(MockMvcResultMatchers.model().attribute("orderPositions", orderPositions))
           .andExpect(MockMvcResultMatchers.view().name("seller/order/order"));
@@ -66,9 +67,9 @@ public class OrderWebIT {
    @Test
    void testCompleteOrder() throws Exception {
       Integer orderId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
               ORDER_COMPLETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/order/getIncompleteBySeller"));
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getIncompleteBySeller"));
       Mockito.verify(orderService).complete(orderId);
    }
 
