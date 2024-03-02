@@ -6,11 +6,14 @@ import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionEntity;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantEntity;
+import code.component.manageRestaurant.manageImages.ImageIdEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
+import java.util.Objects;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RestaurantEntityMapper {
@@ -28,12 +31,21 @@ public interface RestaurantEntityMapper {
    @Mapping(target = "restaurant", source = "restaurant", ignore = true)
    Menu mapFromEntity(MenuEntity menuEntity);
 
+   @Mapping(target = "images", source = "images", ignore = true)
    @Mapping(target = "menu", source = "menu", ignore = true)
    MenuPositionEntity mapToEntity(MenuPosition menuPosition);
 
    @Mapping(target = "menu", source = "menu", ignore = true)
+   @Mapping(target = "images", source = "images", qualifiedByName = "imageMapping")
    MenuPosition mapFromEntity(MenuPositionEntity menuPositionEntity);
 
    List<Restaurant> mapRFromEntityList(List<RestaurantEntity> all);
    List<RestaurantEntity> mapRToEntityList(List<Restaurant> all);
+
+   @Named("imageMapping")
+   default List<Integer> imageMapping(List<ImageIdEntity> images) {
+      if (Objects.isNull(images)) return null;
+      return images.stream().map(ImageIdEntity::getId).toList();
+   }
+
 }

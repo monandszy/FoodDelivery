@@ -35,7 +35,7 @@
       <td>
         <ul th:each="image : ${menuPosition.images}">
           <li>
-            <img th:src="${image}" alt="Image">
+            <img th:src="@{'/images/get/'+${image}}" alt="noImage" style="height:200px;">
           </li>
         </ul>
       </td>

@@ -18,4 +18,9 @@ public class ImageRepo implements ImageDAO {
       image.setMenuPosition(byId);
       imageJpaRepo.save(image);
    }
+
+   @Override
+   public ImageEntity getImageById(int i) {
+      return imageJpaRepo.findById(i).orElseThrow();
+   }
 }

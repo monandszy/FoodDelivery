@@ -1,7 +1,6 @@
 package code.component.manageRestaurant.domain;
 
-import code.component.manageRestaurant.manageImages.ImageEntity;
-import jakarta.persistence.CascadeType;
+import code.component.manageRestaurant.manageImages.ImageIdEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,7 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -49,7 +48,7 @@ public class MenuPositionEntity {
    @JoinColumn(name = "menu_id")
    private MenuEntity menu;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuPosition",
-       cascade = {CascadeType.REMOVE})
-   private Set<ImageEntity> images;
+   @OneToMany(fetch = FetchType.EAGER, mappedBy = "menuPosition")
+   private List<ImageIdEntity> images;
+
 }

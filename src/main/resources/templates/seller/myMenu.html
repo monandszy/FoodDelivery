@@ -43,27 +43,28 @@
     <tr>
       <th>Id</th>
       <th>Price</th>
-      <th>Delete</th>
+      <th>Tea Name</th>
       <th>Images</th>
+      <th>Delete</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="menuPosition : ${menuPage}">
       <td th:text="${menuPosition.id}"></td>
       <td th:text="${menuPosition.price}"></td>
+      <td th:text="${menuPosition.name}"></td>
+      <td>
+        <ul th:each="image : ${menuPosition.images}">
+          <li>
+            <img th:src="@{'/images/get/'+${image}}" alt="noImage" style="height:200px;">
+          </li>
+        </ul>
+      </td>
       <td>
         <form action="#" th:action="@{/myMenu/delete/{id}
         (id=${menuPosition.id})}" th:object="${menuId}" th:method="DELETE">
           <button type="submit">-</button>
         </form>
-      </td>
-      <td>
-        <ul th:each="image : ${menuPosition.images}">
-          <li>
-            <img th:src="@{${image.image}}" alt="ImageTemp">
-<!--            th:src="@{'data:image/jpeg;base64,'+${image.generateBase64Image()}}" />-->
-          </li>
-        </ul>
       </td>
     </tr>
     </tbody>

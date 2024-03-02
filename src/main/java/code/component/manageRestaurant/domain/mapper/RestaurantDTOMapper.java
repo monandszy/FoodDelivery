@@ -33,11 +33,9 @@ public interface RestaurantDTOMapper {
    @Mapping(target = "restaurant", ignore = true)
    Menu mapFromDTO(MenuDTO menuDTO);
 
-   @Mapping(target = "images", source = "images", ignore = true)
    MenuPositionDTO mapToDTO(MenuPosition menuPosition);
 
    @Mapping(target = "menu", ignore = true)
-   @Mapping(target = "images", source = "images", ignore = true)
    MenuPosition mapFromDTO(MenuPositionDTO menuPositionDTO);
 
    @Named("sellerMapping")
