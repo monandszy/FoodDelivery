@@ -4,20 +4,22 @@ import code.component.api.ipAddressApi.ApiDAO;
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.Role;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
-@AllArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public class AccountService {
 
-   private AccountDAO accountDAO;
-   private PasswordEncoder passwordEncoder;
-   private HttpServletRequest request;
+   private final AccountDAO accountDAO;
+   private final HttpServletRequest request;
+   private String localAddressPattern = "(^127\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$)|(^10\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$)|(^172\\.1[6-9]{1}[0-9]{0,1}\\.[0-9]{1,3}\\.[0-9]{1,3}$)|(^172\\.2[0-9]{1}[0-9]{0,1}\\.[0-9]{1,3}\\.[0-9]{1,3}$)|(^172\\.3[0-1]{1}[0-9]{0,1}\\.[0-9]{1,3}\\.[0-9]{1,3}$)|(^192\\.168\\.[0-9]{1,3}\\.[0-9]{1,3}$)";
 
    public String getAuthenticatedUserName() {
       try {
@@ -30,16 +32,18 @@ public class AccountService {
    public String getCurrentIp() {
       String remoteAddr = "";
       request.getRemoteAddr();
-      if (request != null) {
+      if (Objects.nonNull(request)) {
          remoteAddr = request.getHeader("X-FORWARDED-FOR");
          if (remoteAddr == null || "".equals(remoteAddr)) {
             remoteAddr = request.getRemoteAddr();
          }
       }
-      if (remoteAddr.equals("127.0.0.1")) {
+      if (remoteAddr.matches(localAddressPattern) || Objects.isNull(remoteAddr)) {
+         log.error("Access from privateAddress: [%s], using test ip as backup".formatted(remoteAddr));
          return ApiDAO.TEST_IP;
+      } else {
+         return remoteAddr;
       }
-      return remoteAddr;
    }
 
    public List<Account> getAccountPage(Integer pageNumber) {

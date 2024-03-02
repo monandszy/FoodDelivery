@@ -65,6 +65,13 @@ dependencies {
 
 }
 
+bootJar {
+    archiveFileName = "food_delivery.${archiveExtension.get()}"
+}
+jar {
+    enabled = false
+}
+
 dependencyManagement {
     imports {
         mavenBom "org.testcontainers:testcontainers-bom:${testContainers}"
