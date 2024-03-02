@@ -27,15 +27,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name = "tea_image", schema = "food_delivery")
-public class ImageEntity {
+public class ImageIdEntity {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
-
-   @Column(name="image", length=100000)
-   private byte[] image;
 
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name="menu_position_id")

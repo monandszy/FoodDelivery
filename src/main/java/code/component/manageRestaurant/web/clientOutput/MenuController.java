@@ -1,9 +1,7 @@
 package code.component.manageRestaurant.web.clientOutput;
 
-import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
-import code.component.manageRestaurant.manageImages.ImageMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
@@ -24,7 +22,6 @@ public class MenuController {
 
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper dtoMapper;
-   private ImageMapper imageMapper;
 
    @GetMapping(MENU_GET)
    public String getMenuPositions(
@@ -34,10 +31,9 @@ public class MenuController {
    ) {
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       model.addAttribute("restaurantId", restaurantId);
-      List<MenuPosition> allMenuPositions = menuPositionService.getAllMenuPositions(menuId);
-      List<MenuPositionDTO> menuPositions = allMenuPositions.stream()
-          .map(e -> dtoMapper.mapToDTO(e).withImages(
-              imageMapper.mapIToDTOList(e.getImages()))).toList();
+      List<MenuPositionDTO> menuPositions = dtoMapper.mapMPToDTOList(
+          menuPositionService.getAllMenuPositions(menuId));
+
       model.addAttribute("menuPositions", menuPositions);
       return "client/menu";
    }

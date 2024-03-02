@@ -1,6 +1,5 @@
 package code.component.manageRestaurant.domain;
 
-import code.component.manageRestaurant.manageImages.ImageEntity;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -8,7 +7,7 @@ import lombok.Value;
 import lombok.With;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @With
 @Value
@@ -21,5 +20,5 @@ public class MenuPosition {
    BigDecimal price;
    String name;
    Menu menu;
-   Set<ImageEntity> images;
+   List<Integer> images;
 }
