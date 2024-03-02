@@ -18,6 +18,7 @@
       <th>Id</th>
       <th>Price</th>
       <th>Select</th>
+      <th>Images</th>
     </tr>
     </thead>
     <tbody>
@@ -30,6 +31,13 @@
             <input type="checkbox" name="selectedPositions" th:value="${menuPosition.id}"/>
           </label>
         </th:block>
+      </td>
+      <td>
+        <ul th:each="image : ${menuPosition.images}">
+          <li>
+            <img th:src="${image}" alt="Image">
+          </li>
+        </ul>
       </td>
     </tr>
     </tbody>

@@ -1,5 +1,7 @@
 package code.component.manageRestaurant.domain;
 
+import code.component.manageRestaurant.manageImages.ImageDTO;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.With;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @With
 @Data
@@ -20,4 +23,7 @@ public class MenuPositionDTO {
    private Integer id;
    @Pattern(regexp = "[0-9]*")
    private BigDecimal price;
+   @NotEmpty
+   private String name;
+   private Set<ImageDTO> images;
 }

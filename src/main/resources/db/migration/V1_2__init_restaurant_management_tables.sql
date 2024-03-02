@@ -43,8 +43,19 @@ CREATE TABLE food_delivery.menu_position
 (
     id      SERIAL        NOT NULL,
     menu_id INT           NOT NULL,
+    name    VARCHAR(32)   NOT NULL,
     price   NUMERIC(7, 2) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_position_menu
         FOREIGN KEY (menu_id) REFERENCES food_delivery.menu (id)
+);
+
+CREATE TABLE food_delivery.tea_image
+(
+    id               SERIAL NOT NULL,
+    image            bytea    NOT NULL,
+    menu_position_id INT    NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_position_menu
+        FOREIGN KEY (menu_position_id) REFERENCES food_delivery.menu_position (id)
 );

@@ -16,10 +16,18 @@
         th:action="@{/myMenu/add
         (menuId=${menuId})}"
         th:method="POST"
-        th:object="${menuPositionDTO}">
+        th:object="${menuPositionDTO}"
+        enctype="multipart/form-data">
     <div>
       <label>
         <input type="text" placeholder="Price" th:field="*{price}"/>
+      </label>
+      <label>
+        <input type="text" placeholder="Tea Name" th:field="*{name}"/>
+      </label>
+      <label>
+        <input type="file" placeholder="Only tea images allowed!"
+               name="image" accept="image/*" class="form-control-file">
       </label>
     </div>
     <div>
@@ -29,13 +37,14 @@
 </div>
 
 <div>
-<h2>Your Menu</h2>
+  <h2>Your Menu</h2>
   <table>
     <thead>
     <tr>
       <th>Id</th>
       <th>Price</th>
       <th>Delete</th>
+      <th>Images</th>
     </tr>
     </thead>
     <tbody>
@@ -48,6 +57,14 @@
           <button type="submit">-</button>
         </form>
       </td>
+      <td>
+        <ul th:each="image : ${menuPosition.images}">
+          <li>
+            <img th:src="@{${image.image}}" alt="ImageTemp">
+<!--            th:src="@{'data:image/jpeg;base64,'+${image.generateBase64Image()}}" />-->
+          </li>
+        </ul>
+      </td>
     </tr>
     </tbody>
   </table>
@@ -58,7 +75,7 @@
   <form action="#" th:action="@{/myMenu/get/{id}(id=${menuId})}" method="GET">
     <div>
       <label>
-        <input type="text" th:name = "pageNumber"
+        <input type="text" th:name="pageNumber"
                placeholder="PageNumber" th:placeholder="${pageNumber}"/>
       </label>
     </div>
