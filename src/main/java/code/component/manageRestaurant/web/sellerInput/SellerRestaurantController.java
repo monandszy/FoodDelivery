@@ -3,6 +3,7 @@ package code.component.manageRestaurant.web.sellerInput;
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuService;
+import code.component.manageRestaurant.service.RestaurantService;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -27,8 +28,10 @@ public class SellerRestaurantController {
    public static final String MY_RESTAURANT_GET = MY_RESTAURANT + "/get/{restaurantId}";
    public static final String MY_RESTAURANT_ADD = MY_RESTAURANT + "/add";
    public static final String MY_RESTAURANT_DELETE = MY_RESTAURANT + "/delete/{menuId}";
+   private static final String MY_RESTAURANT_UPDATE = MY_RESTAURANT + "/update/{restaurantId}";
 
    private MenuService menuService;
+   private RestaurantService restaurantService;
    private RestaurantDTOMapper dtoMapper;
 
    @GetMapping(MY_RESTAURANT_GET)
@@ -66,6 +69,15 @@ public class SellerRestaurantController {
    ) {
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
       menuService.deleteById(menuId);
+      return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
+   }
+
+   @PostMapping(MY_RESTAURANT_UPDATE)
+   public String updateRestaurant(
+       @PathVariable("restaurantId") Integer restaurantId,
+       @RequestParam("deliveryRange") Double deliveryRange
+   ) {
+      restaurantService.update(restaurantId, deliveryRange);
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 

@@ -66,7 +66,7 @@ public class SellerMenuWebIT {
           .andExpect(MockMvcResultMatchers.redirectedUrl("/"
               + MY_MENU_GET.replace("{menuId}", menuId.toString())))
           .andExpect(MockMvcResultMatchers.status().isFound());
-      Mockito.verify(menuPositionService).add(null, menuId);
+      Mockito.verify(menuPositionService).add(null, null, menuId);
    }
 
    @Test

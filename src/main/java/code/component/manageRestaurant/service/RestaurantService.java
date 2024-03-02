@@ -31,4 +31,9 @@ public class RestaurantService {
    public void deleteById(Integer id) {
       restaurantDAO.deleteById(id);
    }
+
+   @Transactional
+   public void update(Integer restaurantId, Double deliveryRange) {
+      restaurantDAO.updateRange(restaurantId, deliveryRange);
+   }
 }

@@ -1,7 +1,6 @@
-package code.component.manageRestaurant.domain;
+package code.component.manageRestaurant.manageImages;
 
-import code.component.manageRestaurant.manageImages.ImageEntity;
-import jakarta.persistence.CascadeType;
+import code.component.manageRestaurant.domain.MenuPositionEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-import java.util.Set;
-
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id"})
@@ -31,25 +26,18 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "menu_position", schema = "food_delivery")
-public class MenuPositionEntity {
+@Table(name = "tea_image", schema = "food_delivery")
+public class ImageEntity {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id")
    private Integer id;
 
-   @Column(name = "price")
-   private BigDecimal price;
-
-   @Column(name = "name")
-   private String name;
+   @Column(name="image", length=100000)
+   private byte[] image;
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "menu_id")
-   private MenuEntity menu;
-
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuPosition",
-       cascade = {CascadeType.REMOVE})
-   private Set<ImageEntity> images;
+   @JoinColumn(name = "menu_position_id")
+   private MenuPositionEntity menuPosition;
 }

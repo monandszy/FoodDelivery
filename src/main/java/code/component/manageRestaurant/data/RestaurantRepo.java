@@ -9,7 +9,6 @@ import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantEntity;
 import code.component.manageRestaurant.domain.mapper.RestaurantEntityMapper;
 import code.component.manageRestaurant.manageDelivery.AddressJpaRepo;
-import code.component.manageRestaurant.manageDelivery.domain.Address;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +45,14 @@ public class RestaurantRepo implements RestaurantDAO {
    }
 
    @Override
+   public void updateRange(Integer restaurantId, Double range) {
+      // TODO Test
+      RestaurantEntity byId = restaurantJpaRepo.findById(restaurantId).orElseThrow();
+      byId.setDeliveryRange(range);
+      restaurantJpaRepo.save(byId);
+   }
+
+   @Override
    public List<Restaurant> getPageBySeller(String sellerId, Integer page) {
       AccountEntity seller = accountJpaRepo.findByUserName(sellerId).orElseThrow();
       Pageable pageable = PageRequest.of(page, PAGE_SIZE, Sort.by("id"));
@@ -58,15 +65,6 @@ public class RestaurantRepo implements RestaurantDAO {
       restaurantJpaRepo.deleteById(id);
    }
 
-   @Override
-   public void updateAddress(Address address, Integer restaurantId) {
-
-   }
-
-   @Override
-   public void updateRange(Integer range, Integer restaurantId) {
-
-   }
 
    @Override
    public List<Restaurant> getAllWithAddress() {
