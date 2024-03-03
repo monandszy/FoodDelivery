@@ -8,10 +8,11 @@ import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.component.manageRestaurant.manageImages.ImageEntity;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.Set;
+import java.util.HashSet;
 
 public class DataFixtures {
    public static Restaurant getRestaurant() {
@@ -29,6 +30,7 @@ public class DataFixtures {
    public static MenuPosition getMenuPosition() {
       return MenuPosition.builder()
           .price(BigDecimal.valueOf(1))
+          .name("test")
           .build();
    }
 
@@ -72,8 +74,10 @@ public class DataFixtures {
    }
 
    public static Account getAccount() {
+      HashSet hashSet = new HashSet<>();
+      hashSet.add(getAccountRole());
       return Account.builder().active(true)
-          .roles(Set.of(getAccountRole()))
+          .roles(hashSet)
           .userName("someTest")
           .password("someTest")
           .build();
@@ -85,5 +89,11 @@ public class DataFixtures {
 
    public static Role getSellerRole() {
       return Role.builder().role(Role.ACCOUNT_ROLE.SELLER).build();
+   }
+
+   public static ImageEntity getImage() {
+      return ImageEntity.builder()
+          .image(new byte[]{1,2,3})
+          .build();
    }
 }

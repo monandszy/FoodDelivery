@@ -34,8 +34,10 @@ public class AccountRepo implements AccountDAO {
    }
 
    @Override
-   public void addAccount(Account account) {
+   public void addAccount(Account account, Role role) {
+      RoleEntity accountRole = roleJpaRepo.findByRole(role.getRole()).orElseThrow();
       AccountEntity accountEntity = entityMapper.mapToEntity(account);
+      accountEntity.setRoles(Set.of(accountRole));
       accountJpaRepo.save(accountEntity);
    }
 
@@ -58,7 +60,6 @@ public class AccountRepo implements AccountDAO {
           findByUserName(userName).orElseThrow());
       Set<RoleEntity> roles = accountEntity.getRoles();
       roles.add(roleJpaRepo.findByRole(role.getRole()).orElseThrow());
-      accountEntity.setRoles(roles);
       accountJpaRepo.save(accountEntity);
    }
 

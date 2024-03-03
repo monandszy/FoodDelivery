@@ -40,7 +40,7 @@ import static org.mockito.ArgumentMatchers.any;
 })
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class ClientWebIT {
+public class ClientRestaurantMenuWebIT {
 
    private MockMvc mockMvc;
 
@@ -62,32 +62,32 @@ public class ClientWebIT {
    @Test
    void testGetRestaurant() throws Exception {
       Integer restaurantId = 1;
-      Integer pageNumber = 2;
+      Integer expectedPageNumber = 0;
       List<MenuDTO> restaurantPage = List.of(WebFixtures.getMenuDTO());
       Mockito.when(dtoMapper.mapMToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
-                  RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString()))
-              .queryParam("pageNumber", pageNumber.toString()))
+                  RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString())))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.request().sessionAttribute("RESTAURANT", restaurantId))
+          .andExpect(MockMvcResultMatchers.request().sessionAttribute(Constants.RESTAURANT, restaurantId))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantId", restaurantId))
-          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
+          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", expectedPageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantPage", restaurantPage))
           .andExpect(MockMvcResultMatchers.view().name("client/" + RESTAURANT));
-      Mockito.verify(menuService).getPageByRestaurant(restaurantId, pageNumber);
+      Mockito.verify(menuService).getPageByRestaurant(restaurantId, expectedPageNumber);
    }
 
    @Test
    void testGetMenu() throws Exception {
       Integer menuId = 1;
-      int restaurantId = 1;
+      Integer restaurantId = 1;
       List<MenuPositionDTO> menuPositions = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPositions);
       mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
                   MENU_GET.replace("{menuId}", menuId.toString()))
-              .queryParam("restaurantId", Integer.toString(restaurantId)))
+              .sessionAttr(Constants.RESTAURANT, restaurantId))
           .andExpect(MockMvcResultMatchers.status().isOk())
           .andExpect(MockMvcResultMatchers.model().attribute("menuPositions", menuPositions))
+          .andExpect(MockMvcResultMatchers.model().attribute("restaurantId", restaurantId))
           .andExpect(MockMvcResultMatchers.view().name("client/" + MENU));
       Mockito.verify(menuPositionService).getAllMenuPositions(menuId);
    }

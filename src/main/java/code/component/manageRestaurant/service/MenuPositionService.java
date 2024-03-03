@@ -4,6 +4,7 @@ import code.component.manageRestaurant.dao.MenuPositionDAO;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.manageImages.ImageDAO;
 import code.component.manageRestaurant.manageImages.ImageEntity;
+import code.web.exception.DeliveryError;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +23,12 @@ public class MenuPositionService {
    @Transactional
    public void add(MultipartFile image, MenuPosition menuPosition, Integer menuId) {
       MenuPosition created = menuPositionDAO.add(menuPosition, menuId);
-      ImageEntity build = null;
       if (Objects.nonNull(image)) {
          try {
-            build = ImageEntity.builder().image(image.getBytes()).build();
+            ImageEntity build = ImageEntity.builder().image(image.getBytes()).build();
             imageDAO.add(build, created.getId());
          } catch (IOException e) {
-            throw new RuntimeException("INVALID IMAGE");
+            throw new DeliveryError("INVALID IMAGE");
          }
       }
    }

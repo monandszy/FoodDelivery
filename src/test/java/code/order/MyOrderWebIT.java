@@ -19,17 +19,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static code.component.manageOrder.web.MyOrderController.ORDER_ADD;
-import static code.component.manageOrder.web.MyOrderController.ORDER_DELETE;
-import static code.component.manageOrder.web.MyOrderController.ORDER_getByClient;
-import static code.component.manageOrder.web.MyOrderController.ORDER_getForClient;
+import static code.component.manageOrder.web.MyOrderController.MY_ORDER_ADD;
+import static code.component.manageOrder.web.MyOrderController.MY_ORDER_DELETE;
+import static code.component.manageOrder.web.MyOrderController.MY_ORDER_getByClient;
+import static code.component.manageOrder.web.MyOrderController.MY_ORDER_getForClient;
 import static org.mockito.ArgumentMatchers.any;
 
 @WebMvcTest(controllers = MyOrderController.class)
@@ -57,7 +56,7 @@ public class MyOrderWebIT {
       List<OrderDTO> orders = List.of(OrderDTO.builder().id(1).build());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(orderDTOMapper.mapOToDTOList(any())).thenReturn(orders);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getByClient))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + MY_ORDER_getByClient))
           .andExpect(MockMvcResultMatchers.model().attribute("myOrders", orders))
           .andExpect(MockMvcResultMatchers.view().name("client/order/myOrders"));
       Mockito.verify(orderService).getOrdersByClientId(userName);
@@ -66,10 +65,11 @@ public class MyOrderWebIT {
    @Test
    void testGetForClient() throws Exception {
       Integer orderId = 1;
-      List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition());
+      List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition()
+          .withMenuPositionDTO(WebFixtures.getMenuPositionDTO()));
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
       mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
-              ORDER_getForClient.replace("{orderId}", orderId.toString())))
+              MY_ORDER_getForClient.replace("{orderId}", orderId.toString())))
           .andExpect(MockMvcResultMatchers.model().attribute("orderPositions", orderPositions))
           .andExpect(MockMvcResultMatchers.view().name("client/order/myOrder"));
       Mockito.verify(orderService).getOrderPositions(orderId);
@@ -77,25 +77,24 @@ public class MyOrderWebIT {
 
    @Test
    void testAdd() throws Exception {
-      int restaurantId = 1;
+      Integer restaurantId = 1;
       Integer[] selected = new Integer[]{1};
       String selectedString = "1";
       Address address = DataFixtures.getAddress();
-      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + ORDER_ADD)
+      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + MY_ORDER_ADD)
               .param("selectedPositions", selectedString)
               .sessionAttr(Constants.ADDRESS, address)
               .sessionAttr(Constants.RESTAURANT, restaurantId))
-          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getByClient"));
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/" + MY_ORDER_getByClient));
       Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }
 
-   @WithMockUser(username = "seller", authorities = {"SELLER"})
    @Test
    void testDelete() throws Exception {
       Integer orderId = 1;
       mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
-              ORDER_DELETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getByClient"))
+              MY_ORDER_DELETE.replace("{orderId}", orderId.toString())))
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/" + MY_ORDER_getByClient))
           .andExpect(MockMvcResultMatchers.model().hasNoErrors())
           .andExpect(MockMvcResultMatchers.status().isFound());
       Mockito.verify(orderService).cancelOrder(orderId);

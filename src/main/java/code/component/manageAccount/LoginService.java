@@ -2,6 +2,7 @@ package code.component.manageAccount;
 
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.Role;
+import code.web.exception.DeliveryError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,10 +59,10 @@ public class LoginService implements UserDetailsService {
    @Transactional
    public void register(Account account) {
       accountDAO.findByUserName(account.getUserName()).ifPresent(e ->
-      {throw new RuntimeException("Account with that Username already exists");});
+      {throw new DeliveryError("Account with that Username already exists");});
       accountDAO.addAccount(account
           .withPassword(passwordEncoder.encode(account.getPassword()))
-          .withActive(true)
-          .withRoles(Set.of(Role.builder().role(ACCOUNT).build())));
+          .withActive(true),
+          Role.builder().role(ACCOUNT).build());
    }
 }

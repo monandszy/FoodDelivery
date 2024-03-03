@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderController {
 
    public static final String ORDER = "order";
-   public static final String ORDER_getIncompleteBySeller = ORDER + "/getBySeller";
+   public static final String ORDER_getBySeller = ORDER + "/getBySeller";
    public static final String ORDER_getForSeller = ORDER + "/getForSeller/{orderId}";
    public static final String ORDER_COMPLETE = ORDER + "/complete/{orderId}";
 
@@ -27,7 +27,7 @@ public class OrderController {
    private OrderDTOMapper dtoMapper;
    private AccountService accountService;
 
-   @GetMapping(ORDER_getIncompleteBySeller)
+   @GetMapping(ORDER_getBySeller)
    public String getIncompleteOrdersBySellerId(
        Model model
    ) {

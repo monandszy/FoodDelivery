@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
 
 import static code.configuration.Constants.START_PAGE;
-
 
 @Controller
 @AllArgsConstructor
@@ -44,7 +44,7 @@ public class SellerMenuController {
       model.addAttribute("menuPositionDTO", MenuPositionDTO.builder().build());
       model.addAttribute("menuId", menuId);
       model.addAttribute("restaurantId", restaurantId);
-      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
+      pageNumber = Objects.isNull(pageNumber) ? START_PAGE : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<MenuPositionDTO> menuPage = dtoMapper.mapMPToDTOList(
           menuPositionService.getPageByMenu(Integer.valueOf(menuId), pageNumber));
@@ -56,7 +56,7 @@ public class SellerMenuController {
    @PostMapping(MY_MENU_ADD)
    public String postMenuPosition(
        @ModelAttribute("menuPositionDTO") MenuPositionDTO menuPositionDTO,
-       @RequestParam(value = "image", required = false) MultipartFile image,
+       @RequestPart(value = "image", required = false) MultipartFile image,
        @RequestParam("menuId") Integer menuId
    ) {
       menuPositionService.add(image, dtoMapper.mapFromDTO(menuPositionDTO), menuId);

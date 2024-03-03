@@ -1,4 +1,4 @@
-package code.delivery;
+package code.restaurant.web;
 
 import code.api.ipAddressApi.ApiClientImpl;
 import code.component.manageAccount.AccountService;
@@ -32,7 +32,7 @@ import static org.mockito.ArgumentMatchers.any;
 })
 @AutoConfigureMockMvc(addFilters = false)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class DeliveryWebIT {
+public class DiscoveryWebIT {
 
    private MockMvc mockMvc;
 
@@ -50,16 +50,19 @@ public class DeliveryWebIT {
    @Test
    void testGetRestaurantsByIp() throws Exception {
       Integer pageNumber = 2;
+      String userId = "test";
       String ip = "ip";
       List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
       Address address = DataFixtures.getAddress();
+      Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userId);
       Mockito.when(addressService.getAddress(ip)).thenReturn(address);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + DISCOVER)
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + DISCOVER)
               .param("ip", ip)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(MockMvcResultMatchers.status().isOk())
           .andExpect(MockMvcResultMatchers.request().sessionAttribute(Constants.ADDRESS, address))
+          .andExpect(MockMvcResultMatchers.model().attribute(Constants.USERNAME, userId))
           .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantsByAddressPage", restaurantPage))
           .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));

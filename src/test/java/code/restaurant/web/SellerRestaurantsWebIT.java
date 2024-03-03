@@ -49,17 +49,17 @@ public class SellerRestaurantsWebIT {
    @Test
    void testGet() throws Exception {
       String userName = "seller";
-      Integer pageNumber = 2;
+      Integer expectedPageNumber = 0;
       List<RestaurantDTO> restaurantsPage = List.of(WebFixtures.getRestaurantDTO());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantsPage);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + MY_RESTAURANTS_GET)
-              .param("pageNumber", pageNumber.toString()))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + MY_RESTAURANTS_GET))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
+          .andExpect(MockMvcResultMatchers.model().attribute("restaurantDTO", new RestaurantDTO()))
+          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", expectedPageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("restaurantsPage", restaurantsPage))
           .andExpect(MockMvcResultMatchers.view().name("seller/" + MY_RESTAURANTS));
-      Mockito.verify(restaurantService).getPageBySellerId(userName, pageNumber);
+      Mockito.verify(restaurantService).getPageBySellerId(userName, expectedPageNumber);
    }
 
    @Test

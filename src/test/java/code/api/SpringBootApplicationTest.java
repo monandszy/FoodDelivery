@@ -1,5 +1,6 @@
-package code;
+package code.api;
 
+import code.ApplicationRunner;
 import code.configuration.DatabaseContainerTestConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;

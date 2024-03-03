@@ -11,6 +11,7 @@ import code.component.manageRestaurant.data.jpa.MenuPositionJpaRepo;
 import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
 import code.component.manageRestaurant.domain.MenuPositionEntity;
 import code.component.manageRestaurant.manageDelivery.AddressJpaRepo;
+import code.web.exception.DeliveryError;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -32,7 +33,7 @@ public class OrderRepo implements OrderDAO {
    @Override
    public Order getById(Integer orderId) {
       return orderMapper.mapFromEntity(orderJpaRepo.findById(orderId)
-          .orElseThrow(() -> new RuntimeException("Could not find Order")));
+          .orElseThrow());
    }
 
    @Override
@@ -56,7 +57,7 @@ public class OrderRepo implements OrderDAO {
       OrderEntity order = orderJpaRepo.findById(orderId).orElseThrow();
       List<OrderPositionEntity> entities = orderMapper.mapOPToEntityList(orderPositions);
       List<MenuPositionEntity> allById = menuPositionJpaRepo.findAllById(selected);
-      if (allById.size() != selected.size()) throw new RuntimeException("Invalid MenuPosition selected");
+      if (allById.size() != selected.size()) throw new DeliveryError("Invalid MenuPosition selected");
       for (int i = 0; i < selected.size(); i++) {
          OrderPositionEntity entity = entities.get(i);
          entity.setMenuPosition(allById.get(i));
