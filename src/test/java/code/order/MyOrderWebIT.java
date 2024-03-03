@@ -20,8 +20,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
@@ -30,6 +28,12 @@ import static code.component.manageOrder.web.MyOrderController.MY_ORDER_DELETE;
 import static code.component.manageOrder.web.MyOrderController.MY_ORDER_getByClient;
 import static code.component.manageOrder.web.MyOrderController.MY_ORDER_getForClient;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = MyOrderController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -56,9 +60,9 @@ public class MyOrderWebIT {
       List<OrderDTO> orders = List.of(OrderDTO.builder().id(1).build());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(orderDTOMapper.mapOToDTOList(any())).thenReturn(orders);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + MY_ORDER_getByClient))
-          .andExpect(MockMvcResultMatchers.model().attribute("myOrders", orders))
-          .andExpect(MockMvcResultMatchers.view().name("client/order/myOrders"));
+      mockMvc.perform(get(Constants.URL + MY_ORDER_getByClient))
+          .andExpect(model().attribute("myOrders", orders))
+          .andExpect(view().name("client/order/myOrders"));
       Mockito.verify(orderService).getOrdersByClientId(userName);
    }
 
@@ -68,10 +72,9 @@ public class MyOrderWebIT {
       List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition()
           .withMenuPositionDTO(WebFixtures.getMenuPositionDTO()));
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
-              MY_ORDER_getForClient.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.model().attribute("orderPositions", orderPositions))
-          .andExpect(MockMvcResultMatchers.view().name("client/order/myOrder"));
+      mockMvc.perform(get(Constants.URL + MY_ORDER_getForClient, orderId))
+          .andExpect(model().attribute("orderPositions", orderPositions))
+          .andExpect(view().name("client/order/myOrder"));
       Mockito.verify(orderService).getOrderPositions(orderId);
    }
 
@@ -81,22 +84,21 @@ public class MyOrderWebIT {
       Integer[] selected = new Integer[]{1};
       String selectedString = "1";
       Address address = DataFixtures.getAddress();
-      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + MY_ORDER_ADD)
+      mockMvc.perform(post(Constants.URL + MY_ORDER_ADD)
               .param("selectedPositions", selectedString)
               .sessionAttr(Constants.ADDRESS, address)
               .sessionAttr(Constants.RESTAURANT, restaurantId))
-          .andExpect(MockMvcResultMatchers.redirectedUrl("/" + MY_ORDER_getByClient));
+          .andExpect(redirectedUrl("/" + MY_ORDER_getByClient));
       Mockito.verify(orderService).addOrder(selected, address, restaurantId);
    }
 
    @Test
    void testDelete() throws Exception {
       Integer orderId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
-              MY_ORDER_DELETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.redirectedUrl("/" + MY_ORDER_getByClient))
-          .andExpect(MockMvcResultMatchers.model().hasNoErrors())
-          .andExpect(MockMvcResultMatchers.status().isFound());
+      mockMvc.perform(post(Constants.URL + MY_ORDER_DELETE, orderId))
+          .andExpect(redirectedUrl("/" + MY_ORDER_getByClient))
+          .andExpect(model().hasNoErrors())
+          .andExpect(status().isFound());
       Mockito.verify(orderService).cancelOrder(orderId);
    }
 }

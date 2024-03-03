@@ -63,7 +63,7 @@ public class SecurityConfig {
                   "/restaurant/**",
                   "/menu/**",
                   "/discover/**",
-                  "/order/**" // might need to change one controller
+                  "/myOrder/**" // might need to change one controller
               ).hasAnyAuthority("CLIENT")
               .requestMatchers(
                   "/myRestaurants/**",

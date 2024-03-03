@@ -19,13 +19,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
 import static code.component.manageRestaurant.web.clientOutput.DiscoverController.DISCOVER;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = {
     DiscoverController.class,
@@ -57,15 +60,15 @@ public class DiscoveryWebIT {
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userId);
       Mockito.when(addressService.getAddress(ip)).thenReturn(address);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + DISCOVER)
+      mockMvc.perform(get(Constants.URL + DISCOVER)
               .param("ip", ip)
               .param("pageNumber", pageNumber.toString()))
-          .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.request().sessionAttribute(Constants.ADDRESS, address))
-          .andExpect(MockMvcResultMatchers.model().attribute(Constants.USERNAME, userId))
-          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
-          .andExpect(MockMvcResultMatchers.model().attribute("restaurantsByAddressPage", restaurantPage))
-          .andExpect(MockMvcResultMatchers.view().name("client/" + DISCOVER));
+          .andExpect(status().isOk())
+          .andExpect(request().sessionAttribute(Constants.ADDRESS, address))
+          .andExpect(model().attribute(Constants.USERNAME, userId))
+          .andExpect(model().attribute("pageNumber", pageNumber))
+          .andExpect(model().attribute("restaurantsByAddressPage", restaurantPage))
+          .andExpect(view().name("client/" + DISCOVER));
       Mockito.verify(addressService).getPageByAddress(address, pageNumber);
       Mockito.verify(addressService).getAddress(ip);
    }
