@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class ApiClientImpl implements ApiDAO {
 
-   private final AddressApiMapper addressApiMapper;
+   private AddressApiMapper addressApiMapper;
    private DefaultApi defaultApi;
 
    public Address getAddressFromApi(String ip) {

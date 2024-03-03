@@ -6,6 +6,7 @@ import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,14 +33,18 @@ public class OrderRestController {
    private AddressDTOMapper addressDTOMapper;
    private OrderDTOMapper orderDTOMapper;
 
-   @GetMapping(ORDER_GET)
-   public OrderDTOs getOrders(@PathVariable String clientId) {
+   @GetMapping(value = ORDER_GET, produces = MediaType.APPLICATION_JSON_VALUE)
+   public OrderDTOs getOrders(
+       @PathVariable String clientId
+   ) {
       List<Order> ordersByClientId = orderService.getOrdersByClientId(clientId);
       return OrderDTOs.builder().orders(orderDTOMapper.mapOToDTOList(ordersByClientId)).build();
    }
 
-   @GetMapping(ORDER_GET_DETAILS)
-   public OrderPositionDTOs getOrderDetails(@PathVariable Integer orderId) {
+   @GetMapping(value = ORDER_GET_DETAILS, produces = MediaType.APPLICATION_JSON_VALUE)
+   public OrderPositionDTOs getOrderDetails(
+       @PathVariable Integer orderId
+   ) {
       List<OrderPosition> orderPositions = orderService.getOrderPositions(orderId);
       return OrderPositionDTOs.builder().orderPositions(orderDTOMapper.mapOPToDTOList(orderPositions)).build();
    }

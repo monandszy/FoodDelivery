@@ -16,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
@@ -26,6 +25,8 @@ import static code.component.manageRestaurant.web.sellerInput.SellerRestaurantCo
 import static code.component.manageRestaurant.web.sellerInput.SellerRestaurantController.MY_RESTAURANT_GET;
 import static code.component.manageRestaurant.web.sellerInput.SellerRestaurantController.MY_RESTAURANT_UPDATE;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
@@ -57,8 +58,7 @@ public class SellerRestaurantWebIT {
       Integer expectedPageNumber = 0;
       List<MenuDTO> restaurantPage = List.of(WebFixtures.getMenuDTO());
       Mockito.when(dtoMapper.mapMToDTOList(any())).thenReturn(restaurantPage);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
-                  MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString())))
+      mockMvc.perform(get(Constants.URL + MY_RESTAURANT_GET, restaurantId))
           .andExpect(status().isOk())
           .andExpect(request().sessionAttribute(Constants.RESTAURANT, restaurantId))
           .andExpect(model().attribute("menuDTO", new MenuDTO()))
@@ -73,7 +73,7 @@ public class SellerRestaurantWebIT {
    void testAdd() throws Exception {
       Integer restaurantId = 1;
       MenuDTO menuDTO = WebFixtures.getMenuDTO();
-      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL + MY_RESTAURANT_ADD)
+      mockMvc.perform(post(Constants.URL + MY_RESTAURANT_ADD)
               .sessionAttr(Constants.RESTAURANT, restaurantId)
               .flashAttr("menuDTO", menuDTO))
           .andExpect(redirectedUrl("/"
@@ -86,8 +86,7 @@ public class SellerRestaurantWebIT {
    void testDelete() throws Exception {
       Integer restaurantId = 1;
       Integer menuId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
-                  MY_RESTAURANT_DELETE.replace("{menuId}", menuId.toString()))
+      mockMvc.perform(post(Constants.URL + MY_RESTAURANT_DELETE, menuId)
               .sessionAttr(Constants.RESTAURANT, restaurantId))
           .andExpect(redirectedUrl("/"
               + MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString())))
@@ -99,11 +98,10 @@ public class SellerRestaurantWebIT {
    void testUpdateRestaurant() throws Exception {
       Integer restaurantId = 1;
       Double deliveryRange = 2D;
-      mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
-          MY_RESTAURANT_UPDATE.replace("{restaurantId}",restaurantId.toString()))
+      mockMvc.perform(post(Constants.URL + MY_RESTAURANT_UPDATE, restaurantId)
               .param("deliveryRange", deliveryRange.toString()))
-              .andExpect(redirectedUrl("/"
-                  + MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString())))
+          .andExpect(redirectedUrl("/"
+              + MY_RESTAURANT_GET.replace("{restaurantId}", restaurantId.toString())))
           .andExpect(status().isFound());
       Mockito.verify(restaurantService).update(restaurantId, deliveryRange);
    }
