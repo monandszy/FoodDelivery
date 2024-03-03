@@ -41,19 +41,16 @@ public class SellerMenuWebIT {
    @Test
    void testGet() throws Exception {
       Integer menuId = 1;
-      Integer restaurantId = 1;
-      Integer pageNumber = 2;
+      Integer expectedPageNumber = 0;
       List<MenuPositionDTO> menuPage = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPage);
       mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
-                  MY_MENU_GET.replace("{menuId}", menuId.toString()))
-              .queryParam("restaurantId", restaurantId.toString())
-              .queryParam("pageNumber", pageNumber.toString()))
+                  MY_MENU_GET.replace("{menuId}", menuId.toString())))
           .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
+          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", expectedPageNumber))
           .andExpect(MockMvcResultMatchers.model().attribute("menuPage", menuPage))
           .andExpect(MockMvcResultMatchers.view().name("seller/" + MY_MENU));
-      Mockito.verify(menuPositionService).getPageByMenu(menuId, pageNumber);
+      Mockito.verify(menuPositionService).getPageByMenu(menuId, expectedPageNumber);
    }
 
    @Test
@@ -75,7 +72,7 @@ public class SellerMenuWebIT {
       Integer menuPositionId = 1;
       mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
                   MY_MENU_DELETE.replace("{menuPositionId}", menuPositionId.toString()))
-              .param("menuId", Integer.toString(menuId)))
+              .flashAttr("menuId", Integer.toString(menuId)))
           .andExpect(MockMvcResultMatchers.redirectedUrl("/"
               + MY_MENU_GET.replace("{menuId}", Integer.toString(menuId))))
           .andExpect(MockMvcResultMatchers.status().isFound());

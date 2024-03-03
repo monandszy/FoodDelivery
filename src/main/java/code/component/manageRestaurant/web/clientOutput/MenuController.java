@@ -33,7 +33,6 @@ public class MenuController {
       model.addAttribute("restaurantId", restaurantId);
       List<MenuPositionDTO> menuPositions = dtoMapper.mapMPToDTOList(
           menuPositionService.getAllMenuPositions(menuId));
-
       model.addAttribute("menuPositions", menuPositions);
       return "client/menu";
    }

@@ -1,5 +1,7 @@
 package code.order;
 
+import code.component.manageAccount.data.AccountRepo;
+import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.mapper.AccountEntityMapperImpl;
 import code.component.manageOrder.data.OrderRepo;
 import code.component.manageOrder.domain.Order;
@@ -22,7 +24,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ import java.util.List;
     AddressEntityMapperImpl.class,
     RestaurantEntityMapperImpl.class,
     AccountEntityMapperImpl.class,
+    AccountRepo.class
 })
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderRepoIT extends AbstractJpaIT {
@@ -45,13 +47,13 @@ public class OrderRepoIT extends AbstractJpaIT {
    private MenuRepo menuRepo;
    private MenuPositionRepo menuPositionRepo;
    private AddressRepo addressRepo;
+   private AccountRepo accountRepo;
 
    @Test
-   @Transactional
    void testGet() {
-      String sellerId = "admin";
-      String clientId = "admin";
-      Order order = testAddOrder(sellerId, clientId);
+      Order order = testAddOrder();
+      String sellerId = order.getSeller().getUserName();
+      String clientId = order.getSeller().getUserName();
       testAddOrderPosition(order.getRestaurant().getId(), order);
 
       List<Order> ordersByClientId = orderRepo.getOrdersByClientId(clientId);
@@ -67,14 +69,18 @@ public class OrderRepoIT extends AbstractJpaIT {
       Assertions.assertFalse(orderPositions.isEmpty());
    }
 
-   private Order testAddOrder(String sellerId, String clientId) {
-      Address add = addressRepo.addOrFindByIp(DataFixtures.getAddress());
+   private Order testAddOrder() {
+      Account account = DataFixtures.getAccount();
+      String sellerId = account.getUserName();
+      String clientId = account.getUserName();
+      accountRepo.addAccount(account, DataFixtures.getSellerRole());
+      Address address = addressRepo.addOrFindByIp(DataFixtures.getAddress());
       Restaurant restaurant = restaurantRepo.add(
-          DataFixtures.getRestaurant(), add.getId(), sellerId);
+          DataFixtures.getRestaurant(), address.getId(), sellerId);
 
       return orderRepo.add(DataFixtures.getOrder(),
-          add.getId(), sellerId, clientId, restaurant.getId()
-      ).withRestaurant(restaurant);
+          address.getId(), sellerId, clientId, restaurant.getId()
+      ).withRestaurant(restaurant).withSeller(account).withClient(account);
    }
 
    private void testAddOrderPosition(int restaurantId, Order order) {
@@ -86,17 +92,15 @@ public class OrderRepoIT extends AbstractJpaIT {
 
 
    @Test
-   @Transactional
    void testUpdate() {
-      String userName = "admin";
-      Order order = testAddOrder(userName, userName);
+      Order order = testAddOrder();
+      String sellerId = order.getSeller().getUserName();
       testAddOrderPosition(order.getRestaurant().getId(), order);
-      orderRepo.delete(order.getId());
-      Assertions.assertThrows(Exception.class, () -> orderRepo.getById(order.getId()));
-      Order order2 = testAddOrder(userName, userName);
-      orderRepo.updateOrderStatus(order2.getId(), Order.OrderStatus.COMPLETED);
-      Order orderById = orderRepo.getById(order2.getId());
-      Assertions.assertEquals(Order.OrderStatus.COMPLETED, orderById.getStatus());
+      orderRepo.updateOrderStatus(order.getId(), Order.OrderStatus.COMPLETED);
+      List<Order> orderById = orderRepo.getCompleteOrdersBySellerId(sellerId);
+      Assertions.assertEquals(order.getId(), orderById.getFirst().getId());
+      Assertions.assertEquals(Order.OrderStatus.COMPLETED,
+          orderById.getFirst().getStatus());
    }
 
 }

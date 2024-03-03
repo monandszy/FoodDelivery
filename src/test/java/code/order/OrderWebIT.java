@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 
 import static code.component.manageOrder.web.OrderController.ORDER_COMPLETE;
+import static code.component.manageOrder.web.OrderController.ORDER_getBySeller;
 import static code.component.manageOrder.web.OrderController.ORDER_getForSeller;
-import static code.component.manageOrder.web.OrderController.ORDER_getIncompleteBySeller;
 import static org.mockito.ArgumentMatchers.any;
 
 @WebMvcTest(controllers = OrderController.class)
@@ -46,8 +46,9 @@ public class OrderWebIT {
       List<OrderDTO> orders = List.of(OrderDTO.builder().id(1).build());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(orderDTOMapper.mapOToDTOList(any())).thenReturn(orders);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getIncompleteBySeller))
-          .andExpect(MockMvcResultMatchers.model().attribute("orders", orders))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getBySeller))
+          .andExpect(MockMvcResultMatchers.model().attribute("incompleteOrders", orders))
+          .andExpect(MockMvcResultMatchers.model().attribute("completeOrders", orders))
           .andExpect(MockMvcResultMatchers.view().name("seller/order/orders"));
       Mockito.verify(orderService).getIncompleteOrdersBySellerId(userName);
    }
@@ -55,7 +56,8 @@ public class OrderWebIT {
    @Test
    void testGetForSeller() throws Exception {
       Integer orderId = 1;
-      List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition());
+      List<OrderPositionDTO> orderPositions = List.of(WebFixtures.getOrderPosition()
+          .withMenuPositionDTO(WebFixtures.getMenuPositionDTO()));
       Mockito.when(orderDTOMapper.mapOPToDTOList(any())).thenReturn(orderPositions);
       mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL +
               ORDER_getForSeller.replace("{orderId}", orderId.toString())))
@@ -69,7 +71,7 @@ public class OrderWebIT {
       Integer orderId = 1;
       mockMvc.perform(MockMvcRequestBuilders.post(Constants.URL +
               ORDER_COMPLETE.replace("{orderId}", orderId.toString())))
-          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getIncompleteBySeller"));
+          .andExpect(MockMvcResultMatchers.redirectedUrl("/order/getBySeller"));
       Mockito.verify(orderService).complete(orderId);
    }
 

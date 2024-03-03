@@ -17,6 +17,7 @@ public class ImageController {
    public static final String IMAGE_FILE = "/images/get/{imageId}";
    private ImageDAO imageDAO;
 
+   // TODO learn how to test things like that (rest api testing?)
    @GetMapping(value = IMAGE_FILE, produces = MediaType.IMAGE_JPEG_VALUE)
    public ResponseEntity<Resource> getImage(
        @PathVariable("imageId") Integer imageId

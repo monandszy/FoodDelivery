@@ -1,5 +1,7 @@
 package code.restaurant.data;
 
+import code.component.manageAccount.data.AccountRepo;
+import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.mapper.AccountEntityMapperImpl;
 import code.component.manageRestaurant.data.MenuPositionRepo;
 import code.component.manageRestaurant.data.MenuRepo;
@@ -29,33 +31,51 @@ import java.util.List;
     MenuPositionRepo.class,
     RestaurantEntityMapperImpl.class,
     AccountEntityMapperImpl.class,
-    AddressEntityMapperImpl.class
+    AddressEntityMapperImpl.class,
+    AccountRepo.class
 })
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class RestaurantRepoIT extends AbstractJpaIT {
+public class RestaurantManagementRepoIT extends AbstractJpaIT {
 
    private RestaurantRepo restaurantRepo;
    private AddressRepo addressRepo;
+   private AccountRepo accountRepo;
    private MenuRepo menuRepo;
    private MenuPositionRepo menuPositionRepo;
 
    @Test
    @Transactional
-   void thatCrudWorksCorrectly() {
-
+   void testCrud() {
       Address address = addressRepo.addOrFindByIp(DataFixtures.getAddress());
+      Account account = DataFixtures.getAccount();
+      accountRepo.addAccount(account, DataFixtures.getAccountRole());
+      String sellerId = account.getUserName();
 
-      String sellerId = "admin";
+      // addRestaurant and getPageBySeller
       restaurantRepo.add(DataFixtures.getRestaurant(), address.getId(), sellerId);
       List<Restaurant> pageBySeller = restaurantRepo.getPageBySeller(sellerId, 0);
       Assertions.assertFalse(pageBySeller.isEmpty());
-      Integer restaurantId = pageBySeller.getFirst().getId();
+      Restaurant restaurant = pageBySeller.getFirst();
+      Integer restaurantId = restaurant.getId();
 
+      // updateRestaurant and getByRestaurantId
+      Double newRange = 2D;
+      restaurantRepo.updateRange(restaurantId, newRange);
+      Restaurant byId = restaurantRepo.getByRestaurantId(restaurantId);
+      Assertions.assertEquals(restaurant, byId);
+      Assertions.assertNotNull(byId.getSeller());
+
+      // getAllWithAddress
+      List<Restaurant> restaurants = restaurantRepo.getAllWithAddress();
+      Assertions.assertNotNull(restaurants.getFirst().getAddress());
+
+      // addMenu and getPageByRestaurantId
       menuRepo.add(DataFixtures.getMenu(), restaurantId);
       List<Menu> pageByRestaurantId = menuRepo.getPageByRestaurantId(restaurantId, 0);
       Assertions.assertFalse(pageByRestaurantId.isEmpty());
       Integer menuId = pageByRestaurantId.getFirst().getId();
 
+      // addPosition and getMenuPositions, getPageByMenuId
       menuPositionRepo.add(DataFixtures.getMenuPosition(), menuId);
       List<MenuPosition> menuPositions = menuPositionRepo.getMenuPositions(menuId);
       List<MenuPosition> pageByMenuId = menuPositionRepo.getPageByMenuId(menuId, 0);
@@ -63,6 +83,7 @@ public class RestaurantRepoIT extends AbstractJpaIT {
       Assertions.assertFalse(pageByMenuId.isEmpty());
       Integer menuPositionId = pageByMenuId.getFirst().getId();
 
+      // delete
       menuPositionRepo.deleteById(menuPositionId);
       menuPositions = menuPositionRepo.getMenuPositions(menuId);
       pageByMenuId = menuPositionRepo.getPageByMenuId(menuId, 0);
@@ -75,15 +96,4 @@ public class RestaurantRepoIT extends AbstractJpaIT {
       pageBySeller = restaurantRepo.getPageBySeller(sellerId, 0);
       Assertions.assertTrue(pageBySeller.isEmpty());
    }
-
-   @Test
-   public void testUpdateAddress() {
-       // TODO
-   }
-
-   @Test
-   public void testUpdateRange() {
-
-   }
-
 }

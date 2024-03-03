@@ -56,7 +56,6 @@ public class OrderRestController {
 
    @DeleteMapping(ORDER_DELETE)
    public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
-      // TODO add custom error handling - for cancellation timeout
       orderService.cancelOrder(orderId);
       return ResponseEntity.ok()
           .build();

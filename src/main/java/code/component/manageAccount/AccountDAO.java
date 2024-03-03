@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AccountDAO {
    Optional<Account> findByUserName(String username);
 
-   void addAccount(Account account);
+   void addAccount(Account account, Role role);
 
    List<Account> getAccountPage(Integer pageNumber);
 

@@ -11,42 +11,44 @@
 <body>
 <div>
   <h2>Menu</h2>
-  <form action="#" th:action="@{/order/add}" method="post">
+  <form action="#" th:action="@{/myOrder/add}" method="POST">
     <table>
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Price</th>
-      <th>Select</th>
-      <th>Images</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="menuPosition : ${menuPositions}">
-      <td th:text="${menuPosition.id}"></td>
-      <td th:text="${menuPosition.price}"></td>
-      <td>
-        <th:block>
-          <label>
-            <input type="checkbox" name="selectedPositions" th:value="${menuPosition.id}"/>
-          </label>
-        </th:block>
-      </td>
-      <td>
-        <ul th:each="image : ${menuPosition.images}">
-          <li>
-            <img th:src="@{'/images/get/'+${image}}" alt="noImage" style="height:200px;">
-          </li>
-        </ul>
-      </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-      <td><button type="submit">Click to purchase!</button></td>
-    </tr>
-    </tfoot>
-  </table>
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Price</th>
+        <th>Select</th>
+        <th>Images</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="menuPosition : ${menuPositions}">
+        <td th:text="${menuPosition.id}"></td>
+        <td th:text="${menuPosition.price}"></td>
+        <td>
+          <th:block>
+            <label>
+              <input type="checkbox" name="selectedPositions" th:value="${menuPosition.id}"/>
+            </label>
+          </th:block>
+        </td>
+        <td>
+          <ul th:each="image : ${menuPosition.images}">
+            <li>
+              <img th:src="@{'/images/get/'+${image}}" alt="noImage" style="height:200px;">
+            </li>
+          </ul>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td>
+          <button type="submit">Click to purchase!</button>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
   </form>
 </div>
 

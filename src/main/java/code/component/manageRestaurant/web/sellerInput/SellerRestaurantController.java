@@ -28,7 +28,7 @@ public class SellerRestaurantController {
    public static final String MY_RESTAURANT_GET = MY_RESTAURANT + "/get/{restaurantId}";
    public static final String MY_RESTAURANT_ADD = MY_RESTAURANT + "/add";
    public static final String MY_RESTAURANT_DELETE = MY_RESTAURANT + "/delete/{menuId}";
-   private static final String MY_RESTAURANT_UPDATE = MY_RESTAURANT + "/update/{restaurantId}";
+   public static final String MY_RESTAURANT_UPDATE = MY_RESTAURANT + "/update/{restaurantId}";
 
    private MenuService menuService;
    private RestaurantService restaurantService;
@@ -44,7 +44,7 @@ public class SellerRestaurantController {
       session.setAttribute(Constants.RESTAURANT, restaurantId);
       model.addAttribute("menuDTO", new MenuDTO());
       model.addAttribute("restaurantId", restaurantId);
-      pageNumber = Objects.isNull(pageNumber) ? Integer.valueOf(START_PAGE) : pageNumber;
+      pageNumber = Objects.isNull(pageNumber) ? START_PAGE : pageNumber;
       model.addAttribute("pageNumber", pageNumber);
       List<MenuDTO> restaurantPage = dtoMapper.mapMToDTOList(
           menuService.getPageByRestaurant(restaurantId, pageNumber));
