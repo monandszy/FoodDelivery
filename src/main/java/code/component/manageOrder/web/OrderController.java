@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderController {
 
    public static final String ORDER = "order";
-   public static final String ORDER_getBySeller = ORDER + "/getIncompleteBySeller";
+   public static final String ORDER_getIncompleteBySeller = ORDER + "/getBySeller";
    public static final String ORDER_getForSeller = ORDER + "/getForSeller/{orderId}";
    public static final String ORDER_COMPLETE = ORDER + "/complete/{orderId}";
 
@@ -27,14 +27,17 @@ public class OrderController {
    private OrderDTOMapper dtoMapper;
    private AccountService accountService;
 
-   @GetMapping(ORDER_getBySeller)
+   @GetMapping(ORDER_getIncompleteBySeller)
    public String getIncompleteOrdersBySellerId(
        Model model
    ) {
       String sellerId = accountService.getAuthenticatedUserName();
-      List<OrderDTO> orders = dtoMapper.mapOToDTOList(
+      List<OrderDTO> incomplete = dtoMapper.mapOToDTOList(
           orderService.getIncompleteOrdersBySellerId(sellerId));
-      model.addAttribute("orders", orders);
+      List<OrderDTO> complete = dtoMapper.mapOToDTOList(
+          orderService.getCompleteOrdersBySellerId(sellerId));
+      model.addAttribute("incompleteOrders", incomplete);
+      model.addAttribute("completeOrders", complete);
       return "seller/order/orders";
    }
 
@@ -54,6 +57,6 @@ public class OrderController {
        @PathVariable("orderId") Integer orderId
    ) {
       orderService.complete(orderId);
-      return "redirect:/order/getIncompleteBySeller";
+      return "redirect:/order/getBySeller";
    }
 }

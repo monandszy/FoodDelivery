@@ -31,6 +31,7 @@ public class Order {
    public enum OrderStatus {
       IN_PROGRESS,
       TRAVELLING,
+      CANCELED,
       COMPLETED
    }
 

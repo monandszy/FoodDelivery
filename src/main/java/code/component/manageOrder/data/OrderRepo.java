@@ -66,12 +66,6 @@ public class OrderRepo implements OrderDAO {
    }
 
    @Override
-   public void delete(Integer orderId) {
-      // TODO - separate list for completed seller orders - move to CANCELLED status
-      orderJpaRepo.deleteById(orderId);
-   }
-
-   @Override
    public void updateOrderStatus(Integer orderId, Order.OrderStatus status) {
       OrderEntity entity = orderJpaRepo.findById(orderId).orElseThrow();
       entity.setStatus(status);
@@ -79,7 +73,14 @@ public class OrderRepo implements OrderDAO {
 
    @Override
    public List<Order> getIncompleteOrdersBySellerId(String sellerId) {
-      return orderMapper.mapOFromEntityList(orderJpaRepo.findIncompleteBySellerUserName(sellerId));
+      return orderMapper.mapOFromEntityList(orderJpaRepo.
+          findIncompleteBySellerUserName(sellerId));
+   }
+
+   @Override
+   public List<Order> getCompleteOrdersBySellerId(String sellerId) {
+      return orderMapper.mapOFromEntityList(orderJpaRepo.
+          findCompleteBySellerUserName(sellerId));
    }
 
    @Override

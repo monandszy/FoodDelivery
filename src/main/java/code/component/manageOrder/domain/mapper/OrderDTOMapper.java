@@ -4,9 +4,8 @@ import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
-import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
-import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapperImpl;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -16,7 +15,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    uses = RestaurantDTOMapperImpl.class)
 public interface OrderDTOMapper {
 
    @Mapping(target = "addressOutput", source = "address", qualifiedByName = "addressMapping")
@@ -29,36 +29,16 @@ public interface OrderDTOMapper {
    @Mapping(target = "timeOfOrder", source = "timeOfOrder", qualifiedByName = "stringToTimeMapping")
    Order mapFromDTO(OrderDTO orderDTO);
 
-   @Mapping(target = "orderId" , source = "order", qualifiedByName = "orderMapping")
-   @Mapping(target = "menuPositionId" , source = "menuPosition", qualifiedByName = "menuPositionMapping")
+   @Mapping(target = "menuPositionDTO", source = "menuPosition")
    OrderPositionDTO mapToDTO(OrderPosition orderPosition);
 
-   @Mapping(target = "order", ignore = true)
    @Mapping(target = "menuPosition", ignore = true)
    OrderPosition mapFromDTO(OrderPositionDTO orderPositionDTO);
-
-   @Named("addressMapping")
-   default String addressMapping(Address address) {
-      if (Objects.isNull(address)) return null;
-      return address.toString();
-   }
 
    @Named("restaurantMapping")
    default Integer restaurantMapping(Restaurant restaurant) {
       if (Objects.isNull(restaurant)) return null;
       return restaurant.getId();
-   }
-
-   @Named("orderMapping")
-   default Integer orderIdMapping(Order order) {
-      if (Objects.isNull(order)) return null;
-      return order.getId();
-   }
-
-   @Named("menuPositionMapping")
-   default Integer menuPositionMapping(MenuPosition menuPosition) {
-      if (Objects.isNull(menuPosition)) return null;
-      return menuPosition.getId();
    }
 
    @Named("timeToStringMapping")
