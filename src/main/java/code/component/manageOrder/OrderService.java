@@ -55,7 +55,7 @@ public class OrderService {
          throw new RuntimeException("Order status not IN_PROGRESS, cannot cancel");
       if (order.getTimeOfOrder().isBefore(OffsetDateTime.now().minusMinutes(20)))
          throw new RuntimeException("20 minute return timer has already expired");
-      orderDAO.delete(orderId);
+      orderDAO.updateOrderStatus(orderId, Order.OrderStatus.CANCELED);
    }
 
    @Transactional
@@ -71,6 +71,11 @@ public class OrderService {
    @Transactional
    public List<Order> getIncompleteOrdersBySellerId(String sellerId) {
       return orderDAO.getIncompleteOrdersBySellerId(sellerId);
+   }
+
+   @Transactional
+   public List<Order> getCompleteOrdersBySellerId(String sellerId) {
+      return orderDAO.getCompleteOrdersBySellerId(sellerId);
    }
 
    @Transactional

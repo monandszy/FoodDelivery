@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 
 import static code.component.manageOrder.web.OrderController.ORDER_COMPLETE;
-import static code.component.manageOrder.web.OrderController.ORDER_getBySeller;
 import static code.component.manageOrder.web.OrderController.ORDER_getForSeller;
+import static code.component.manageOrder.web.OrderController.ORDER_getIncompleteBySeller;
 import static org.mockito.ArgumentMatchers.any;
 
 @WebMvcTest(controllers = OrderController.class)
@@ -46,7 +46,7 @@ public class OrderWebIT {
       List<OrderDTO> orders = List.of(OrderDTO.builder().id(1).build());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(orderDTOMapper.mapOToDTOList(any())).thenReturn(orders);
-      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getBySeller))
+      mockMvc.perform(MockMvcRequestBuilders.get(Constants.URL + ORDER_getIncompleteBySeller))
           .andExpect(MockMvcResultMatchers.model().attribute("orders", orders))
           .andExpect(MockMvcResultMatchers.view().name("seller/order/orders"));
       Mockito.verify(orderService).getIncompleteOrdersBySellerId(userName);
