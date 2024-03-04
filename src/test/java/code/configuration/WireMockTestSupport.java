@@ -20,5 +20,6 @@ public interface WireMockTestSupport {
    /*
    * org.springframework.web.reactive.function.client.WebClientResponseException$InternalServerError: 500 Internal Server Error from GET http://localhost:9090/v1/
    *  Suspected couse - incompatiblity with "Mono"
+   * Create a proxy controller and mock that heh?
    * */
 }
