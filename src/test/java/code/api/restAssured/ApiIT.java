@@ -11,15 +11,14 @@ import code.component.manageOrder.domain.Order;
 import code.component.manageRestaurant.data.jpa.RestaurantJpaRepo;
 import code.component.manageRestaurant.manageDelivery.AddressJpaRepo;
 import code.configuration.RestAssuredITBase;
+import code.configuration.WireMockTestSupport;
 import code.util.ApiFixtures;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.test.web.servlet.MockMvc;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @AutoConfigureMockMvc(addFilters = false)
@@ -27,9 +26,9 @@ import org.springframework.test.web.servlet.MockMvc;
 public class ApiIT extends RestAssuredITBase
     implements OrderControllerSupport,
     RestaurantControllerSupport,
-    AccountControllerSupport {
+    AccountControllerSupport,
+    WireMockTestSupport {
 
-   private MockMvc mockMvc;
    private AccountJpaRepo accountJpaRepo;
    private RestaurantJpaRepo restaurantJpaRepo;
    private OrderJpaRepo orderJpaRepo;
@@ -44,11 +43,12 @@ public class ApiIT extends RestAssuredITBase
 
       OpenRestaurantDTO openRestaurantDTO = openRestaurant(ApiFixtures.getOpenRestaurant());
 
+      Integer[] selected = openRestaurantDTO.getMenuPositions()
+          .stream().map(e -> e.getId()).toArray(Integer[]::new);
       OrderInputDTO newOrder = OrderInputDTO.builder()
           .addressDTO(WebFixtures.getAddress())
           .restaurantId(openRestaurantDTO.getRestaurant().getId())
-          .selected(openRestaurantDTO.getMenuPositions()
-              .stream().map(e -> e.getId()).toArray(Integer[]::new))
+          .selected(selected)
           .build();
       addOrder(newOrder);
 
@@ -58,8 +58,8 @@ public class ApiIT extends RestAssuredITBase
 
       cancelOrder(id);
       OrderDTOs cancelled = getOrders(userName);
-      Assertions.assertEquals(Order.OrderStatus.CANCELLED,
-          cancelled.getOrders().getFirst().getStatus());
+      org.assertj.core.api.Assertions.assertThat(cancelled.getOrders().getFirst().getStatus()
+          ).isEqualTo(Order.OrderStatus.CANCELLED);
 
       orderJpaRepo.deleteAll();
       restaurantJpaRepo.deleteAll();

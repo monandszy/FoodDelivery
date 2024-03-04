@@ -5,7 +5,6 @@ import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,6 @@ public class DiscoverController {
    public static final String DISCOVER = "discover";
    private AddressService addressService;
    private RestaurantDTOMapper dtoMapper;
-   private AddressDTOMapper addressDTOMapper;
    private AccountService accountService;
 
    @GetMapping(DISCOVER)

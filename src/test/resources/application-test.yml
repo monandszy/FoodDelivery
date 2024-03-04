@@ -3,4 +3,4 @@ jpa:
     ddl-auto: validate
 api:
   abstract:
-    url: http://localhost:9999
+    url: http://localhost:9090

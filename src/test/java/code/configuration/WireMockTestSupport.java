@@ -1,6 +1,5 @@
 package code.configuration;
 
-import code.component.api.ipAddressApi.ApiDAO;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
@@ -10,12 +9,16 @@ public interface WireMockTestSupport {
 
    default void stubForIp(final WireMockServer wireMockServer, String ip) {
       wireMockServer.stubFor(WireMock.get(
-          WireMock.urlPathEqualTo("v1/?api_key=%s&ip_address=%s"
-              .formatted(ApiDAO.KEY).formatted(ApiDAO.TEST_IP)))
-              .willReturn(WireMock.aResponse()
-                  .withHeader("Content-Type", "applicatioin/json")
-                  .withBodyFile("wiremock/inlineResponse200_1.json")
+              WireMock.urlPathEqualTo("/v1/"))
+          .willReturn(WireMock.aResponse()
+                  .withHeader("Content-Type", "application/json")
+                  .withBodyFile("inlineResponse200_1.json")
                   .withTransformerParameters(Map.of("ip", ip))
                   .withTransformers("response-template")));
    }
+
+   /*
+   * org.springframework.web.reactive.function.client.WebClientResponseException$InternalServerError: 500 Internal Server Error from GET http://localhost:9090/v1/
+   *  Suspected couse - incompatiblity with "Mono"
+   * */
 }

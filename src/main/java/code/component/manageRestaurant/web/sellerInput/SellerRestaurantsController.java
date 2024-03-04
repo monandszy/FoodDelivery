@@ -5,7 +5,6 @@ import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,6 @@ public class SellerRestaurantsController {
    private RestaurantService restaurantService;
    private AccountService accountService;
    private AddressService addressService;
-   private AddressDTOMapper addressDTOMapper;
    private RestaurantDTOMapper dtoMapper;
 
    @GetMapping(MY_RESTAURANTS_GET)

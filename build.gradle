@@ -58,9 +58,7 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation "org.slf4j:slf4j-api:${wiremockSlf4j}"
-    testImplementation("com.github.tomakehurst:wiremock-standalone:${wiremock}") {
-        exclude group: 'org.slf4j', module: 'slf4j-api' // IDK how to fix that warning
-    }
+    testImplementation "com.github.tomakehurst:wiremock-standalone:${wiremock}"
     testImplementation "io.rest-assured:rest-assured:${restAssured}"
 
 }
