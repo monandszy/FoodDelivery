@@ -2,6 +2,8 @@ package code.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.common.ClasspathFileSource;
+import com.github.tomakehurst.wiremock.common.FileSource;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -16,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 @ActiveProfiles("test")
 public abstract class RestAssuredITBase
@@ -36,11 +38,12 @@ public abstract class RestAssuredITBase
 
    @BeforeAll
    static void beforeAll() {
+      FileSource fs = new ClasspathFileSource("src/test/resources/wiremock/");
       wireMockServer = new WireMockServer(
-          options()
-              .port(9999)
-              .templatingEnabled(false)
-      );
+          wireMockConfig()
+              .port(9090)
+              .fileSource(fs)
+              .globalTemplating(true));
       wireMockServer.start();
    }
    @AfterEach
