@@ -43,6 +43,7 @@ public class RestaurantManagementRepoIT extends AbstractJpaIT {
    private MenuRepo menuRepo;
    private MenuPositionRepo menuPositionRepo;
 
+
    @Test
    @Transactional
    void testCrud() {

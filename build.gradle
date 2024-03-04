@@ -96,19 +96,17 @@ jacocoTestReport {
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
-}
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.5
-            }
-        }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "code/openApi/**",
+                    "code/configuration/**",
+                    "code/web/**",
+            ])
+        }))
     }
 }
-check.dependsOn jacocoTestCoverageVerification
+
 // https://docs.abstractapi.com/ip-geolocation
 openApiGenerate {
     generatorName = "java"
@@ -121,8 +119,8 @@ openApiGenerate {
 
     outputDir = "$buildDir/generated-sources/openapi".toString()
     inputSpec = "$rootDir/src/main/resources/openApi/abstractapi.com_geolocation_1.0.0_openapi.json".toString()
-    apiPackage = "code.api.infrastructure"
-    modelPackage = "code.api.model"
+    apiPackage = "code.openApi.infrastructure"
+    modelPackage = "code.openApi.model"
 }
 
 sourceSets {

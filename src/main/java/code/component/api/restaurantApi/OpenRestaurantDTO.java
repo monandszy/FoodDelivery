@@ -1,4 +1,4 @@
-package code.api.restaurantApi;
+package code.component.api.restaurantApi;
 
 import code.component.manageRestaurant.domain.MenuDTO;
 import code.component.manageRestaurant.domain.MenuPositionDTO;

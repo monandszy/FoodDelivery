@@ -1,4 +1,4 @@
-package code.api.orderApi;
+package code.component.api.orderApi;
 
 import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;

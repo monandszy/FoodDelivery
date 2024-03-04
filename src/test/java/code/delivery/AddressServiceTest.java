@@ -1,6 +1,6 @@
 package code.delivery;
 
-import code.api.ipAddressApi.ApiClientImpl;
+import code.component.api.ipAddressApi.ApiClientImpl;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.domain.Restaurant;

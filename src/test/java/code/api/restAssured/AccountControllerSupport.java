@@ -5,7 +5,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static code.api.AccountRestController.API_REGISTER;
+import static code.component.api.AccountRestController.API_REGISTER;
 
 public interface AccountControllerSupport {
 

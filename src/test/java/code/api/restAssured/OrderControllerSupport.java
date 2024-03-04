@@ -1,17 +1,17 @@
 package code.api.restAssured;
 
-import code.api.orderApi.OrderDTOs;
-import code.api.orderApi.OrderInputDTO;
-import code.api.orderApi.OrderPositionDTOs;
+import code.component.api.orderApi.OrderDTOs;
+import code.component.api.orderApi.OrderInputDTO;
+import code.component.api.orderApi.OrderPositionDTOs;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.springframework.http.HttpStatus;
 
-import static code.api.orderApi.OrderRestController.ORDER_ADD;
-import static code.api.orderApi.OrderRestController.ORDER_DELETE;
-import static code.api.orderApi.OrderRestController.ORDER_GET;
-import static code.api.orderApi.OrderRestController.ORDER_GET_DETAILS;
+import static code.component.api.orderApi.OrderRestController.ORDER_ADD;
+import static code.component.api.orderApi.OrderRestController.ORDER_DELETE;
+import static code.component.api.orderApi.OrderRestController.ORDER_GET;
+import static code.component.api.orderApi.OrderRestController.ORDER_GET_DETAILS;
 
 public interface OrderControllerSupport {
 

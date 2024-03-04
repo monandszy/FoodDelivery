@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -54,12 +55,14 @@ public class AccountRepo implements AccountDAO {
           findByUserName(userName).orElseThrow()));
    }
 
-   @Override
-   public void setRole(String userName, Role role) {
-      AccountEntity accountEntity = entityMapper.mapToEntity(
-          findByUserName(userName).orElseThrow());
-      Set<RoleEntity> roles = accountEntity.getRoles();
-      roles.add(roleJpaRepo.findByRole(role.getRole()).orElseThrow());
+   @Override // Does it have to require mapping the set? seemed to work fine, not in tests tho
+   public void setRole(String username, Role role) {
+      RoleEntity e = roleJpaRepo.findByRole(role.getRole()).orElseThrow();
+      AccountEntity accountEntity = accountJpaRepo.findByUserName(username).orElseThrow();
+      Set<RoleEntity> oldRoles = accountEntity.getRoles();
+      HashSet<RoleEntity> newRoles = new HashSet<>(oldRoles);
+      newRoles.add(e);
+      accountEntity.setRoles(newRoles);
       accountJpaRepo.save(accountEntity);
    }
 

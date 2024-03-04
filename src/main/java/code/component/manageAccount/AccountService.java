@@ -1,6 +1,6 @@
 package code.component.manageAccount;
 
-import code.api.ipAddressApi.ApiDAO;
+import code.component.api.ipAddressApi.ApiDAO;
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.Role;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package code.configuration;
 
-import code.api.ApiClient;
-import code.api.infrastructure.DefaultApi;
+import code.openApi.ApiClient;
+import code.openApi.infrastructure.DefaultApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

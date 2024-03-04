@@ -1,6 +1,6 @@
-package code.api.orderApi;
+package code.component.api.orderApi;
 
-import code.component.manageOrder.domain.OrderDTO;
+import code.component.manageOrder.domain.OrderPositionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDTOs {
+public class OrderPositionDTOs {
 
-   private List<OrderDTO> orders;
+   private List<OrderPositionDTO> orderPositions;
 }
