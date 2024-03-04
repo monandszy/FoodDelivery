@@ -1,7 +1,4 @@
 jpa:
   hibernate:
     ddl-auto: validate
-api:
-  abstract:
-    url: http://localhost:9090
 spring.security.enabled: false
