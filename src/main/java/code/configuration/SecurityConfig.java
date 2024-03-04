@@ -56,7 +56,10 @@ public class SecurityConfig {
           .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests
               .requestMatchers("/login", "/error", "/register").permitAll()
-              .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
+              .requestMatchers(
+                  "/queue/**",
+                  "/images/**"
+              ).hasAnyAuthority("ACCOUNT")
               .requestMatchers(
                   "/home/**"
               ).hasAnyAuthority("ADMIN")

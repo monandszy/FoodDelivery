@@ -1,6 +1,7 @@
 package code.component.manageRestaurant.domain;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MenuPositionDTO {
 
    private Integer id;
+   @NotNull
    @Range(min = 10, max = 100000)
    private BigDecimal price;
    @NotEmpty

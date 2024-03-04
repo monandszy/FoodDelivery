@@ -1,5 +1,6 @@
 package code.component.manageRestaurant.domain;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class RestaurantDTO {
    private Integer id;
    private String addressOutput;
    private String sellerOutput;
+   @NotNull
    @Range(min = 10, max = Long.MAX_VALUE)
    private Double deliveryRange;
 }

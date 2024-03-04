@@ -36,6 +36,7 @@ public class GlobalExceptionHandler {
       return modelAndView;
    }
 
+
    @ExceptionHandler(NotImplementedException.class)
    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
    public ModelAndView handleException(NotImplementedException ex) {
