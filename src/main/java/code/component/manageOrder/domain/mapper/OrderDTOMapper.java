@@ -6,6 +6,8 @@ import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapperImpl;
+import code.configuration.Generated;
+import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -15,6 +17,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
+@AnnotateWith(Generated.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
     uses = RestaurantDTOMapperImpl.class)
 public interface OrderDTOMapper {
@@ -51,9 +54,7 @@ public interface OrderDTOMapper {
       return OffsetDateTime.parse(time);
    }
 
-   List<OrderPosition> mapOPFromDTOList(List<OrderPositionDTO> orderPositions);
    List<OrderPositionDTO> mapOPToDTOList(List<OrderPosition> orderPositions);
 
-   List<Order> mapOFromDTOList(List<OrderDTO> orderPositions);
    List<OrderDTO> mapOToDTOList(List<Order> orderPositions);
 }

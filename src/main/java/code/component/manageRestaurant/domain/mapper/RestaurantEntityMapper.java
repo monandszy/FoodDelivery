@@ -7,6 +7,8 @@ import code.component.manageRestaurant.domain.MenuPositionEntity;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.domain.RestaurantEntity;
 import code.component.manageRestaurant.manageImages.ImageIdEntity;
+import code.configuration.Generated;
+import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -15,6 +17,7 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 import java.util.Objects;
 
+@AnnotateWith(Generated.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RestaurantEntityMapper {
    @Mapping(target = "menus", source = "menus", ignore = true)

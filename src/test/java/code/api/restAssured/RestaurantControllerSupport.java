@@ -1,10 +1,10 @@
 package code.api.restAssured;
 
-import code.api.restaurantApi.OpenRestaurantDTO;
+import code.component.api.restaurantApi.OpenRestaurantDTO;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
-import static code.api.restaurantApi.RestaurantRestController.RESTAURANT_OPEN;
+import static code.component.api.restaurantApi.RestaurantRestController.RESTAURANT_OPEN;
 
 public interface RestaurantControllerSupport {
 

@@ -1,4 +1,4 @@
-package code.api;
+package code.component.api;
 
 import code.component.manageAccount.LoginService;
 import code.component.manageAccount.domain.AccountDTO;

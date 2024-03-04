@@ -1,6 +1,6 @@
 package code.component.manageRestaurant.manageDelivery;
 
-import code.api.ipAddressApi.ApiClientImpl;
+import code.component.api.ipAddressApi.ApiClientImpl;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.domain.Restaurant;
@@ -66,7 +66,6 @@ public class AddressService {
       if (address.isPresent()) {
          return address.get();
       } else {
-         Optional<Address> byIp = addressDAO.getByIp(ip);
          return apiClient.getAddressFromApi(ip);
       }
    }

@@ -1,6 +1,6 @@
 package code.util;
 
-import code.api.restaurantApi.OpenRestaurantDTO;
+import code.component.api.restaurantApi.OpenRestaurantDTO;
 
 import java.util.List;
 

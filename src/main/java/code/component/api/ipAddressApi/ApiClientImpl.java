@@ -1,8 +1,8 @@
-package code.api.ipAddressApi;
+package code.component.api.ipAddressApi;
 
-import code.api.infrastructure.DefaultApi;
-import code.api.model.InlineResponse200;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.openApi.infrastructure.DefaultApi;
+import code.openApi.model.InlineResponse200;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

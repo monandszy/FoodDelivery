@@ -1,9 +1,9 @@
 package code.api;
 
-import code.api.infrastructure.DefaultApi;
-import code.api.ipAddressApi.ApiDAO;
-import code.api.model.InlineResponse200;
+import code.component.api.ipAddressApi.ApiDAO;
 import code.configuration.AbstractSpringBootIT;
+import code.openApi.infrastructure.DefaultApi;
+import code.openApi.model.InlineResponse200;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

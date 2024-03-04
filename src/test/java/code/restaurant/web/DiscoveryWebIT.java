@@ -1,6 +1,6 @@
 package code.restaurant.web;
 
-import code.api.ipAddressApi.ApiClientImpl;
+import code.component.api.ipAddressApi.ApiClientImpl;
 import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.domain.RestaurantDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;

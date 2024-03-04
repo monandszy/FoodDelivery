@@ -1,4 +1,4 @@
-package code.api;
+package code.web;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
