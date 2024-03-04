@@ -61,6 +61,8 @@ dependencies {
     testImplementation "com.github.tomakehurst:wiremock-standalone:${wiremock}"
     testImplementation "io.rest-assured:rest-assured:${restAssured}"
 
+    implementation "de.elnarion.util:plantuml-generator-util:2.3.0"
+
 }
 
 dependencyManagement {
