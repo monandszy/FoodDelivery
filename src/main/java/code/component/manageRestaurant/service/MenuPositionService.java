@@ -21,7 +21,7 @@ public class MenuPositionService {
    private ImageDAO imageDAO;
 
    @Transactional
-   public void add(MultipartFile image, MenuPosition menuPosition, Integer menuId) {
+   public Integer add(MultipartFile image, MenuPosition menuPosition, Integer menuId) {
       MenuPosition created = menuPositionDAO.add(menuPosition, menuId);
       if (Objects.nonNull(image)) {
          try {
@@ -31,6 +31,7 @@ public class MenuPositionService {
             throw new DeliveryError("INVALID IMAGE");
          }
       }
+      return created.getId();
    }
 
    @Transactional

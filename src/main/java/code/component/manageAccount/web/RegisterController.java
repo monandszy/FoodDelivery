@@ -26,7 +26,6 @@ public class RegisterController {
       return "register";
    }
 
-   // TODO auto-login
    @PostMapping(REGISTER)
    public String processRegister(
        @Valid @ModelAttribute("account") AccountDTO account

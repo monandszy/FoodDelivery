@@ -11,3 +11,5 @@ curl -i -H "Content-Type: application/json" -X POST http://localhost:8087/code/a
    "selected": [1, 2, 3],
    "restaurantId": 1
 }"
+
+curl -i -X POST http://localhost:8087/code/login --data-raw "username=admin&password=admin"

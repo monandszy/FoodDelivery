@@ -13,7 +13,8 @@ CREATE TABLE food_delivery.client_order
         (
          'IN_PROGRESS',
          'TRAVELLING',
-         'COMPLETED'
+         'COMPLETED',
+         'CANCELLED'
             )),
     CONSTRAINT fk_client_account
         FOREIGN KEY (client_id)

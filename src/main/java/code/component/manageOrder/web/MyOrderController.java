@@ -66,9 +66,8 @@ public class MyOrderController {
           "Your can't order nothing, pick an order Position before proceeding");
       Address address = (Address) session.getAttribute(Constants.ADDRESS);
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
-      orderService.addOrder(selected,
-          address,
-          restaurantId
+      orderService.addOrder(selected, accountService.getAuthenticatedUserName(),
+          address, restaurantId
       );
       return "redirect:/myOrder/getByClient";
    }

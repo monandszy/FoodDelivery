@@ -82,14 +82,16 @@ public class MyOrderWebIT {
    void testAdd() throws Exception {
       Integer restaurantId = 1;
       Integer[] selected = new Integer[]{1};
+      String userName = "test";
       String selectedString = "1";
       Address address = DataFixtures.getAddress();
+      Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       mockMvc.perform(post(Constants.URL + MY_ORDER_ADD)
               .param("selectedPositions", selectedString)
               .sessionAttr(Constants.ADDRESS, address)
               .sessionAttr(Constants.RESTAURANT, restaurantId))
           .andExpect(redirectedUrl("/" + MY_ORDER_getByClient));
-      Mockito.verify(orderService).addOrder(selected, address, restaurantId);
+      Mockito.verify(orderService).addOrder(selected, userName, address, restaurantId);
    }
 
    @Test

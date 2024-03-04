@@ -1,4 +1,4 @@
-package code.api.orderApi;
+package code.api;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -47,7 +47,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
    }
 
    @ExceptionHandler(Exception.class)
-   public ResponseEntity<Object> handle(Exception ex){
+   public ResponseEntity<Object> handle(Exception ex) {
       return doHandle(ex, EXCEPTION_STATUS.getOrDefault(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR));
    }
 
