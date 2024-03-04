@@ -6,6 +6,7 @@ import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -51,9 +52,9 @@ public class OrderRestController {
       return OrderPositionDTOs.builder().orderPositions(orderDTOMapper.mapOPToDTOList(orderPositions)).build();
    }
 
-   @PostMapping(ORDER_ADD)
+   @PostMapping(value = ORDER_ADD)
    public ResponseEntity<?> addOrder(
-       @RequestBody OrderInputDTO orderInputDTO
+       @RequestBody @Valid OrderInputDTO orderInputDTO
    ) {
       String clientId = accountService.getAuthenticatedUserName();
       Order order = orderService.addOrder(orderInputDTO.getSelected(), clientId,
@@ -62,8 +63,10 @@ public class OrderRestController {
           .build();
    }
 
-   @DeleteMapping(ORDER_DELETE)
-   public ResponseEntity<?> cancelOrder(@PathVariable Integer orderId) {
+   @DeleteMapping(value = ORDER_DELETE)
+   public ResponseEntity<?> cancelOrder(
+       @PathVariable Integer orderId
+   ) {
       orderService.cancelOrder(orderId);
       return ResponseEntity.ok()
           .build();

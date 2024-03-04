@@ -1,7 +1,6 @@
 package code.component.manageRestaurant.manageDelivery;
 
 import code.component.api.ipAddressApi.ApiClientImpl;
-import code.component.manageAccount.AccountService;
 import code.component.manageRestaurant.dao.RestaurantDAO;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
@@ -12,7 +11,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,7 +20,6 @@ public class AddressService {
 
    private AddressDAO addressDAO;
    private RestaurantDAO restaurantDAO;
-   private AccountService accountService;
    private ApiClientImpl apiClient;
    private DistanceCalculationService distanceCalculationService;
 
@@ -44,30 +41,20 @@ public class AddressService {
           .sorted(Comparator.comparing(e -> e.getKey()))
           .map(e -> e.getValue())
           .skip(pageNumber*10).limit(10).collect(Collectors.toList());
-
-      // TODO Maybe one day + consider moving logic to a database query
-//      return restaurants.stream().collect(Collectors.teeing(
-//          Collectors.mapping(e -> e, Collectors.fi),
-//              e -> {
-//                 Double distance = distanceCalculationService.calculateDistance(
-//                     longitude, latitude,
-//                     e.getAddress().getLongitude(),
-//                     e.getAddress().getLatitude());
-//                 if (e.getDeliveryRange() - distance < 0) return -1D;
-//                 return distance;
-//              })
-//          )).skip(pageNumber * 10).limit(10).toList();
    }
 
    public Address getAddress(String ip) {
-      if (Objects.isNull(ip))
-         ip = accountService.getCurrentIp();
       Optional<Address> address = addressDAO.getByIp(ip);
       if (address.isPresent()) {
          return address.get();
       } else {
-         return apiClient.getAddressFromApi(ip);
+         Address addressFromApi = apiClient.getAddressFromApi(ip);
+         addAddress(addressFromApi);
+         return addressFromApi;
       }
    }
 
+   public void addAddress(Address address) {
+      addressDAO.add(address);
+   }
 }

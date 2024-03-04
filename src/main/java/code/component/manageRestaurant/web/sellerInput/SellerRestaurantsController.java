@@ -6,6 +6,7 @@ import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
 import code.component.manageRestaurant.service.RestaurantService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ public class SellerRestaurantsController {
    private AddressService addressService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_RESTAURANTS_GET)
+   @GetMapping(value = MY_RESTAURANTS_GET)
    public String getRestaurantsViewBySellerId(
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
@@ -48,9 +49,9 @@ public class SellerRestaurantsController {
       return "seller/myRestaurants";
    }
 
-   @PostMapping(MY_RESTAURANTS_ADD)
+   @PostMapping(value = MY_RESTAURANTS_ADD)
    public String postRestaurant(
-       @ModelAttribute("restaurantDTO") RestaurantDTO restaurantDTO
+       @ModelAttribute("restaurantDTO") @Valid RestaurantDTO restaurantDTO
    ) {
       Address address = addressService.getAddress(accountService.getCurrentIp());
       String sellerId = accountService.getAuthenticatedUserName();
@@ -59,7 +60,7 @@ public class SellerRestaurantsController {
       return "redirect:/myRestaurants/get";
    }
 
-   @PostMapping(MY_RESTAURANTS_DELETE)
+   @PostMapping(value = MY_RESTAURANTS_DELETE)
    public String deleteRestaurant(
        @PathVariable("restaurantId") Integer restaurantId
    ) {

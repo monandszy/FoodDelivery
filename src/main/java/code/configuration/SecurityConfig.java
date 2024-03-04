@@ -55,15 +55,17 @@ public class SecurityConfig {
       return http
           .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests
-              .requestMatchers("/login", "/error", "/register", "register.html").permitAll()
+              .requestMatchers("/login", "/error", "/register").permitAll()
               .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
-              .requestMatchers("/home/**").hasAnyAuthority("ADMIN")
+              .requestMatchers(
+                  "/home/**"
+              ).hasAnyAuthority("ADMIN")
               .requestMatchers(
                   "/restaurants/**",
                   "/restaurant/**",
                   "/menu/**",
                   "/discover/**",
-                  "/myOrder/**" // might need to change one controller
+                  "/myOrder/**"
               ).hasAnyAuthority("CLIENT")
               .requestMatchers(
                   "/myRestaurants/**",

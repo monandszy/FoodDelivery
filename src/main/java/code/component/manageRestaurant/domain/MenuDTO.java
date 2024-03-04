@@ -1,7 +1,6 @@
 package code.component.manageRestaurant.domain;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +14,8 @@ import lombok.With;
 @AllArgsConstructor
 public class MenuDTO {
 
-   @Pattern(regexp = "[0-9]*")
    private Integer id;
-   @NotEmpty
+   @NotNull
    private Menu.MenuType menuType;
 
 }
