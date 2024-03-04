@@ -4,3 +4,4 @@ jpa:
 api:
   abstract:
     url: http://localhost:9090
+spring.security.enabled: false

@@ -4,6 +4,7 @@ import code.component.manageAccount.AccountService;
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.RoleDTO;
 import code.component.manageAccount.domain.mapper.AccountDTOMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ public class HomeController {
    private final AccountService accountService;
    private final AccountDTOMapper accountDTOMapper;
 
-   @GetMapping(ACCOUNTS)
+   @GetMapping(value = ACCOUNTS)
    public String getAccounts(
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
        Model model
@@ -41,16 +42,16 @@ public class HomeController {
       return "home";
    }
 
-   @PostMapping(ACCOUNTS_SET_ROLE)
+   @PostMapping(value = ACCOUNTS_SET_ROLE)
    public String setRole(
        @PathVariable("userName") String userName,
-       @ModelAttribute("role") RoleDTO role
+       @ModelAttribute("role") @Valid RoleDTO role
    ) {
       accountService.setRole(userName, accountDTOMapper.mapFromDTO(role));
       return "redirect:/home";
    }
 
-   @PostMapping(ACCOUNTS_DELETE)
+   @PostMapping(value = ACCOUNTS_DELETE)
    public String deleteAccount(
        @PathVariable("userName") String userName
    ) {

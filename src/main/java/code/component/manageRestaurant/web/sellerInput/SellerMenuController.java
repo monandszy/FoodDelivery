@@ -5,6 +5,7 @@ import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class SellerMenuController {
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_MENU_GET)
+   @GetMapping(value = MY_MENU_GET)
    public String getMenuViewById(
        @PathVariable(value = "menuId") String menuId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
@@ -53,9 +54,9 @@ public class SellerMenuController {
       return "seller/myMenu";
    }
 
-   @PostMapping(MY_MENU_ADD)
+   @PostMapping(value = MY_MENU_ADD)
    public String postMenuPosition(
-       @ModelAttribute("menuPositionDTO") MenuPositionDTO menuPositionDTO,
+       @ModelAttribute("menuPositionDTO") @Valid MenuPositionDTO menuPositionDTO,
        @RequestPart(value = "image", required = false) MultipartFile image,
        @RequestParam("menuId") Integer menuId
    ) {
@@ -63,7 +64,7 @@ public class SellerMenuController {
       return "redirect:/myMenu/get/%s" .formatted(menuId);
    }
 
-   @PostMapping(MY_MENU_DELETE)
+   @PostMapping(value = MY_MENU_DELETE)
    public String deleteMenuPosition(
        @PathVariable("menuPositionId") Integer menuPositionId,
        @ModelAttribute("menuId") Integer menuId

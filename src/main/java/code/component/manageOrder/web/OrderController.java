@@ -27,7 +27,7 @@ public class OrderController {
    private OrderDTOMapper dtoMapper;
    private AccountService accountService;
 
-   @GetMapping(ORDER_getBySeller)
+   @GetMapping(value = ORDER_getBySeller)
    public String getIncompleteOrdersBySellerId(
        Model model
    ) {
@@ -41,7 +41,7 @@ public class OrderController {
       return "seller/order/orders";
    }
 
-   @GetMapping(ORDER_getForSeller)
+   @GetMapping(value = ORDER_getForSeller)
    public String getOrderPositionsForSeller(
        @PathVariable Integer orderId,
        Model model
@@ -52,7 +52,7 @@ public class OrderController {
       return "seller/order/order";
    }
 
-   @PostMapping(ORDER_COMPLETE)
+   @PostMapping(value = ORDER_COMPLETE)
    public String completeOrder(
        @PathVariable("orderId") Integer orderId
    ) {

@@ -18,11 +18,12 @@
   <div>
     <h2>Input IpAddress (Current is default)</h2>
     <form action="#"
-          th:action="@{/discover}"
-          th:method="GET">
+          th:action="@{/discover/ip}"
+          th:method="GET"
+          th:object="${IpDTO}">
       <div>
         <label>
-          <input type="text" placeholder="Your ip" th:name="ip"/>
+          <input th:type="text" th:placeholder="${ipDTO}" th:name="ip"/>
         </label>
       </div>
       <div>
@@ -66,7 +67,7 @@
           th:method="GET">
       <div>
         <label>
-          <input type="text" th:name = "pageNumber"
+          <input type="text" th:name="pageNumber"
                  placeholder="PageNumber" th:placeholder="${pageNumber}"/>
         </label>
       </div>

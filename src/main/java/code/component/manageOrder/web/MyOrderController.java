@@ -6,10 +6,10 @@ import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.configuration.Constants;
 import code.web.exception.DeliveryError;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +32,9 @@ public class MyOrderController {
 
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
-   private AddressDTOMapper addressDTOMapper;
    private AccountService accountService;
 
-   @GetMapping(MY_ORDER_getByClient)
+   @GetMapping(value = MY_ORDER_getByClient)
    public String getOrdersByClientId(
        Model model
    ) {
@@ -46,7 +45,7 @@ public class MyOrderController {
       return "client/order/myOrders";
    }
 
-   @GetMapping(MY_ORDER_getForClient)
+   @GetMapping(value = MY_ORDER_getForClient)
    public String getOrderPositionsForClient(
        @PathVariable Integer orderId,
        Model model
@@ -57,9 +56,9 @@ public class MyOrderController {
       return "client/order/myOrder";
    }
 
-   @PostMapping(MY_ORDER_ADD)
+   @PostMapping(value = MY_ORDER_ADD)
    public String postOrder(
-       @RequestParam("selectedPositions") Integer[] selected,
+       @RequestParam("selectedPositions") @Valid Integer[] selected,
        HttpSession session
    ) {
       if (selected.length == 0) throw new DeliveryError(
@@ -72,7 +71,7 @@ public class MyOrderController {
       return "redirect:/myOrder/getByClient";
    }
 
-   @PostMapping(MY_ORDER_DELETE)
+   @PostMapping(value = MY_ORDER_DELETE)
    public String deleteOrder(
        @PathVariable("orderId") Integer orderId
    ) {

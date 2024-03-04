@@ -9,6 +9,7 @@ import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.service.MenuService;
 import code.component.manageRestaurant.service.RestaurantService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class RestaurantRestController {
 
    @PostMapping(value = RESTAURANT_OPEN, produces = MediaType.APPLICATION_JSON_VALUE)
    public OpenRestaurantDTO openRestaurant(
-       @RequestBody OpenRestaurantDTO restaurantDTO
+       @RequestBody @Valid OpenRestaurantDTO restaurantDTO
    ) {
       String sellerId = accountService.getAuthenticatedUserName();
       Integer restaurantId = addRestaurant(restaurantDTO, sellerId);

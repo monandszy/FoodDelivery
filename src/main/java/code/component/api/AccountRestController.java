@@ -20,9 +20,9 @@ public class AccountRestController {
 
    public static final String API_REGISTER = "api/register";
 
-   @PostMapping(API_REGISTER)
+   @PostMapping(value = API_REGISTER)
    public ResponseEntity<?> processRegister(
-       @Valid @RequestBody() AccountDTO account
+       @Valid @RequestBody AccountDTO account
    ) {
       loginService.register(accountDTOMapper.mapFromDTO(account));
       return ResponseEntity.status(HttpStatus.CREATED).build();

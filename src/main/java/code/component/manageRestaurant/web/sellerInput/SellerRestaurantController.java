@@ -6,6 +6,7 @@ import code.component.manageRestaurant.service.MenuService;
 import code.component.manageRestaurant.service.RestaurantService;
 import code.configuration.Constants;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ public class SellerRestaurantController {
    private RestaurantService restaurantService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MY_RESTAURANT_GET)
+   @GetMapping(value = MY_RESTAURANT_GET)
    public String getRestaurantViewById(
        @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
@@ -52,9 +53,9 @@ public class SellerRestaurantController {
       return "seller/myRestaurant";
    }
 
-   @PostMapping(MY_RESTAURANT_ADD)
+   @PostMapping(value = MY_RESTAURANT_ADD)
    public String postMenu(
-       @ModelAttribute("menuDTO") MenuDTO menuDTO,
+       @ModelAttribute("menuDTO") @Valid MenuDTO menuDTO,
        HttpSession session
    ) {
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
@@ -62,7 +63,7 @@ public class SellerRestaurantController {
       return "redirect:/myRestaurant/get/%s".formatted(restaurantId);
    }
 
-   @PostMapping(MY_RESTAURANT_DELETE)
+   @PostMapping(value = MY_RESTAURANT_DELETE)
    public String deleteMenu(
        @PathVariable("menuId") Integer menuId,
        HttpSession session

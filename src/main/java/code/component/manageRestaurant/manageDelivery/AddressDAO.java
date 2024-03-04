@@ -9,5 +9,5 @@ public interface AddressDAO {
 
    Optional<Address> getByIp(String ip);
 
-
+   void add(Address address);
 }

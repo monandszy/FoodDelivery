@@ -27,7 +27,7 @@ public class RestaurantController {
    private MenuService menuService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(RESTAURANT_GET)
+   @GetMapping(value = RESTAURANT_GET)
    public String getMenusView(
        @PathVariable(value = "restaurantId") Integer restaurantId,
        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,

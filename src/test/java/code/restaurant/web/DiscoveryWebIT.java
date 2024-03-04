@@ -44,24 +44,24 @@ public class DiscoveryWebIT {
    @MockBean
    private RestaurantDTOMapper dtoMapper;
    @MockBean
+   @SuppressWarnings("unused")
    private AddressDTOMapper addressDTOMapper;
    @MockBean
    private AccountService accountService;
    @MockBean
+   @SuppressWarnings("unused")
    private ApiClientImpl apiClient;
 
    @Test
    void testGetRestaurantsByIp() throws Exception {
       Integer pageNumber = 2;
       String userId = "test";
-      String ip = "ip";
       List<RestaurantDTO> restaurantPage = List.of(WebFixtures.getRestaurantDTO());
       Address address = DataFixtures.getAddress();
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userId);
-      Mockito.when(addressService.getAddress(ip)).thenReturn(address);
+      Mockito.when(addressService.getAddress(null)).thenReturn(address);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantPage);
       mockMvc.perform(get(Constants.URL + DISCOVER)
-              .param("ip", ip)
               .param("pageNumber", pageNumber.toString()))
           .andExpect(status().isOk())
           .andExpect(request().sessionAttribute(Constants.ADDRESS, address))
@@ -70,6 +70,6 @@ public class DiscoveryWebIT {
           .andExpect(model().attribute("restaurantsByAddressPage", restaurantPage))
           .andExpect(view().name("client/" + DISCOVER));
       Mockito.verify(addressService).getPageByAddress(address, pageNumber);
-      Mockito.verify(addressService).getAddress(ip);
+      Mockito.verify(addressService).getAddress(null);
    }
 }
