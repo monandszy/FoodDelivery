@@ -51,7 +51,7 @@ public class SecurityConfig {
    @Bean
    @ConditionalOnProperty(value = "spring.security.enabled",
        havingValue = "true", matchIfMissing = true)
-   SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
+   public SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
       return http
           .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests
@@ -91,7 +91,7 @@ public class SecurityConfig {
 
    @Bean
    @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
-   SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
+   public SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
       return http
           .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests

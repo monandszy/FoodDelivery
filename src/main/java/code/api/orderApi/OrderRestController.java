@@ -1,5 +1,6 @@
 package code.api.orderApi;
 
+import code.component.manageAccount.AccountService;
 import code.component.manageOrder.OrderService;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderPosition;
@@ -30,6 +31,7 @@ public class OrderRestController {
    public static final String ORDER_DELETE = API_ORDER + "/delete/{orderId}";
 
    private OrderService orderService;
+   private AccountService accountService;
    private AddressDTOMapper addressDTOMapper;
    private OrderDTOMapper orderDTOMapper;
 
@@ -53,7 +55,8 @@ public class OrderRestController {
    public ResponseEntity<?> addOrder(
        @RequestBody OrderInputDTO orderInputDTO
    ) {
-      Order order = orderService.addOrder(orderInputDTO.getSelected(),
+      String clientId = accountService.getAuthenticatedUserName();
+      Order order = orderService.addOrder(orderInputDTO.getSelected(), clientId,
           addressDTOMapper.mapFromDTO(orderInputDTO.getAddressDTO()), orderInputDTO.getRestaurantId());
       return ResponseEntity.created(URI.create(ORDER_GET_DETAILS.replace("{orderId}", order.getId().toString())))
           .build();
