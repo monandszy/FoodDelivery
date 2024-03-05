@@ -9,7 +9,7 @@ import lombok.With;
 @With
 @Value
 @Builder
-@EqualsAndHashCode()
+@EqualsAndHashCode
 @ToString
 public class Role {
 

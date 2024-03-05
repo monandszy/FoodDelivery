@@ -3,6 +3,8 @@ plugins {
     id 'org.springframework.boot' version "${springBoot}"
     id 'io.spring.dependency-management' version "${springDependencyManagement}"
     id 'org.openapi.generator' version "${openApiGenerator}"
+    id 'jacoco'
+    id 'pmd'
 }
 
 group = 'code'
@@ -55,6 +57,12 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
+    testImplementation "org.slf4j:slf4j-api:${wiremockSlf4j}"
+    testImplementation "com.github.tomakehurst:wiremock-standalone:${wiremock}"
+    testImplementation "io.rest-assured:rest-assured:${restAssured}"
+
+    implementation "de.elnarion.util:plantuml-generator-util:2.3.0"
+
 }
 
 dependencyManagement {
@@ -64,27 +72,55 @@ dependencyManagement {
     }
 }
 
+// To turn on only consoleOutput, comment rest, priority doesn't seem to work, it passes no matter what
+pmd {
+    consoleOutput = false
+    toolVersion = "6.21.0"
+    rulesMinimumPriority = 5
+    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+}
+
 test {
     useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
     }
 }
+jacoco {
+    toolVersion = "0.8.9"
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "code/openApi/**",
+                    "code/configuration/**",
+                    "code/web/**",
+            ])
+        }))
+    }
+}
+
 // https://docs.abstractapi.com/ip-geolocation
-// https://petstore.swagger.io/?url=https://api.apis.guru/v2/specs/abstractapi.com/geolocation/1.0.0/openapi.json
 openApiGenerate {
     generatorName = "java"
     library = "webclient"
     configOptions = [
-            serializableModel : "true",
-            dateLibrary : "java8",
+            serializableModel   : "true",
+            dateLibrary         : "java8",
             serializationLibrary: "jackson"
     ]
 
     outputDir = "$buildDir/generated-sources/openapi".toString()
     inputSpec = "$rootDir/src/main/resources/openApi/abstractapi.com_geolocation_1.0.0_openapi.json".toString()
-    apiPackage = "code.api.infrastructure"
-    modelPackage = "code.api.model"
+    apiPackage = "code.openApi.infrastructure"
+    modelPackage = "code.openApi.model"
 }
 
 sourceSets {

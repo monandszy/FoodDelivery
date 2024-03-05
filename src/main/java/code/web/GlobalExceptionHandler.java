@@ -1,5 +1,6 @@
 package code.web;
 
+import code.web.exception.DeliveryError;
 import code.web.exception.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,17 @@ public class GlobalExceptionHandler {
       modelAndView.addObject("message", message);
       return modelAndView;
    }
+
+   @ExceptionHandler(DeliveryError.class)
+   @ResponseStatus(HttpStatus.BAD_REQUEST)
+   public ModelAndView handleException(DeliveryError ex) {
+      String message = String.format("DeliveryError occurred: [%s]", ex.getMessage());
+      log.error(message, ex);
+      ModelAndView modelAndView = new ModelAndView("error");
+      modelAndView.addObject("message", message);
+      return modelAndView;
+   }
+
 
    @ExceptionHandler(NotImplementedException.class)
    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

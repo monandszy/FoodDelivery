@@ -29,13 +29,15 @@ spring:
     hiddenmethod:
       filter:
         enabled: on
-    logging:
-      level:
-        org:
-          springframework:
-            security: DEBUG
   security:
     enabled: true
+  servlet.multipart.max-file-size: 5MB
+  servlet.multipart.max-request-size: 5MB
+logging:
+  level:
+    org:
+      springframework:
+        security: ERROR
 api:
   abstract:
     url: https://ipgeolocation.abstractapi.com/

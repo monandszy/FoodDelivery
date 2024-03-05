@@ -1,3 +1,4 @@
-  jpa:
-    hibernate:
-      ddl-auto: validate
+jpa:
+  hibernate:
+    ddl-auto: validate
+spring.security.enabled: false

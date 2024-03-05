@@ -1,6 +1,6 @@
 package code.component.manageOrder.domain;
 
-import jakarta.validation.constraints.Pattern;
+import code.component.manageRestaurant.domain.MenuPositionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +14,6 @@ import lombok.With;
 @AllArgsConstructor
 public class OrderPositionDTO {
 
-   @Pattern(regexp = "[0-9]*")
    private Integer id;
-   @Pattern(regexp = "[0-9]*")
-   private Integer orderId;
-   @Pattern(regexp = "[0-9]*")
-   private Integer menuPositionId;
+   private MenuPositionDTO menuPositionDTO;
 }

@@ -16,10 +16,18 @@
         th:action="@{/myMenu/add
         (menuId=${menuId})}"
         th:method="POST"
-        th:object="${menuPositionDTO}">
+        th:object="${menuPositionDTO}"
+        enctype="multipart/form-data">
     <div>
       <label>
         <input type="text" placeholder="Price" th:field="*{price}"/>
+      </label>
+      <label>
+        <input type="text" placeholder="Tea Name" th:field="*{name}"/>
+      </label>
+      <label>
+        <input type="file" placeholder="Only tea images allowed!"
+               name="image" accept="image/*" class="form-control-file">
       </label>
     </div>
     <div>
@@ -29,12 +37,14 @@
 </div>
 
 <div>
-<h2>Your Menu</h2>
+  <h2>Your Menu</h2>
   <table>
     <thead>
     <tr>
       <th>Id</th>
       <th>Price</th>
+      <th>Tea Name</th>
+      <th>Images</th>
       <th>Delete</th>
     </tr>
     </thead>
@@ -42,6 +52,14 @@
     <tr th:each="menuPosition : ${menuPage}">
       <td th:text="${menuPosition.id}"></td>
       <td th:text="${menuPosition.price}"></td>
+      <td th:text="${menuPosition.name}"></td>
+      <td>
+        <ul th:each="image : ${menuPosition.images}">
+          <li>
+            <img th:src="@{'/images/get/'+${image}}" alt="noImage" style="height:200px;">
+          </li>
+        </ul>
+      </td>
       <td>
         <form action="#" th:action="@{/myMenu/delete/{id}
         (id=${menuPosition.id})}" th:object="${menuId}" th:method="DELETE">
@@ -58,7 +76,8 @@
   <form action="#" th:action="@{/myMenu/get/{id}(id=${menuId})}" method="GET">
     <div>
       <label>
-        <input type="text" placeholder="PageNumber" th:name = "pageNumber"/>
+        <input type="text" th:name="pageNumber"
+               placeholder="PageNumber" th:placeholder="${pageNumber}"/>
       </label>
     </div>
     <div>

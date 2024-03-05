@@ -14,6 +14,5 @@ import lombok.With;
 public class OrderPosition {
 
    Integer id;
-   Order order;
    MenuPosition menuPosition;
 }

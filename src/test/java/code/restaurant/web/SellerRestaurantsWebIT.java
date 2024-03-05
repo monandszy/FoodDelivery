@@ -7,6 +7,7 @@ import code.component.manageRestaurant.manageDelivery.AddressService;
 import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.component.manageRestaurant.service.RestaurantService;
 import code.component.manageRestaurant.web.sellerInput.SellerRestaurantsController;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
@@ -26,6 +25,12 @@ import static code.component.manageRestaurant.web.sellerInput.SellerRestaurantsC
 import static code.component.manageRestaurant.web.sellerInput.SellerRestaurantsController.MY_RESTAURANTS_DELETE;
 import static code.component.manageRestaurant.web.sellerInput.SellerRestaurantsController.MY_RESTAURANTS_GET;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = SellerRestaurantsController.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -48,17 +53,17 @@ public class SellerRestaurantsWebIT {
    @Test
    void testGet() throws Exception {
       String userName = "seller";
-      Integer pageNumber = 2;
+      Integer expectedPageNumber = 0;
       List<RestaurantDTO> restaurantsPage = List.of(WebFixtures.getRestaurantDTO());
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(dtoMapper.mapRToDTOList(any())).thenReturn(restaurantsPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" + MY_RESTAURANTS_GET)
-              .param("pageNumber", pageNumber.toString()))
-          .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
-          .andExpect(MockMvcResultMatchers.model().attribute("restaurantsPage", restaurantsPage))
-          .andExpect(MockMvcResultMatchers.view().name("seller/" + MY_RESTAURANTS));
-      Mockito.verify(restaurantService).getPageBySellerId(userName, pageNumber);
+      mockMvc.perform(get(Constants.URL + MY_RESTAURANTS_GET))
+          .andExpect(status().isOk())
+          .andExpect(model().attribute("restaurantDTO", new RestaurantDTO()))
+          .andExpect(model().attribute("pageNumber", expectedPageNumber))
+          .andExpect(model().attribute("restaurantsPage", restaurantsPage))
+          .andExpect(view().name("seller/" + MY_RESTAURANTS));
+      Mockito.verify(restaurantService).getPageBySellerId(userName, expectedPageNumber);
    }
 
    @Test
@@ -68,10 +73,10 @@ public class SellerRestaurantsWebIT {
       RestaurantDTO restaurantDTO = WebFixtures.getRestaurantDTO();
       Mockito.when(accountService.getAuthenticatedUserName()).thenReturn(userName);
       Mockito.when(accountService.getCurrentIp()).thenReturn(ip);
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_RESTAURANTS_ADD)
+      mockMvc.perform(post(Constants.URL + MY_RESTAURANTS_ADD)
               .flashAttr("restaurantDTO", restaurantDTO))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
-          .andExpect(MockMvcResultMatchers.status().isFound());
+          .andExpect(redirectedUrl("/" + MY_RESTAURANTS_GET))
+          .andExpect(status().isFound());
       Mockito.verify(restaurantService).add(null, null, userName);
       Mockito.verify(addressService).getAddress(ip);
    }
@@ -79,10 +84,9 @@ public class SellerRestaurantsWebIT {
    @Test
    void testDelete() throws Exception {
       Integer restaurantId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
-              MY_RESTAURANTS_DELETE.replace("{restaurantId}", restaurantId.toString())))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/" + MY_RESTAURANTS_GET))
-          .andExpect(MockMvcResultMatchers.status().isFound());
+      mockMvc.perform(post(Constants.URL + MY_RESTAURANTS_DELETE, restaurantId))
+          .andExpect(redirectedUrl("/" + MY_RESTAURANTS_GET))
+          .andExpect(status().isFound());
       Mockito.verify(restaurantService).deleteById(restaurantId);
    }
 

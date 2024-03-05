@@ -5,14 +5,18 @@
 
     <property name="HOME_LOG" value="${user.dir}/logs/application.log"/>
 
-
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${HOME_LOG}</file>
-        <append>false</append>
-        <immediateFlush>true</immediateFlush>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/archived/rolled.%d{yyyy-mm-dd}.%i.log</fileNamePattern>
+            <maxFileSize>20MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
+            <maxHistory>50</maxHistory>
+        </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}:%line - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
+                <append>true</append>
     </appender>
 
     <logger name="org.hibernate.orm.jdbc.bind" additivity="false" level="TRACE">

@@ -11,6 +11,13 @@
 
 <body>
 <div>
+  <h2>Update Restaurant</h2>
+  <form action="#" th:action="@{/myRestaurant/update/{id}(id=${restaurantId})}" th:method="PATCH">
+    <input type="text" placeholder="deliveryRange" th:name="deliveryRange"/>
+    <button type="submit">-</button>
+  </form>
+</div>
+<div>
   <h2>Add Menu</h2>
   <form action="#"
         th:action="@{/myRestaurant/add
@@ -70,7 +77,8 @@
   (id=${restaurantId})}" method="GET">
     <div>
       <label>
-        <input type="text" placeholder="PageNumber" th:name="pageNumber"/>
+        <input type="text" th:name="pageNumber"
+               placeholder="PageNumber" th:placeholder="${pageNumber}"/>
       </label>
     </div>
     <div>

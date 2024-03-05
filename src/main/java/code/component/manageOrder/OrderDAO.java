@@ -13,8 +13,6 @@ public interface OrderDAO {
 
    void addOrderPositions(List<OrderPosition> orderPositions, List<Integer> selected, Integer orderId);
 
-   void delete(Integer orderId);
-
    void updateOrderStatus(Integer orderId, Order.OrderStatus updatedStatus);
 
    List<Order> getIncompleteOrdersBySellerId(String sellerId);
@@ -22,4 +20,6 @@ public interface OrderDAO {
    List<Order> getOrdersByClientId(String clientId);
 
    Order getById(Integer orderId);
+
+   public List<Order> getCompleteOrdersBySellerId(String sellerId);
 }

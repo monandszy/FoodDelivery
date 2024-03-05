@@ -15,6 +15,8 @@
     <thead>
     <tr>
       <th>Id</th>
+      <th>Address</th>
+      <th>RestaurantId</th>
       <th>Status</th>
       <th>TimeOfOrder</th>
       <th>Show</th>
@@ -24,16 +26,18 @@
     <tbody>
     <tr th:each="order : ${myOrders}">
       <td th:text="${order.id}"></td>
+      <td th:text="${order.addressOutput}"></td>
+      <td th:text="${order.restaurantId}"></td>
       <td th:text="${order.status}"></td>
       <td th:text="${order.timeOfOrder}"></td>
       <td>
-        <form action="#" th:action="@{/order/getForClient/{id}
+        <form action="#" th:action="@{/myOrder/getForClient/{id}
         (id=${order.id})}" method="GET">
           <button type="submit">+</button>
         </form>
       </td>
       <td>
-        <form action="#" th:action="@{/order/delete/{id}
+        <form action="#" th:action="@{/myOrder/delete/{id}
         (id=${order.id})}" th:method="DELETE">
           <button type="submit">-</button>
         </form>

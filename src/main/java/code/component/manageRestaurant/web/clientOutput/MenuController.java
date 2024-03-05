@@ -23,7 +23,7 @@ public class MenuController {
    private MenuPositionService menuPositionService;
    private RestaurantDTOMapper dtoMapper;
 
-   @GetMapping(MENU_GET)
+   @GetMapping(value = MENU_GET)
    public String getMenuPositions(
        @PathVariable(value = "menuId") Integer menuId,
        HttpSession session,

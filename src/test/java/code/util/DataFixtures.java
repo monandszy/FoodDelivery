@@ -1,14 +1,18 @@
 package code.util;
 
+import code.component.manageAccount.domain.Account;
+import code.component.manageAccount.domain.Role;
 import code.component.manageOrder.domain.Order;
 import code.component.manageOrder.domain.OrderPosition;
 import code.component.manageRestaurant.domain.Menu;
 import code.component.manageRestaurant.domain.MenuPosition;
 import code.component.manageRestaurant.domain.Restaurant;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.component.manageRestaurant.manageImages.ImageEntity;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 
 public class DataFixtures {
    public static Restaurant getRestaurant() {
@@ -26,6 +30,7 @@ public class DataFixtures {
    public static MenuPosition getMenuPosition() {
       return MenuPosition.builder()
           .price(BigDecimal.valueOf(1))
+          .name("test")
           .build();
    }
 
@@ -66,5 +71,29 @@ public class DataFixtures {
 
    public static Address getAddressLonLat1() {
       return getAddress().withLatitude(1D).withLongitude(1D);
+   }
+
+   public static Account getAccount() {
+      HashSet hashSet = new HashSet<>();
+      hashSet.add(getAccountRole());
+      return Account.builder().active(true)
+          .roles(hashSet)
+          .userName("someTest")
+          .password("someTest")
+          .build();
+   }
+
+   public static Role getAccountRole() {
+      return Role.builder().role(Role.ACCOUNT_ROLE.ACCOUNT).build();
+   }
+
+   public static Role getSellerRole() {
+      return Role.builder().role(Role.ACCOUNT_ROLE.SELLER).build();
+   }
+
+   public static ImageEntity getImage() {
+      return ImageEntity.builder()
+          .image(new byte[]{1,2,3})
+          .build();
    }
 }

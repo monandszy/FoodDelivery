@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderController {
 
    public static final String ORDER = "order";
-   public static final String ORDER_getBySeller = ORDER + "/getIncompleteBySeller";
+   public static final String ORDER_getBySeller = ORDER + "/getBySeller";
    public static final String ORDER_getForSeller = ORDER + "/getForSeller/{orderId}";
    public static final String ORDER_COMPLETE = ORDER + "/complete/{orderId}";
 
@@ -27,18 +27,21 @@ public class OrderController {
    private OrderDTOMapper dtoMapper;
    private AccountService accountService;
 
-   @GetMapping(ORDER_getBySeller)
+   @GetMapping(value = ORDER_getBySeller)
    public String getIncompleteOrdersBySellerId(
        Model model
    ) {
       String sellerId = accountService.getAuthenticatedUserName();
-      List<OrderDTO> orders = dtoMapper.mapOToDTOList(
+      List<OrderDTO> incomplete = dtoMapper.mapOToDTOList(
           orderService.getIncompleteOrdersBySellerId(sellerId));
-      model.addAttribute("orders", orders);
+      List<OrderDTO> complete = dtoMapper.mapOToDTOList(
+          orderService.getCompleteOrdersBySellerId(sellerId));
+      model.addAttribute("incompleteOrders", incomplete);
+      model.addAttribute("completeOrders", complete);
       return "seller/order/orders";
    }
 
-   @GetMapping(ORDER_getForSeller)
+   @GetMapping(value = ORDER_getForSeller)
    public String getOrderPositionsForSeller(
        @PathVariable Integer orderId,
        Model model
@@ -49,11 +52,11 @@ public class OrderController {
       return "seller/order/order";
    }
 
-   @PostMapping(ORDER_COMPLETE)
+   @PostMapping(value = ORDER_COMPLETE)
    public String completeOrder(
        @PathVariable("orderId") Integer orderId
    ) {
       orderService.complete(orderId);
-      return "redirect:/order/getIncompleteBySeller";
+      return "redirect:/order/getBySeller";
    }
 }

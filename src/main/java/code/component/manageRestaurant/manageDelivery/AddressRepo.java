@@ -32,4 +32,9 @@ public class AddressRepo implements AddressDAO {
           .map(e -> entityMapper.mapFromEntity(e));
    }
 
+   @Override
+   public void add(Address address) {
+      addressJpaRepo.save(entityMapper.mapToEntity(address));
+   }
+
 }

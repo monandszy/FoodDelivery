@@ -51,19 +51,24 @@ public class SecurityConfig {
    @Bean
    @ConditionalOnProperty(value = "spring.security.enabled",
        havingValue = "true", matchIfMissing = true)
-   SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
+   public SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
       return http
           .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests
-              .requestMatchers("/login", "/error", "/register", "register.html").permitAll()
-              .requestMatchers("/queue").hasAnyAuthority("ACCOUNT")
-              .requestMatchers("/home").hasAnyAuthority("ADMIN")
+              .requestMatchers("/login", "/error", "/register").permitAll()
+              .requestMatchers(
+                  "/queue/**",
+                  "/images/**"
+              ).hasAnyAuthority("ACCOUNT")
+              .requestMatchers(
+                  "/home/**"
+              ).hasAnyAuthority("ADMIN")
               .requestMatchers(
                   "/restaurants/**",
                   "/restaurant/**",
                   "/menu/**",
                   "/discover/**",
-                  "/order/**" // might need to change one controller
+                  "/myOrder/**"
               ).hasAnyAuthority("CLIENT")
               .requestMatchers(
                   "/myRestaurants/**",
@@ -79,7 +84,7 @@ public class SecurityConfig {
           )
           .formLogin(form -> form
               .loginPage("/login")
-              .defaultSuccessUrl("/discover", true)
+              .defaultSuccessUrl("/queue", true)
               .permitAll()
           )
           .logout(logout -> logout.logoutSuccessUrl("/login")
@@ -91,7 +96,7 @@ public class SecurityConfig {
 
    @Bean
    @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
-   SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
+   public SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
       return http
           .csrf(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(requests -> requests

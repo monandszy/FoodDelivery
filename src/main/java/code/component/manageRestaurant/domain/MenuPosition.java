@@ -7,6 +7,7 @@ import lombok.Value;
 import lombok.With;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @With
 @Value
@@ -17,5 +18,7 @@ public class MenuPosition {
 
    Integer id;
    BigDecimal price;
+   String name;
    Menu menu;
+   List<Integer> images;
 }

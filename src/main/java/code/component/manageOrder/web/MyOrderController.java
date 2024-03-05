@@ -6,9 +6,10 @@ import code.component.manageOrder.domain.OrderDTO;
 import code.component.manageOrder.domain.OrderPositionDTO;
 import code.component.manageOrder.domain.mapper.OrderDTOMapper;
 import code.component.manageRestaurant.manageDelivery.domain.Address;
-import code.component.manageRestaurant.manageDelivery.domain.AddressDTOMapper;
 import code.configuration.Constants;
+import code.web.exception.DeliveryError;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,18 +24,17 @@ import java.util.List;
 @AllArgsConstructor
 public class MyOrderController {
 
-   public static final String ORDER = "order";
-   public static final String ORDER_getByClient = ORDER + "/getByClient";
-   public static final String ORDER_getForClient = ORDER + "/getForClient/{orderId}";
-   public static final String ORDER_ADD = ORDER + "/add";
-   public static final String ORDER_DELETE = ORDER + "/delete/{orderId}";
+   public static final String MY_ORDER = "myOrder";
+   public static final String MY_ORDER_getByClient = MY_ORDER + "/getByClient";
+   public static final String MY_ORDER_getForClient = MY_ORDER + "/getForClient/{orderId}";
+   public static final String MY_ORDER_ADD = MY_ORDER + "/add";
+   public static final String MY_ORDER_DELETE = MY_ORDER + "/delete/{orderId}";
 
    private OrderService orderService;
    private OrderDTOMapper orderDTOMapper;
-   private AddressDTOMapper addressDTOMapper;
    private AccountService accountService;
 
-   @GetMapping(ORDER_getByClient)
+   @GetMapping(value = MY_ORDER_getByClient)
    public String getOrdersByClientId(
        Model model
    ) {
@@ -45,7 +45,7 @@ public class MyOrderController {
       return "client/order/myOrders";
    }
 
-   @GetMapping(ORDER_getForClient)
+   @GetMapping(value = MY_ORDER_getForClient)
    public String getOrderPositionsForClient(
        @PathVariable Integer orderId,
        Model model
@@ -56,27 +56,26 @@ public class MyOrderController {
       return "client/order/myOrder";
    }
 
-   @PostMapping(ORDER_ADD)
+   @PostMapping(value = MY_ORDER_ADD)
    public String postOrder(
-       @RequestParam("selectedPositions") Integer[] selected,
+       @RequestParam("selectedPositions") @Valid Integer[] selected,
        HttpSession session
    ) {
-      if (selected.length == 0) throw new RuntimeException(
+      if (selected.length == 0) throw new DeliveryError(
           "Your can't order nothing, pick an order Position before proceeding");
       Address address = (Address) session.getAttribute(Constants.ADDRESS);
       Integer restaurantId = (Integer) session.getAttribute(Constants.RESTAURANT);
-      orderService.addOrder(selected,
-          address,
-          restaurantId
+      orderService.addOrder(selected, accountService.getAuthenticatedUserName(),
+          address, restaurantId
       );
-      return "redirect:/order/getByClient";
+      return "redirect:/myOrder/getByClient";
    }
 
-   @PostMapping(ORDER_DELETE)
+   @PostMapping(value = MY_ORDER_DELETE)
    public String deleteOrder(
        @PathVariable("orderId") Integer orderId
    ) {
       orderService.cancelOrder(orderId);
-      return "redirect:/order/getByClient";
+      return "redirect:/myOrder/getByClient";
    }
 }

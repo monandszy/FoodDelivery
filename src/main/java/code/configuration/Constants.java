@@ -2,8 +2,8 @@ package code.configuration;
 
 public interface Constants {
 
-   int PAGE_SIZE = 10;
-   int START_PAGE = 0;
+   Integer PAGE_SIZE = 10;
+   Integer START_PAGE = 0;
 
    String ADDRESS = "ADDRESS";
    String RESTAURANT = "RESTAURANT";
@@ -11,4 +11,5 @@ public interface Constants {
 
    String RESTAURANT_PAGE = "RESTAURANT_PAGE";
    String IP = "IP";
+   String URL = "http://localhost:8087/";
 }

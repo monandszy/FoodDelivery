@@ -1,7 +1,6 @@
 package code.component.manageRestaurant.dao;
 
 import code.component.manageRestaurant.domain.Restaurant;
-import code.component.manageRestaurant.manageDelivery.domain.Address;
 
 import java.util.List;
 
@@ -14,9 +13,7 @@ public interface RestaurantDAO extends CrudDAO<Restaurant> {
 
    Restaurant getByRestaurantId(Integer restaurantId);
 
-   void updateAddress(Address address, Integer restaurantId);
-
-   void updateRange(Integer range, Integer restaurantId);
+   void updateRange(Integer restaurantId, Double range);
 
    List<Restaurant> getAllWithAddress();
 }

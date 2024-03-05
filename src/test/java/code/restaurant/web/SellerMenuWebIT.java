@@ -4,6 +4,7 @@ import code.component.manageRestaurant.domain.MenuPositionDTO;
 import code.component.manageRestaurant.domain.mapper.RestaurantDTOMapper;
 import code.component.manageRestaurant.service.MenuPositionService;
 import code.component.manageRestaurant.web.sellerInput.SellerMenuController;
+import code.configuration.Constants;
 import code.util.WebFixtures;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
@@ -23,6 +22,12 @@ import static code.component.manageRestaurant.web.sellerInput.SellerMenuControll
 import static code.component.manageRestaurant.web.sellerInput.SellerMenuController.MY_MENU_DELETE;
 import static code.component.manageRestaurant.web.sellerInput.SellerMenuController.MY_MENU_GET;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = SellerMenuController.class)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -40,44 +45,39 @@ public class SellerMenuWebIT {
    @Test
    void testGet() throws Exception {
       Integer menuId = 1;
-      Integer restaurantId = 1;
-      Integer pageNumber = 2;
+      Integer expectedPageNumber = 0;
       List<MenuPositionDTO> menuPage = List.of(WebFixtures.getMenuPositionDTO());
       Mockito.when(dtoMapper.mapMPToDTOList(any())).thenReturn(menuPage);
-      mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8087/" +
-                  MY_MENU_GET.replace("{menuId}", menuId.toString()))
-              .queryParam("restaurantId", restaurantId.toString())
-              .queryParam("pageNumber", pageNumber.toString()))
-          .andExpect(MockMvcResultMatchers.status().isOk())
-          .andExpect(MockMvcResultMatchers.model().attribute("pageNumber", pageNumber))
-          .andExpect(MockMvcResultMatchers.model().attribute("menuPage", menuPage))
-          .andExpect(MockMvcResultMatchers.view().name("seller/" + MY_MENU));
-      Mockito.verify(menuPositionService).getPageByMenu(menuId, pageNumber);
+      mockMvc.perform(get(Constants.URL +MY_MENU_GET, menuId))
+          .andExpect(status().isOk())
+          .andExpect(model().attribute("pageNumber", expectedPageNumber))
+          .andExpect(model().attribute("menuPage", menuPage))
+          .andExpect(view().name("seller/" + MY_MENU));
+      Mockito.verify(menuPositionService).getPageByMenu(menuId, expectedPageNumber);
    }
 
    @Test
    void testAdd() throws Exception {
       Integer menuId = 1;
       MenuPositionDTO menuPositionDTO = WebFixtures.getMenuPositionDTO();
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" + MY_MENU_ADD)
+      mockMvc.perform(post(Constants.URL + MY_MENU_ADD)
               .param("menuId", menuId.toString())
               .flashAttr("menuPositionDTO", menuPositionDTO))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/"
+          .andExpect(redirectedUrl("/"
               + MY_MENU_GET.replace("{menuId}", menuId.toString())))
-          .andExpect(MockMvcResultMatchers.status().isFound());
-      Mockito.verify(menuPositionService).add(null, menuId);
+          .andExpect(status().isFound());
+      Mockito.verify(menuPositionService).add(null, null, menuId);
    }
 
    @Test
    void testDelete() throws Exception {
-      int menuId = 1;
+      Integer menuId = 1;
       Integer menuPositionId = 1;
-      mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8087/" +
-                  MY_MENU_DELETE.replace("{menuPositionId}", menuPositionId.toString()))
-              .param("menuId", Integer.toString(menuId)))
-          .andExpect(MockMvcResultMatchers.view().name("redirect:/"
-              + MY_MENU_GET.replace("{menuId}", Integer.toString(menuId))))
-          .andExpect(MockMvcResultMatchers.status().isFound());
+      mockMvc.perform(post(Constants.URL +MY_MENU_DELETE, menuPositionId)
+              .flashAttr("menuId", menuId.toString()))
+          .andExpect(redirectedUrl("/"
+              + MY_MENU_GET.replace("{menuId}", menuId.toString())))
+          .andExpect(status().isFound());
       Mockito.verify(menuPositionService).deleteById(menuPositionId);
    }
 }

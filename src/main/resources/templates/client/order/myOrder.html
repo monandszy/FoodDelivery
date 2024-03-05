@@ -16,21 +16,23 @@
     <tr>
       <th>Id</th>
       <th>MenuPositionId</th>
-      <th>OrderId</th>
+      <th>Name</th>
+      <th>Price</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="orderPosition : ${orderPositions}">
       <td th:text="${orderPosition.id}"></td>
-      <td th:text="${orderPosition.menuPositionId}"></td>
-      <td th:text="${orderPosition.orderId}"></td>
+      <td th:text="${orderPosition.menuPositionDTO.id}"></td>
+      <td th:text="${orderPosition.menuPositionDTO.name}"></td>
+      <td th:text="${orderPosition.menuPositionDTO.price}"></td>
     </tr>
     </tbody>
   </table>
 </div>
 
 <div>
-  <a th:href="@{/order/getByClient}">Go Back</a>
+  <a th:href="@{/myOrder/getByClient}">Go Back</a>
 </div>
 </body>
 </html>
