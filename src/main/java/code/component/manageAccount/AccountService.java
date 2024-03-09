@@ -1,8 +1,8 @@
 package code.component.manageAccount;
 
-import code.component.api.ipAddressApi.ApiDAO;
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.Role;
+import code.configuration.Constants;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +39,10 @@ public class AccountService {
          }
       }
       if (remoteAddr.matches(localAddressPattern) || Objects.isNull(remoteAddr)) {
-         log.error("Access from privateAddress: [%s], using test ip as backup".formatted(remoteAddr));
-         return ApiDAO.TEST_IP;
+         if (log.isErrorEnabled()) {
+            log.error("Access from privateAddress: [%s], using test ip as backup".formatted(remoteAddr));
+         }
+         return Constants.TEST_IP;
       } else {
          return remoteAddr;
       }

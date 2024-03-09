@@ -14,7 +14,7 @@ import lombok.With;
 public class Role {
 
    Integer id;
-   ACCOUNT_ROLE role;
+   ACCOUNT_ROLE roleName;
 
    public enum ACCOUNT_ROLE {
       ACCOUNT,

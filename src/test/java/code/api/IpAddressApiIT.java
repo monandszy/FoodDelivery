@@ -1,7 +1,7 @@
 package code.api;
 
-import code.component.api.ipAddressApi.ApiDAO;
 import code.configuration.AbstractSpringBootIT;
+import code.configuration.Constants;
 import code.openApi.infrastructure.DefaultApi;
 import code.openApi.model.InlineResponse200;
 import lombok.AllArgsConstructor;
@@ -22,9 +22,9 @@ public class IpAddressApiIT extends AbstractSpringBootIT {
    @Test
    public void testAbstractApiConnection() {
       Mono<InlineResponse200> inlineResponse200Mono = defaultApi.v1Get(
-          ApiDAO.KEY, ApiDAO.TEST_IP, ApiDAO.FIELDS);
+          Constants.TOKEN, Constants.TEST_IP, Constants.FIELDS);
       InlineResponse200 block = inlineResponse200Mono.block();
-      Assertions.assertEquals(ApiDAO.TEST_IP, block.getIpAddress());
+      Assertions.assertEquals(Constants.TEST_IP, block.getIpAddress());
       Assertions.assertEquals("Gadki", block.getCity());
       Assertions.assertEquals("62-023", block.getPostalCode());
       Assertions.assertEquals(BigDecimal.valueOf(17.0398), block.getLongitude());

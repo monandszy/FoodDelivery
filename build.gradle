@@ -62,6 +62,8 @@ dependencies {
     testImplementation "io.rest-assured:rest-assured:${restAssured}"
 
     implementation "de.elnarion.util:plantuml-generator-util:2.3.0"
+    pmd 'net.sourceforge.pmd:pmd-ant:7.0.0-rc4'
+    pmd 'net.sourceforge.pmd:pmd-java:7.0.0-rc4'
 
 }
 
@@ -80,11 +82,19 @@ dependencyManagement {
 }
 
 // To turn on only consoleOutput, comment rest, priority doesn't seem to work, it passes no matter what
+
 pmd {
-    consoleOutput = false
-    toolVersion = "6.21.0"
+    consoleOutput = true
+    toolVersion = "7.0.0-rc4"
     rulesMinimumPriority = 5
     ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+}
+
+pmdMain {
+    excludes = [
+            "code/openApi/**",
+            "code/PlantUmlCreator"
+    ]
 }
 
 test {

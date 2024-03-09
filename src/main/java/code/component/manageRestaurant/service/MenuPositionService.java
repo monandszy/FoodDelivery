@@ -28,7 +28,7 @@ public class MenuPositionService {
             ImageEntity build = ImageEntity.builder().image(image.getBytes()).build();
             imageDAO.add(build, created.getId());
          } catch (IOException e) {
-            throw new DeliveryError("INVALID IMAGE");
+            throw new DeliveryError("Invalid Image [%s]".formatted(e.getMessage()));
          }
       }
       return created.getId();

@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-   public static final String API_URL = "";
    public static final int TIMEOUT = 5000;
 
 
@@ -60,7 +59,6 @@ public class WebConfig implements WebMvcConfigurer {
           }).build();
 
       return WebClient.builder()
-          .baseUrl(API_URL)
           .exchangeStrategies(exchangeServices)
           .clientConnector(new ReactorClientHttpConnector(httpClient))
           .build();

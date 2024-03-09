@@ -38,7 +38,7 @@ public class LoginService implements UserDetailsService {
 
    private List<GrantedAuthority> getAccountAuthority(Set<Role> roles) {
       return roles.stream()
-          .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRole().toString()))
+          .map(role -> (GrantedAuthority) new SimpleGrantedAuthority(role.getRoleName().toString()))
           .distinct()
           .toList();
    }
@@ -63,6 +63,6 @@ public class LoginService implements UserDetailsService {
       accountDAO.addAccount(account
           .withPassword(passwordEncoder.encode(account.getPassword()))
           .withActive(true),
-          Role.builder().role(ACCOUNT).build());
+          Role.builder().roleName(ACCOUNT).build());
    }
 }

@@ -32,7 +32,7 @@ public interface AccountDTOMapper {
    @Named("roleMapping")
    default String roleMapping(Set<Role> roles) {
       if (Objects.isNull(roles)) return null;
-      return roles.stream().map(e -> e.getRole().name())
+      return roles.stream().map(e -> e.getRoleName().name())
           .reduce((l, r) -> l + "," + r).orElse("none");
    }
 }

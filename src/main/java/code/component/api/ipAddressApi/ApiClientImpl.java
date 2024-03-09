@@ -1,6 +1,7 @@
 package code.component.api.ipAddressApi;
 
 import code.component.manageRestaurant.manageDelivery.domain.Address;
+import code.configuration.Constants;
 import code.openApi.infrastructure.DefaultApi;
 import code.openApi.model.InlineResponse200;
 import code.web.exception.DeliveryError;
@@ -19,13 +20,13 @@ public class ApiClientImpl implements ApiDAO {
 
    public Address getAddressFromApi(String ip) {
       try {
-         Mono<InlineResponse200> inlineResponse200Mono = defaultApi.v1Get(ApiDAO.KEY, ip, ApiDAO.FIELDS);
+         Mono<InlineResponse200> inlineResponse200Mono = defaultApi.v1Get(Constants.TOKEN, ip, Constants.FIELDS);
          InlineResponse200 block = inlineResponse200Mono.block();
          return addressApiMapper.mapToAddress(block);
-      } catch (Throwable throwable ) {
-         log.error(throwable.getMessage());
+      } catch (Exception ex ) {
+         log.error(ex.getMessage());
          throw new DeliveryError("Exception while connecting to ipApi: [%s] [%s]".formatted(
-             throwable.getMessage(), throwable.getClass()
+             ex.getMessage(), ex.getClass()
          ));
       }
    }

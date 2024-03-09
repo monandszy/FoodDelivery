@@ -31,7 +31,7 @@ public class AccountRepoIT extends AbstractJpaIT {
    @Test
    void testAccountCrud() {
       Account account = DataFixtures.getAccount();
-      accountRepo.addAccount(account, Role.builder().role(ACCOUNT).build());
+      accountRepo.addAccount(account, Role.builder().roleName(ACCOUNT).build());
       String userName = account.getUserName();
       List<Account> accountPage = accountRepo.getAccountPage(0);
       Assertions.assertFalse(accountPage.isEmpty());

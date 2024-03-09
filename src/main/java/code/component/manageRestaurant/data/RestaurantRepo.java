@@ -30,6 +30,7 @@ public class RestaurantRepo implements RestaurantDAO {
    private RestaurantEntityMapper entityMapper;
    private AccountEntityMapper accountEntityMapper;
 
+   @Override
    public Restaurant add(Restaurant restaurant, Integer addressId, String sellerId) {
       RestaurantEntity save = entityMapper.mapToEntity(restaurant);
       save.setSeller(accountJpaRepo.findByUserName(sellerId).orElseThrow());

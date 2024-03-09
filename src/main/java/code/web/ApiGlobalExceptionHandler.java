@@ -44,7 +44,8 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
          return handle(ex);
       else {
          String message = "Rest Api Exception: [%s] [%s] ".formatted(errorId, statusCode);
-         log.error(message + ex.getMessage());
+         if (log.isErrorEnabled())
+            log.error(message + ex.getMessage());
          return super.handleExceptionInternal(
              ex, message + ex.getClass(), headers, statusCode, request
          );
@@ -59,7 +60,8 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
    private ResponseEntity<Object> doHandle(Exception ex, HttpStatus httpStatus) {
       final String errorId = UUID.randomUUID().toString();
       String message = "Rest Api Exception: [%s] [%s] ".formatted(errorId, httpStatus);
-      log.error(message + ex.getMessage());
+      if (log.isErrorEnabled())
+         log.error(message + ex.getMessage());
       return ResponseEntity
           .status(httpStatus)
           .contentType(MediaType.APPLICATION_JSON)

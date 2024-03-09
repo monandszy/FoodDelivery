@@ -54,7 +54,7 @@ public class AccountWebIT {
    @Test
    void testSetRole() throws Exception {
       String userName = "test";
-      RoleDTO role = RoleDTO.builder().role(Role.ACCOUNT_ROLE.ACCOUNT).build();
+      RoleDTO role = RoleDTO.builder().roleName(Role.ACCOUNT_ROLE.ACCOUNT).build();
       mockMvc.perform(post(Constants.URL + ACCOUNTS_SET_ROLE, userName)
               .flashAttr("role", role))
           .andExpect(redirectedUrl("/home"));

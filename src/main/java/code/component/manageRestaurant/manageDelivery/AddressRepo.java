@@ -15,6 +15,7 @@ public class AddressRepo implements AddressDAO {
    private AddressJpaRepo addressJpaRepo;
    private AddressEntityMapper entityMapper;
 
+   @Override
    public Address addOrFindByIp(Address address) {
       Optional<AddressEntity> byIpAddress = addressJpaRepo
           .findByIpAddress(address.getIpAddress());

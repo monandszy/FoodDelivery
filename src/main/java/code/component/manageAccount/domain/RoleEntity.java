@@ -34,6 +34,6 @@ public class RoleEntity {
 
    @Enumerated(EnumType.STRING)
    @Column(name = "role")
-   private Role.ACCOUNT_ROLE role;
+   private Role.ACCOUNT_ROLE roleName;
 
 }

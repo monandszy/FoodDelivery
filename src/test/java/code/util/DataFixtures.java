@@ -84,11 +84,11 @@ public class DataFixtures {
    }
 
    public static Role getAccountRole() {
-      return Role.builder().role(Role.ACCOUNT_ROLE.ACCOUNT).build();
+      return Role.builder().roleName(Role.ACCOUNT_ROLE.ACCOUNT).build();
    }
 
    public static Role getSellerRole() {
-      return Role.builder().role(Role.ACCOUNT_ROLE.SELLER).build();
+      return Role.builder().roleName(Role.ACCOUNT_ROLE.SELLER).build();
    }
 
    public static ImageEntity getImage() {

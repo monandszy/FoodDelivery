@@ -20,10 +20,10 @@ public class DistanceCalculationService {
       double dLat = Math.toRadians((endLat - startLat));
       double dLong = Math.toRadians((endLon - startLon));
 
-      startLat = Math.toRadians(startLat);
-      endLat = Math.toRadians(endLat);
+      Double radStartLat = Math.toRadians(startLat);
+      Double radEndLat = Math.toRadians(endLat);
 
-      double a = haversine(dLat) + Math.cos(startLat) * Math.cos(endLat) * haversine(dLong);
+      double a = haversine(dLat) + Math.cos(radStartLat) * Math.cos(radEndLat) * haversine(dLong);
       double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
       return EARTH_RADIUS * c;

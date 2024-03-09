@@ -10,7 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component 
 @AllArgsConstructor
 public class BootstrapApplicationComponent implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -20,24 +20,26 @@ public class BootstrapApplicationComponent implements ApplicationListener<Contex
    @Override
    public void onApplicationEvent(final @NonNull ContextRefreshedEvent event) {
       try {
+         String userName = "admin";
          Account admin = Account.builder()
-             .userName("admin")
-             .password("admin")
+             .userName(userName)
+             .password(userName)
              .build();
          loginService.register(admin);
-         accountService.setRole("admin", Role.builder().role(Role.ACCOUNT_ROLE.SELLER).build());
-         accountService.setRole("admin", Role.builder().role(Role.ACCOUNT_ROLE.ADMIN).build());
-         accountService.setRole("admin", Role.builder().role(Role.ACCOUNT_ROLE.CLIENT).build());
+         accountService.setRole(userName, Role.builder().roleName(Role.ACCOUNT_ROLE.SELLER).build());
+         accountService.setRole(userName, Role.builder().roleName(Role.ACCOUNT_ROLE.ADMIN).build());
+         accountService.setRole(userName, Role.builder().roleName(Role.ACCOUNT_ROLE.CLIENT).build());
       } catch (Exception e) {}
       try {
+         String userName = "anonymousUser";
          Account anonymousUser = Account.builder()
-             .userName("anonymousUser")
-             .password("anonymousUser")
+             .userName(userName)
+             .password(userName)
              .build();
          loginService.register(anonymousUser);
-         accountService.setRole("anonymousUser", Role.builder().role(Role.ACCOUNT_ROLE.SELLER).build());
-         accountService.setRole("anonymousUser", Role.builder().role(Role.ACCOUNT_ROLE.ADMIN).build());
-         accountService.setRole("anonymousUser", Role.builder().role(Role.ACCOUNT_ROLE.CLIENT).build());
+         accountService.setRole(userName, Role.builder().roleName(Role.ACCOUNT_ROLE.SELLER).build());
+         accountService.setRole(userName, Role.builder().roleName(Role.ACCOUNT_ROLE.ADMIN).build());
+         accountService.setRole(userName, Role.builder().roleName(Role.ACCOUNT_ROLE.CLIENT).build());
       } catch (Exception e) {}
    }
 }

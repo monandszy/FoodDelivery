@@ -36,7 +36,7 @@ public class AccountRepo implements AccountDAO {
 
    @Override
    public void addAccount(Account account, Role role) {
-      RoleEntity accountRole = roleJpaRepo.findByRole(role.getRole()).orElseThrow();
+      RoleEntity accountRole = roleJpaRepo.findByRole(role.getRoleName()).orElseThrow();
       AccountEntity accountEntity = entityMapper.mapToEntity(account);
       accountEntity.setRoles(Set.of(accountRole));
       accountJpaRepo.save(accountEntity);
@@ -57,10 +57,10 @@ public class AccountRepo implements AccountDAO {
 
    @Override // Does it have to require mapping the set? seemed to work fine, not in tests tho
    public void setRole(String username, Role role) {
-      RoleEntity e = roleJpaRepo.findByRole(role.getRole()).orElseThrow();
+      RoleEntity e = roleJpaRepo.findByRole(role.getRoleName()).orElseThrow();
       AccountEntity accountEntity = accountJpaRepo.findByUserName(username).orElseThrow();
       Set<RoleEntity> oldRoles = accountEntity.getRoles();
-      HashSet<RoleEntity> newRoles = new HashSet<>(oldRoles);
+      Set<RoleEntity> newRoles = new HashSet<>(oldRoles);
       newRoles.add(e);
       accountEntity.setRoles(newRoles);
       accountJpaRepo.save(accountEntity);

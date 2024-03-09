@@ -21,6 +21,7 @@ public interface RestaurantJpaRepo extends JpaRepository<RestaurantEntity, Integ
        type = EntityGraph.EntityGraphType.FETCH,
        attributePaths = "seller"
    )
+   @Override
    Optional<RestaurantEntity> findById(@NonNull Integer restaurantId);
 
 
