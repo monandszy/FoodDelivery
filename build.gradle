@@ -84,7 +84,7 @@ dependencyManagement {
 // To turn on only consoleOutput, comment rest, priority doesn't seem to work, it passes no matter what
 
 pmd {
-    consoleOutput = true
+    consoleOutput = false
     toolVersion = "7.0.0-rc4"
     rulesMinimumPriority = 5
     ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
@@ -102,6 +102,7 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+    finalizedBy jacocoTestReport
 }
 jacoco {
     toolVersion = "0.8.9"
@@ -119,6 +120,7 @@ jacocoTestReport {
                     "code/openApi/**",
                     "code/configuration/**",
                     "code/web/**",
+                    "code/PlantUmlCreator.class"
             ])
         }))
     }

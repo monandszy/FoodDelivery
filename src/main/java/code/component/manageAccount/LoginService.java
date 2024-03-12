@@ -3,7 +3,6 @@ package code.component.manageAccount;
 import code.component.manageAccount.domain.Account;
 import code.component.manageAccount.domain.Role;
 import code.web.exception.DeliveryError;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +25,6 @@ public class LoginService implements UserDetailsService {
 
    private AccountDAO accountDAO;
    private PasswordEncoder passwordEncoder;
-   private HttpServletRequest request;
 
    @Override
    @Transactional

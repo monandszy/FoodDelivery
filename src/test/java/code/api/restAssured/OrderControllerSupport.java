@@ -42,7 +42,7 @@ public interface OrderControllerSupport {
           .body(orderInputDTO)
           .post(ORDER_ADD)
           .then()
-//          .statusCode(HttpStatus.CREATED.value())
+          .statusCode(HttpStatus.CREATED.value())
           .and()
           .extract();
    }
@@ -51,7 +51,7 @@ public interface OrderControllerSupport {
       return requestSpecification()
           .delete(ORDER_DELETE, orderId)
           .then()
-//          .statusCode(HttpStatus.CREATED.value())
+          .statusCode(HttpStatus.OK.value())
           .and()
           .extract();
    }

@@ -2,6 +2,15 @@
 
 A simple practice project
 
+#### How to use:
+- Application starts on port localhost:8087/code
+- To get a role and use features, register a new account, login as admin, assign a role
+
+### Features as Admin:
+
+- CRUD Accounts - assign roles
+- default admin account: Username: "admin" Password: "admin"
+
 ### Features as Seller:
 
 - CRUD Restaurants - Address is assigned based on your ip
@@ -15,10 +24,6 @@ A simple practice project
 - Read Menus
 - Read MenuPositions - Create Order
 - Read Your Orders and Their Status - Cancel Order within 20 minutes
-
-### Features as Admin:
-
-- CRUD Accounts - assign roles
 
 ### Rest API Features:
 
